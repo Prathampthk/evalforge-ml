@@ -113,7 +113,7 @@ class RuntimeConfig:
 @dataclass(frozen=True)
 class TelemetryConfig:
     telemetry_enabled: bool = field(default_factory=lambda: os.getenv("TELEMETRY_ENABLED", "true").lower() == "true")
-    telemetry_service_name: str = field(default_factory=lambda: os.getenv("TELEMETRY_SERVICE_NAME", "rag-pipeline"))
+    telemetry_service_name: str = field(default_factory=lambda: os.getenv("TELEMETRY_SERVICE_NAME", "evalforge"))
     telemetry_exporter: str = field(default_factory=lambda: os.getenv("TELEMETRY_EXPORTER", "console"))
     telemetry_otlp_endpoint: Optional[str] = field(default_factory=lambda: os.getenv("TELEMETRY_OTLP_ENDPOINT"))
     metrics_enabled: bool = field(default_factory=lambda: os.getenv("METRICS_ENABLED", "true").lower() == "true")
@@ -124,7 +124,7 @@ class TelemetryConfig:
         default_factory=lambda: _parse_int_env("OTEL_METRIC_EXPORT_INTERVAL_MS", 60000)
     )
     log_level: str = field(default_factory=lambda: os.getenv("LOG_LEVEL", "INFO"))
-    service_version: str = field(default_factory=lambda: os.getenv("SERVICE_VERSION", "1.0.0"))
+    service_version: str = field(default_factory=lambda: os.getenv("SERVICE_VERSION", "0.1.0"))
     environment: str = field(default_factory=lambda: os.getenv("ENVIRONMENT", "local"))
 
 

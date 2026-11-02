@@ -1,4 +1,4 @@
-"""RAGAS evaluation runner for RAG_Pipeline.
+"""RAGAS evaluation runner for EvalForge.
 
 Runs the real pipeline over a grounded question set and scores it with RAGAS
 (faithfulness, answer relevancy, context precision, context recall).
@@ -307,7 +307,7 @@ def run(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run RAGAS evaluation over the RAG pipeline.")
+    parser = argparse.ArgumentParser(description="Run RAGAS evaluation over the EvalForge RAG pipeline.")
     parser.add_argument("--corpus", default="evaluation/datasets/ragas_corpus.json")
     parser.add_argument("--dataset", default="evaluation/datasets/ragas_eval.jsonl")
     parser.add_argument("--output", default="evaluation/reports/ragas-latest.json")

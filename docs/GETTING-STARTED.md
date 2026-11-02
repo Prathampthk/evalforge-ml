@@ -1,71 +1,7 @@
-<!-- generated-by: gsd-doc-writer -->
-# Getting Started
+# Getting started with EvalForge
 
-## Prerequisites
+Follow the [installation](../README.md#installation), [environment configuration](../README.md#environment-configuration), and [running instructions](../README.md#running-the-application) in the README. Commands run from the repository root. Python 3.11 matches CI and Docker.
 
-- Python `>=3.10`
-- `pip`
-- Network access to your configured OpenAI-compatible LLM endpoint
+The first run downloads the embedding model. Set a valid API key and model for your provider. If using another embedding model, set both its name and dimension using `EmbeddingConfig`; environment variables do not change these settings.
 
-## Installation
-
-1. Clone the repository.
-
-```bash
-git clone <your-repo-url>
-```
-
-2. Move into the project directory.
-
-```bash
-cd RAG_Pipeline-1
-```
-
-3. Create and activate a virtual environment.
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-4. Install dependencies.
-
-```bash
-pip install -r requirements.txt
-```
-
-5. Create your local environment file.
-
-```bash
-copy .env.example .env
-```
-
-## First Run
-
-Run the demo pipeline:
-
-```bash
-python demo.py
-```
-
-You should see retrieval, generation, and evaluation output in an interactive console workflow.
-
-## Common Setup Issues
-
-1. `Embedding dimension mismatch` during startup.
-Cause: `EmbeddingConfig.dimension` does not match your chosen sentence-transformers model output.
-Fix: align `EmbeddingConfig.dimension` with model output or switch model/dimension pair.
-
-2. LLM authentication errors.
-Cause: missing or invalid `OPENAI_API_KEY` for your selected endpoint.
-Fix: set `OPENAI_API_KEY` in `.env`, verify `LLM_BASE_URL` and `LLM_MODEL` match provider expectations.
-
-3. FAISS install/import problems.
-Cause: incompatible Python environment or missing dependency install.
-Fix: recreate `.venv`, then run `pip install -r requirements.txt` again.
-
-## Next Steps
-
-- Continue with development workflows in `docs/DEVELOPMENT.md`.
-- Run and extend tests using `docs/TESTING.md`.
-- Review architecture details in `docs/ARCHITECTURE.md`.
+See [configuration](CONFIGURATION.md), [testing](TESTING.md), and [architecture](ARCHITECTURE.md).

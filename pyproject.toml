@@ -1,3 +1,12 @@
+# Release identity only; installation uses requirements.txt, not pip install .
+[tool.evalforge]
+name = "evalforge-ml"
+version = "0.1.0"
+maintainer = "Pratham Pathak"
+maintainer_email = "prathampthk13@gmail.com"
+description = "An extensible machine learning evaluation platform for benchmarking retrieval-augmented generation pipelines, analyzing model reliability, and optimizing inference performance."
+repository = "https://github.com/Prathampthk/evalforge-ml"
+
 [tool.black]
 line-length = 120
 target-version = ["py310", "py311"]

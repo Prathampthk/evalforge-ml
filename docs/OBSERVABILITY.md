@@ -49,8 +49,8 @@ The API returns `x-request-id` and `x-trace-id` headers so user reports can be j
 export TELEMETRY_ENABLED=true
 export TELEMETRY_EXPORTER=otlp
 export TELEMETRY_OTLP_ENDPOINT=http://localhost:4318
-export TELEMETRY_SERVICE_NAME=rag-pipeline
-export SERVICE_VERSION=1.0.0
+export TELEMETRY_SERVICE_NAME=evalforge
+export SERVICE_VERSION=0.1.0
 export ENVIRONMENT=local
 export METRICS_ENABLED=true
 export STRUCTURED_LOGS_ENABLED=true

@@ -53,6 +53,4 @@ No explicit coverage threshold config was found (no `.coveragerc`, `pytest-cov` 
 
 ## CI Integration
 
-No CI workflow files were found in `.github/workflows/`.
-
-Tests currently run as a local developer responsibility via `pytest` commands.
+`.github/workflows/ci.yml` runs formatting, linting, typing, unit tests, and security/dependency scans. Its pytest job excludes `tests/test_api.py`; run the complete suite locally. `.github/workflows/quality-regression.yml` defaults to dataset-fixture checks, not measured model quality. See the [release audit](RELEASE_AUDIT.md) for actual local results.

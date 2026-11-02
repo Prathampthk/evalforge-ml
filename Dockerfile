@@ -24,7 +24,10 @@ COPY . /build/app
 # Runtime
 FROM python:3.11-slim
 
-LABEL maintainer="RAG Pipeline Team"
+LABEL org.opencontainers.image.authors="Pratham Pathak <prathampthk13@gmail.com>" \
+      org.opencontainers.image.title="EvalForge" \
+      org.opencontainers.image.version="0.1.0" \
+      org.opencontainers.image.source="https://github.com/Prathampthk/evalforge-ml"
 
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"

@@ -62,8 +62,8 @@ Recommended local checks:
 
 GitHub Actions are split into a fast PR lane and an optional expensive evaluation lane.
 
-- `CI` runs on pull requests and pushes to `main`: Black, flake8, mypy, pytest, Bandit, and Safety.
-- `Evaluation` runs weekly, manually, or when a PR has the `run-evaluation` label. This preserves quality regression signal without slowing every PR.
+- `EvalForge CI` runs on pull requests and pushes to `main`: Black, flake8, mypy, pytest, Bandit, and Safety.
+- `EvalForge evaluation harness` runs weekly, manually, or when a PR has the `run-evaluation` label. Its default path checks fixed dataset fixtures; it does not measure model quality. Live heuristic evaluation lacks corpus ingestion and provider-secret wiring.
 - Workflow summaries and uploaded artifacts provide failure context for pytest, Bandit, and evaluation reports.
 - Python dependency caching is enabled through `actions/setup-python` using `requirements.txt`, `requirements-dev.txt`, and tool config files as cache keys.
 

@@ -104,3 +104,17 @@ coverage-html/
 pip-log.txt
 pip-delete-this-directory.txt
 docker-compose.override.yml
+
+# Release hygiene
+.env.*
+!.env.example
+.aws/
+credentials*.json
+*.pem
+*.key
+*.p12
+*.pfx
+reports/
+.ruff_cache/
+.venv*/
+.graphify_python

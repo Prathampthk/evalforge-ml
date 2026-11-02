@@ -1,9 +1,9 @@
 apiVersion: 1
 
 providers:
-  - name: RAG Pipeline
+  - name: EvalForge
     orgId: 1
-    folder: RAG Pipeline
+    folder: EvalForge
     type: file
     disableDeletion: false
     updateIntervalSeconds: 30

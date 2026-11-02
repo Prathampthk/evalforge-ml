@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: rag-pipeline:latest
+    image: evalforge-ml:0.1.0
     container_name: rag-pipeline-api
     restart: on-failure
     ports:

@@ -63,7 +63,7 @@ class RAGPipeline:
             max_workers=1, thread_name_prefix="rag-evaluator"
         )
 
-        logger.info("RAG Pipeline initialized")
+        logger.info("EvalForge initialized")
 
     def __enter__(self):
         return self

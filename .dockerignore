@@ -19,3 +19,18 @@ docs
 # Avoid copying local editor config
 .vscode
 .idea
+.env.*
+!.env.example
+.aws
+*.pem
+*.key
+*.db
+*.sqlite*
+vector_store_data
+evaluation/reports
+reports
+.planning
+.graphify_python
+.venv*
+.cache
+.mypy_cache

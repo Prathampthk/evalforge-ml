@@ -58,7 +58,7 @@ def evaluate_quality_gates(report: dict) -> tuple[bool, list[str]]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Evaluate Phase 2 quality regression gates")
+    parser = argparse.ArgumentParser(description="EvalForge report quality gates")
     parser.add_argument("--report", required=True, help="Path to evaluation report JSON")
     args = parser.parse_args()
 

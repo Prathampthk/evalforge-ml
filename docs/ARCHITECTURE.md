@@ -1,5 +1,5 @@
 <!-- generated-by: gsd-doc-writer -->
-# Architecture
+# EvalForge v0.1.0 architecture
 
 ## System Overview
 
@@ -13,9 +13,9 @@ graph TD
   P --> R[Retriever retriever.py]
   R --> E[EmbeddingModel embeddings.py]
   R --> V[VectorStore vector_store.py]
-  P --> G[GuardrailAgent guardrail_agent.py]
+  P --> G[Optional GuardrailAgent guardrail_agent.py]
   P --> N[Generator generator.py]
-  P --> X[EvaluatorAgent evaluator_agent.py]
+  P --> X[Sync or deferred EvaluatorAgent evaluator_agent.py]
   G --> L[LLMClient llm_client.py]
   N --> L
   X --> L
@@ -69,3 +69,7 @@ graph TD
 ```
 
 This structure keeps each pipeline concern isolated to a module while `main.py` composes those modules into a single query interface.
+
+## Runtime boundaries
+
+The guardrail is optional and disabled by default. Deferred evaluation returns pending fields without a result-polling endpoint; select sync mode to consume completed scores. FAISS indexes are process-local, and save/load is explicit. API startup does not restore a persisted index. The README diagram describes implemented stages only; the roadmap is separate.

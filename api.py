@@ -1,5 +1,5 @@
 """
-Production-grade FastAPI service layer for the RAG Pipeline.
+FastAPI service layer for EvalForge.
 
 Architecture:
   - Async endpoints for high concurrency
@@ -137,7 +137,7 @@ class HealthCheckResponse(BaseModel):
     status: str  # "healthy" | "degraded" | "unhealthy"
     timestamp: float
     components: dict[str, str]
-    version: str = "1.0.0"
+    version: str = "0.1.0"
 
 
 class ErrorResponse(BaseModel):
@@ -392,9 +392,12 @@ async def check_llm_health(pipeline: RAGPipeline) -> str:
 
 
 app = FastAPI(
-    title="RAG Pipeline API",
-    description="Production-grade Retrieval-Augmented Generation API",
-    version="1.0.0",
+    title="EvalForge API",
+    description=(
+        "An extensible machine learning evaluation platform for benchmarking retrieval-augmented "
+        "generation pipelines, analyzing model reliability, and optimizing inference performance."
+    ),
+    version="0.1.0",
     lifespan=lifespan,
 )
 
@@ -481,8 +484,8 @@ async def health_check(pipeline: RAGPipeline = Depends(get_pipeline)):
 async def root():
     """Root endpoint: API info."""
     return {
-        "name": "RAG Pipeline API",
-        "version": "1.0.0",
+        "name": "EvalForge API",
+        "version": "0.1.0",
         "docs": "/docs",
         "health": "/health",
     }
@@ -728,9 +731,12 @@ def custom_openapi():
         return app.openapi_schema
 
     openapi_schema = get_openapi(
-        title="RAG Pipeline API",
-        version="1.0.0",
-        description="Production-grade Retrieval-Augmented Generation API",
+        title="EvalForge API",
+        version="0.1.0",
+        description=(
+            "An extensible machine learning evaluation platform for benchmarking retrieval-augmented "
+            "generation pipelines, analyzing model reliability, and optimizing inference performance."
+        ),
         routes=app.routes,
     )
 

@@ -1,5 +1,5 @@
 {
-  "description": "Grounded knowledge corpus for RAGAS evaluation of the RAG_Pipeline. Each passage is a self-contained factual statement. The evaluation questions in ragas_eval.jsonl are answerable strictly from this corpus, so retrieval quality and answer faithfulness can be measured against a known ground truth.",
+  "description": "Grounded knowledge corpus for RAGAS evaluation of EvalForge. Each passage is a self-contained factual statement. The evaluation questions in ragas_eval.jsonl are answerable strictly from this corpus, so retrieval quality and answer faithfulness can be measured against a known ground truth.",
   "passages": [
     {"id": "ctx-rag-def", "text": "Retrieval-Augmented Generation (RAG) is a technique that combines a retrieval system with a generative language model. Before generating an answer, the system retrieves relevant documents from an external knowledge source and conditions the model's output on that retrieved evidence."},
     {"id": "ctx-rag-hallucination", "text": "RAG reduces hallucination by grounding generation in retrieved evidence. Because the model answers from supplied context rather than only its parametric memory, its responses are more traceable and less likely to invent unsupported facts."},

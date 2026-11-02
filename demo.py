@@ -1,5 +1,5 @@
 """
-End-to-end demo of the Multi-Agent RAG Pipeline.
+End-to-end demo of the EvalForge RAG.
 Run: python demo.py
 """
 
@@ -207,13 +207,13 @@ def display_result(result, console: Console) -> None:
 def main():
     console.print(
         Panel(
-            "[bold]Multi-Agent RAG Pipeline Demo[/bold]\n\n"
+            "[bold]EvalForge RAG Demo[/bold]\n\n"
             "Components:\n"
             "  1. 📦 Retriever  — FAISS vector search with MMR\n"
             "  2. 🛡️  Guardrail  — LLM-based relevance & safety filter\n"
             "  3. 🤖 Generator  — Grounded answer generation\n"
             "  4. ✅ Evaluator  — Factual consistency scoring",
-            title="🚀 RAG Pipeline",
+            title="🚀 EvalForge",
             border_style="bright_blue",
             padding=(1, 2),
         )

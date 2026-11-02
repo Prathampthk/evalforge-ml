@@ -1,0 +1,12 @@
+EvalForge v0.1.0
+Maintainer: Pratham Pathak <prathampthk13@gmail.com>
+Repository: https://github.com/Prathampthk/evalforge-ml
+
+This project builds on the RAG implementation identified in the inherited
+repository documentation as https://github.com/satyamshivam13/RAG_Pipeline.
+The original MIT license and Copyright (c) 2026 Satyam Shivam are retained
+unchanged in LICENSE. Rebranding does not assign authorship of inherited code.
+
+Historical audits, design proposals, planning records, and Docker verification
+output are retained as provenance; their claims are not release validation.
+Third-party software and model weights retain their respective licenses.

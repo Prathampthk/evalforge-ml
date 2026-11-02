@@ -1,0 +1,4 @@
+# Optional adapters imported by evaluation/run_ragas.py
+-r requirements.txt
+langchain-openai>=0.1,<0.3
+langchain-huggingface>=0.0.3,<0.2

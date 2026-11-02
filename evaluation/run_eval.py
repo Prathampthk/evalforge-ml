@@ -158,7 +158,9 @@ def run_evaluation(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run offline RAG evaluation")
+    parser = argparse.ArgumentParser(
+        description="EvalForge dataset-fixture evaluation (not measured model quality); use run_ragas for benchmarks"
+    )
     parser.add_argument("--dataset", required=True, help="Path to JSONL evaluation dataset")
     parser.add_argument("--output", required=True, help="Path to output report JSON")
     parser.add_argument("--live", action="store_true", help="Use the live pipeline instead of the offline baseline")

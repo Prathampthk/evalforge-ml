@@ -114,7 +114,7 @@
   "templating": {"list": []},
   "time": {"from": "now-1h", "to": "now"},
   "timezone": "browser",
-  "title": "RAG Pipeline Overview",
+  "title": "EvalForge Overview",
   "uid": "rag-pipeline-overview",
   "version": 1
 }

@@ -11,12 +11,12 @@
 | `TELEMETRY_ENABLED` | Optional | `true` | Enables OpenTelemetry setup and structured logging. |
 | `TELEMETRY_EXPORTER` | Optional | `console` | Export mode: `console`, `otlp`, or `none`. |
 | `TELEMETRY_OTLP_ENDPOINT` | Optional | `None` | OTLP HTTP endpoint, usually `http://otel-collector:4318`. |
-| `TELEMETRY_SERVICE_NAME` | Optional | `rag-pipeline` | Service name attached to traces and metrics. |
+| `TELEMETRY_SERVICE_NAME` | Optional | `evalforge` | Service name attached to traces and metrics. |
 | `METRICS_ENABLED` | Optional | `true` | Enables OpenTelemetry metric instruments. |
 | `STRUCTURED_LOGS_ENABLED` | Optional | `true` | Emits JSON logs with correlation, trace, and span IDs. |
 | `OTEL_METRIC_EXPORT_INTERVAL_MS` | Optional | `60000` | Metric export interval in milliseconds. |
 | `ENVIRONMENT` | Optional | `local` | Deployment environment resource attribute. |
-| `SERVICE_VERSION` | Optional | `1.0.0` | Service version resource attribute. |
+| `SERVICE_VERSION` | Optional | `0.1.0` | Service version resource attribute. |
 | `LOG_LEVEL` | Optional | `INFO` | Root structured log level. |
 
 ## Config File Format
@@ -79,3 +79,7 @@ The project uses Python dataclasses in `config.py` as the primary configuration 
 Chunk quality metrics are stored on each chunk under `metadata["chunking"]["metrics"]`, including token count, sentence count, paragraph count, overlap tokens, budget utilization, semantic-boundary flags, and oversize status.
 
 <!-- VERIFY: Production deployment secret-management location is not discoverable from repository files. -->
+
+## Environment boundaries
+
+`EMBEDDING_MODEL`, `EMBEDDING_DEVICE`, `VECTOR_INDEX_TYPE`, and `VECTOR_STORE_PERSIST_DIR` are not read by the Python configuration. Legacy Compose entries are retained for compatibility but have no effect on these settings. Use `EmbeddingConfig` and `VectorStoreConfig` in Python. API settings include `RAG_API_TOKEN`, `RAG_AUTH_DISABLED` (false), `CORS_ORIGINS`, and `TRUSTED_HOSTS`. `API_HOST`/`API_PORT` apply only when running `python api.py`; Uvicorn CLI takes its own options.

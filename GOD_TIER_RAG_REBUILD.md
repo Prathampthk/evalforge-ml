@@ -1,3 +1,5 @@
+> Historical upstream document retained for provenance. This is not the EvalForge v0.1.0 feature inventory or validation report. See [README](README.md) and [release audit](docs/RELEASE_AUDIT.md).
+
 # God-Tier RAG System: Complete Rebuild from First Principles
 ## World-Class Retrieval-Augmented Generation Architecture
 
