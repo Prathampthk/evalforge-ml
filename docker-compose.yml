@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  rag-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rag-pipeline:latest
+    container_name: rag-pipeline-api
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    environment:
+      # LLM Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - LLM_MODEL=${LLM_MODEL:-gpt-4o-mini}
+      - LLM_BASE_URL=${LLM_BASE_URL:-}
+
+      # Embeddings Configuration
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-BAAI/bge-large-en-v1.5}
+      - EMBEDDING_DEVICE=${EMBEDDING_DEVICE:-cpu}
+
+      # Vector Store Configuration
+      - VECTOR_INDEX_TYPE=${VECTOR_INDEX_TYPE:-flat}
+
+      # API Configuration
+      - RAG_API_TOKEN=${RAG_API_TOKEN:-}
+      - RAG_AUTH_DISABLED=${RAG_AUTH_DISABLED:-false}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000}
+      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-localhost,127.0.0.1}
+
+      # Telemetry Configuration
+      - TELEMETRY_ENABLED=${TELEMETRY_ENABLED:-true}
+      - TELEMETRY_EXPORTER=${TELEMETRY_EXPORTER:-console}
+      - TELEMETRY_OTLP_ENDPOINT=${TELEMETRY_OTLP_ENDPOINT:-}
+
+      # Python runtime settings
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+
+    volumes:
+      # Persist vector store using a named volume for portability
+      - vector_store_data:/app/vector_store_data
+
+      # NOTE: For local development, prefer using docker-compose.override.yml
+      # to bind-mount source code (e.g., - ./:/app) so production doesn't
+      # accidentally run with a host bind that overrides the built image.
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+    networks:
+      - rag-network
+
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4096M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+volumes:
+  vector_store_data:
+    driver: local
+
+networks:
+  rag-network:
+    driver: bridge
+
+# Notes:
+# - `vector_store_data` persists vectors between container restarts.
+# - Provide secrets via a `.env` file or your platform's secret manager.

@@ -1,0 +1,106 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.venv/
+.venv311/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.project
+.pydevproject
+.settings/
+*.iml
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+*.cover
+.nose*
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Project Specific
+vector_store_data/
+*.db
+*.sqlite
+*.sqlite3
+cache/
+logs/
+temp/
+tmp/
+
+# OS
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Git
+.git/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+/graphify-out/
+*graphify-python-*.log
+evaluation/reports/
+
+# Tooling
+.jetro/
+
+# Additional common ignores
+.mypy_cache/
+.pytype/
+.pyre/
+.ipynb_checkpoints/
+.cache/
+coverage.xml
+coverage-html/
+.python-version
+pip-log.txt
+pip-delete-this-directory.txt
+docker-compose.override.yml
