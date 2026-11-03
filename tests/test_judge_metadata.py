@@ -34,7 +34,17 @@ def test_prompt_hashes_are_stable_and_scores_reject_infinity():
     assert _score_coverage(result) == {"a": 0, "b": 1}
 
 
-def test_ragas_cache_column_mismatch_fails_before_judge(tmp_path):
+def test_ragas_cache_column_mismatch_fails_before_judge(tmp_path, monkeypatch):
+    import builtins
+
+    original_import = builtins.__import__
+
+    def forbid_ragas(name, *args, **kwargs):
+        if name == "ragas" or name.startswith("ragas."):
+            raise AssertionError("Invalid caches must be rejected before importing RAGAS")
+        return original_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", forbid_ragas)
     from evaluation.run_ragas import run_scoring_stage
 
     cache = {
@@ -61,3 +71,18 @@ def test_resume_rejects_stale_dataset_before_scoring(tmp_path):
     cache.write_text(json.dumps({"provenance": {"corpus_sha256": "old", "dataset_sha256": "old"}}))
     with pytest.raises(ValueError, match="cache corpus/dataset mismatch"):
         run(corpus, dataset, tmp_path / "output.json", None, cache, resume=True)
+
+
+def test_installed_ragas_judge_integrations_import():
+    # Exercise the real imports: do not let lazy cache validation conceal dependency drift.
+    from ragas import evaluate, EvaluationDataset, RunConfig
+    from ragas.cost import get_token_usage_for_openai
+    from ragas.metrics import Faithfulness, ResponseRelevancy, LLMContextPrecisionWithReference, LLMContextRecall
+    from langchain_community.chat_models.vertexai import ChatVertexAI
+    from langchain_openai import ChatOpenAI
+
+    assert callable(evaluate)
+    assert callable(get_token_usage_for_openai)
+    assert EvaluationDataset and RunConfig and ChatVertexAI and ChatOpenAI
+    metrics = [Faithfulness(), ResponseRelevancy(), LLMContextPrecisionWithReference(), LLMContextRecall()]
+    assert len(prompt_manifest(metrics)) == 5

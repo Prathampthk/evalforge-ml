@@ -200,15 +200,6 @@ def run_scoring_stage(cached: dict, output_path: Path, limit: int | None = None)
     caps (e.g. Groq free tier's 100k TPD); limiting to ~8 keeps a *complete*
     4-metric run inside one daily window.
     """
-    from ragas import evaluate, EvaluationDataset, RunConfig
-    from ragas.cost import get_token_usage_for_openai
-    from ragas.metrics import (
-        Faithfulness,
-        ResponseRelevancy,
-        LLMContextPrecisionWithReference,
-        LLMContextRecall,
-    )
-
     questions = cached["questions"]
     answers = cached["answers"]
     contexts = cached["contexts"]
@@ -232,6 +223,16 @@ def run_scoring_stage(cached: dict, output_path: Path, limit: int | None = None)
         latencies = latencies[:limit]
         consistency = consistency[:limit]
         print(f"Scoring first {len(questions)} of {cached['dataset_size']} cached samples (--limit).", flush=True)
+
+    # Validate cached inputs before loading optional judge integrations.
+    from ragas import evaluate, EvaluationDataset, RunConfig
+    from ragas.cost import get_token_usage_for_openai
+    from ragas.metrics import (
+        Faithfulness,
+        ResponseRelevancy,
+        LLMContextPrecisionWithReference,
+        LLMContextRecall,
+    )
 
     judge_llm, judge_emb = _build_judge()
     dataset = EvaluationDataset.from_list(

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Bound LangChain integrations to the RAGAS 0.2-compatible family after a fresh Linux CI install exposed dependency drift; validate caches before imports and smoke-test actual judge integrations.
+
 - Add strict versioned BEIR-compatible corpus/query/qrel manifests and bounded checksum-verified SciFact preparation.
 - Implement graded Recall/Precision/MRR/NDCG/Hit Rate with documented semantics and independent reference checks.
 - Add JSON/YAML experiments for sparse TF-IDF and pinned MiniLM exact/HNSW/IVF/MMR retrieval, real corpus subsets, index artifacts and performance measurements.
