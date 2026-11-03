@@ -46,6 +46,7 @@ jobs:
           cache: pip
           cache-dependency-path: |
             requirements.txt
+            requirements-experiments.txt
             requirements-dev.txt
             pyproject.toml
             .flake8

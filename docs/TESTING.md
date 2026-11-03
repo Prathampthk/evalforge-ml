@@ -53,4 +53,17 @@ No explicit coverage threshold config was found (no `.coveragerc`, `pytest-cov` 
 
 ## CI Integration
 
-`.github/workflows/ci.yml` runs formatting, linting, typing, unit tests, and security/dependency scans. Its pytest job excludes `tests/test_api.py`; run the complete suite locally. `.github/workflows/quality-regression.yml` defaults to dataset-fixture checks, not measured model quality. See the [release audit](RELEASE_AUDIT.md) for actual local results.
+`.github/workflows/ci.yml` runs formatting, linting, typing, unit tests, and security/dependency scans. Its pytest job includes API contract tests with mocked startup (no model/provider downloads). A separate deterministic retrieval job checks the versioned quality baseline. `.github/workflows/quality-regression.yml` defaults to dataset-fixture checks, not measured model quality. See the [release audit](RELEASE_AUDIT.md) for actual local results.
+
+
+## Retrieval infrastructure verification
+
+```bash
+OMP_NUM_THREADS=1 python -m pytest tests/ -q
+OMP_NUM_THREADS=1 python -m evaluation.experiment --config configs/experiments/regression.json --output evaluation/reports/ci-new
+python -m evaluation.retrieval_gate --report evaluation/reports/ci-new/report.json --baseline evaluation/baselines/regression-v1.json
+```
+
+Ranking tests use hand calculations and exhaustive independent scikit-learn NDCG comparisons. Index tests load saved exact/HNSW/IVF artifacts and check search consistency. Other tests cover manifest integrity, missing/duplicate labels, deterministic artifacts, paired bootstrap, regression rejection, trace privacy, API auth/options, and RAGAS accounting/cache integrity. Runtime timing tests use one FAISS thread locally. Console exporter output is disabled only in unit-test setup; explicit in-memory exporter tests verify actual spans.
+
+Generated experiment source snapshots are excluded from static analysis to avoid duplicate module discovery; application sources remain checked. See [results](SCIFACT_RESULTS.md) for final test counts and validation limits.

@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "dataset": "../../evaluation/datasets/regression-v1/manifest.json",
+  "corpus_sizes": [
+    0
+  ],
+  "repeats": 2,
+  "warmup": 1,
+  "bootstrap_samples": 1000,
+  "configurations": [
+    {
+      "name": "tfidf-similarity-k1",
+      "representation": "tfidf",
+      "index": "sparse",
+      "mode": "similarity",
+      "k": 1,
+      "fetch_k": 10
+    },
+    {
+      "name": "tfidf-similarity-k3",
+      "representation": "tfidf",
+      "index": "sparse",
+      "mode": "similarity",
+      "k": 3,
+      "fetch_k": 10
+    },
+    {
+      "name": "tfidf-similarity-k5",
+      "representation": "tfidf",
+      "index": "sparse",
+      "mode": "similarity",
+      "k": 5,
+      "fetch_k": 10
+    },
+    {
+      "name": "tfidf-mmr-k1",
+      "representation": "tfidf",
+      "index": "sparse",
+      "mode": "mmr",
+      "k": 1,
+      "fetch_k": 10
+    },
+    {
+      "name": "tfidf-mmr-k3",
+      "representation": "tfidf",
+      "index": "sparse",
+      "mode": "mmr",
+      "k": 3,
+      "fetch_k": 10
+    },
+    {
+      "name": "tfidf-mmr-k5",
+      "representation": "tfidf",
+      "index": "sparse",
+      "mode": "mmr",
+      "k": 5,
+      "fetch_k": 10
+    }
+  ]
+}

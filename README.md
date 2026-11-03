@@ -1,14 +1,39 @@
 # EvalForge
 
-**An ML Evaluation and Optimization Platform for Retrieval-Augmented Language Models**
+**Reproducible Retrieval Evaluation and Index Benchmarking**
 
 An extensible machine learning evaluation platform for benchmarking retrieval-augmented generation pipelines, analyzing model reliability, and optimizing inference performance.
 
-Version **0.1.0** · Maintainer: **Pratham Pathak** · [Repository](https://github.com/Prathampthk/evalforge-ml) · [MIT license](LICENSE)
+Version **0.1.0 foundation + unreleased retrieval infrastructure upgrade** · Maintainer: **Pratham Pathak** · [Repository](https://github.com/Prathampthk/evalforge-ml) · [MIT license](LICENSE)
 
 ## Overview and motivation
 
-EvalForge starts from an existing Python RAG implementation and establishes a foundation for reproducible evaluation and future inference optimization. This initial release preserves that implementation, documents its behavior, and separates the available evaluation harnesses from the planned ML platform. It does not claim independent authorship of the inherited code or measured performance improvements.
+EvalForge extends an existing Python RAG implementation with versioned relevance datasets, tested ranking metrics, controlled lexical/dense experiments, index scaling measurements, and paired statistical comparisons. Its focus is retrieval relevance and quality/performance tradeoffs; asynchronous LLM job scheduling belongs to AgentEval. The inherited RAG serving and answer-evaluation paths remain available, with upstream attribution retained.
+
+## Retrieval evaluation quick start
+
+```bash
+python -m pip install -r requirements-experiments.txt
+# Small deterministic CI fixture, no downloads or credentials:
+OMP_NUM_THREADS=1 python -m evaluation.experiment \
+  --config configs/experiments/regression.json --output evaluation/reports/regression-new
+python -m evaluation.retrieval_gate \
+  --report evaluation/reports/regression-new/report.json \
+  --baseline evaluation/baselines/regression-v1.json
+
+# Public SciFact benchmark: explicit small dataset and pinned CPU model downloads:
+python -m evaluation.prepare_dataset --output data/scifact
+python -m evaluation.prepare_model
+OMP_NUM_THREADS=1 python -m evaluation.experiment \
+  --config configs/experiments/scifact.json --output evaluation/reports/scifact-new
+python -m evaluation.compare \
+  --report evaluation/reports/scifact-new/report.json \
+  --output evaluation/reports/scifact-new/comparison.md
+```
+
+Use a new empty output directory for each run. Commands run from the repository root after creating a Python environment. Dense experiments fail if the pinned model is unavailable; they do not substitute synthetic embeddings. See [dataset provenance/licenses](docs/DATASETS.md), [metric and experiment methodology](docs/EXPERIMENTS.md), and [resume evidence](RESUME_EVIDENCE.md).
+
+The upgrade preserves the original 22-query/20-passage fixture and supports BEIR SciFact with **5,183 documents, 300 test queries and 339 judgments**. Compare TF-IDF, pinned MiniLM dense exact search, MMR, HNSW and IVF across three real corpus sizes. Reports include five ranking metrics, per-query results, paired bootstrap intervals, build/encoding timings, P50/P95/P99 index-query latency, serial QPS, memory estimates, and ANN agreement with exact search. [Measured comparisons](docs/SCIFACT_RESULTS.md) document scope and limitations; no end-to-end RAG throughput or judge-accuracy claim is implied.
 
 ## Current capabilities
 
@@ -43,7 +68,7 @@ Deferred evaluation returns a pending placeholder; there is no result-polling en
 
 ## Technology stack
 
-Python, dataclasses, Pydantic, sentence-transformers, FAISS, tiktoken, OpenAI SDK, FastAPI/Uvicorn, RAGAS, pytest, OpenTelemetry, Docker, and GitHub Actions. Optional observability uses Jaeger, Prometheus, and Grafana. Dependencies have version ranges rather than a reproducible lockfile.
+Python, scikit-learn, SciPy, psutil, PyYAML, dataclasses, Pydantic, sentence-transformers, FAISS, tiktoken, OpenAI SDK, FastAPI/Uvicorn, RAGAS, pytest, OpenTelemetry, Docker, and GitHub Actions. Optional observability uses Jaeger, Prometheus, and Grafana. Runtime requirements use version ranges; a snapshot of the measured environment is retained with the benchmark evidence.
 
 ## Repository structure
 
@@ -62,7 +87,8 @@ evalforge-ml/
 ├── generator.py              # Answer generation
 ├── evaluator_agent.py        # Claim consistency stage
 ├── api.py / demo.py          # HTTP service / console demo
-├── evaluation/              # Datasets, runners, quality gates
+├── evaluation/              # Versioned datasets, ranking, experiments, RAGAS and gates
+├── configs/experiments/     # Regression and public benchmark configurations
 ├── observability/           # Collector and dashboard configuration
 ├── tests/ / docs/           # Tests and technical documentation
 └── .github/workflows/       # Existing CI and evaluation harness
@@ -169,6 +195,14 @@ python -m evaluation.quality_gates --report evaluation/reports/phase2-latest.jso
 
 These offline scores are fixed values selected by dataset annotations, **not measured model quality or RAGAS results**. `run_eval --live` uses heuristic metrics and does not ingest a corpus or load an index; it is not a meaningful end-to-end retrieval benchmark as shipped. The existing evaluation workflow defaults to fixture checks, and its live option lacks provider-secret wiring. Use `run_ragas` for corpus-backed evaluation.
 
+### Local retrieval benchmark
+
+```bash
+OMP_NUM_THREADS=1 python -m evaluation.retrieval_benchmark
+```
+
+This new corpus-backed TF-IDF baseline compares existing FAISS similarity search and MMR across K=1, 3, 5. It reports Recall@K, MRR@K, NDCG@K, per-query rankings, and warm-query latency with dataset hashes and environment metadata. On the 22-question/20-passage repository sample, similarity search measured 95.45% Recall@5 and 0.9545 MRR@5. These are lexical fixture measurements, not LLM quality or production performance; the separate SciFact experiments now include dense retrieval. See [methodology and raw results](docs/BENCHMARKS.md).
+
 ## Evaluation metrics
 
 | Metric | Existing implementation and interpretation |
@@ -176,33 +210,33 @@ These offline scores are fixed values selected by dataset annotations, **not mea
 | Faithfulness | RAGAS judge metric in `run_ragas`; separate claim-consistency score in the pipeline |
 | Answer relevancy | RAGAS embedding/judge metric; `run_eval --live` uses an answer substring heuristic |
 | Context precision / recall | RAGAS metrics in `run_ragas`; live heuristic runner uses expected/retrieved chunk-ID overlap |
-| Latency | Pipeline stage timers and RAGAS report latency summaries; no published benchmark results |
+| Latency | Pipeline stage timers and RAGAS summaries; retrieval timings reported separately, no published full-RAG results |
 | Quality gates | Faithfulness ≥ 0.90 and answer relevancy ≥ 0.95; context metrics informational |
 
-Passing thresholds on fixture reports validates the harness only. It does not establish model reliability. No measured release benchmark is published here.
+Passing thresholds on fixture reports validates the harness only. It does not establish model reliability. A local lexical retrieval baseline is documented separately; no measured release LLM benchmark is published here.
 
 ## Testing
 
 ```bash
 python -m pip install -r requirements-dev.txt
-python -m pytest tests/
+OMP_NUM_THREADS=1 python -m pytest tests/
 python -m black --check .
 python -m flake8 .
 python -m mypy
 ```
 
-On the macOS Python 3.14 validation host, the suite required `OMP_NUM_THREADS=1` to avoid a native FAISS crash (60 passed, 24 credential-dependent tests skipped). Python 3.11 and Docker validation remain outstanding.
+The pre-upgrade baseline was 72 passed / 24 skipped. The upgrade isolates API startup with mocks so those contract tests run without credentials; explicit in-memory exporters validate telemetry. Use `OMP_NUM_THREADS=1` on the local macOS validation host to avoid the native threading crash observed in the initial audit. See [current validation and measurements](docs/SCIFACT_RESULTS.md). Python 3.11 CI and Docker runtime execution remain separate validation tasks.
 
-Tests exercise loading, embeddings, vector indexes, retrieval, agents, runtime behavior, telemetry, evaluation, and API behavior. Many substitute fake models/clients. Existing CI excludes `tests/test_api.py` from its unit-test job; run the full suite locally. See [testing](docs/TESTING.md) and the [release audit](docs/RELEASE_AUDIT.md) for actual validation results and limitations.
+Tests exercise loading, embeddings, vector indexes, retrieval, agents, runtime behavior, telemetry, evaluation, and API behavior. Many substitute fake models/clients. CI now includes the API contract tests and a versioned deterministic retrieval regression gate. The larger SciFact workflow runs separately, manually or monthly. See [testing](docs/TESTING.md) and the [release audit](docs/RELEASE_AUDIT.md) for actual validation results and limitations.
 
 ## Development roadmap
 
-All items below are planned; existing components provide a foundation rather than completion of these milestones.
+The retrieval infrastructure upgrade implements versioned data, lexical/dense/ANN comparisons, five ranking metrics and paired bootstrap analysis. Remaining milestones below extend that foundation; implemented components are not represented as future work.
 
 ### v0.2 — Retrieval Benchmarking
 
-- BM25 retrieval, dense retrieval baselines, and hybrid retrieval.
-- Recall@K and MRR evaluation; reproducible retrieval experiments.
+- Add BM25 and hybrid lexical/dense retrieval.
+- Extend the implemented dense baselines, Recall/MRR/NDCG experiments, and index scaling to more held-out domains and seeds.
 
 ### v0.3 — Model Evaluation
 
@@ -223,7 +257,7 @@ All items below are planned; existing components provide a foundation rather tha
 
 ## Project status
 
-**v0.1.0: initial EvalForge identity and documented RAG foundation.** Existing CI, evaluation, and observability code is retained. Production readiness, cross-model optimization, and comprehensive benchmark reproducibility remain future work. See [release notes](CHANGELOG.md) and [release audit](docs/RELEASE_AUDIT.md) before publishing.
+**v0.1.0 foundation with an unreleased retrieval-infrastructure upgrade.** Configuration-driven, provenance-rich retrieval experiments and small-fixture regression gates are implemented. Production readiness, cross-model inference optimization, multi-domain generalization, and independently validated LLM judgments remain future work. See [release notes](CHANGELOG.md) and [release audit](docs/RELEASE_AUDIT.md) before publishing.
 
 ## License and acknowledgements
 

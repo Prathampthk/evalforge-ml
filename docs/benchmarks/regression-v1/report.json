@@ -1,0 +1,784 @@
+{
+  "schema_version": 1,
+  "experiment_id": "6d696653ed8a6f0db657",
+  "run_id": "6d696653ed8a6f0db657-9d37afbb",
+  "started_at": "2026-11-03T17:47:24.240565+00:00",
+  "status": "COMPLETE",
+  "metric_version": "ranking-v2-exp2-fixed-k",
+  "dataset": {
+    "schema_version": 1,
+    "id": "evalforge/regression",
+    "version": "1.0.0",
+    "split": "regression",
+    "role": "regression",
+    "origin": "Inherited repository ragas_corpus.json and ragas_eval.jsonl",
+    "license": "MIT repository fixture; inherited labels, not independent human ground truth",
+    "corpus_count": 20,
+    "query_count": 22,
+    "qrel_count": 23,
+    "files": {
+      "corpus": {
+        "path": "corpus.jsonl",
+        "sha256": "f1cbeb7c65a7f2d97cec375513bdf67fb63c6391704227e7e7f33f1677c5be5b"
+      },
+      "queries": {
+        "path": "queries.jsonl",
+        "sha256": "4c88279e34f68b53ea0e83710f4a1d4cb1c0027f25912150c0b26dedf27be89c"
+      },
+      "qrels": {
+        "path": "qrels.tsv",
+        "sha256": "e8e311e08112911a3f2e5abddbd35f941b07508367603cc8842a997501052da0"
+      }
+    },
+    "positive_qrel_count": 23,
+    "queries_without_positives": 0
+  },
+  "config": {
+    "schema_version": 1,
+    "dataset": "../../evaluation/datasets/regression-v1/manifest.json",
+    "seed": 42,
+    "corpus_sizes": [
+      0
+    ],
+    "repeats": 2,
+    "warmup": 1,
+    "threads": 1,
+    "bootstrap_samples": 1000,
+    "no_positive": "exclude",
+    "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "model_cache": "artifacts/model-cache",
+    "batch_size": 32,
+    "max_seq_length": 256,
+    "configurations": [
+      {
+        "name": "tfidf-similarity-k1",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 1,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "tfidf-similarity-k3",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 3,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "tfidf-similarity-k5",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 5,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "tfidf-mmr-k1",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 1,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "tfidf-mmr-k3",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 3,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "tfidf-mmr-k5",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 5,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      }
+    ]
+  },
+  "code": {
+    "commit": "5668eeed04953f3daf17e2eb5aaadcd1a211cd01",
+    "working_tree_dirty": true,
+    "source_sha256": {
+      "config.py": "f161e32ed91666ce1ee9895d51c6cb22d5175b2c36da9c02da789e8577593374",
+      "evaluation/__init__.py": "4e70d4860f15941941d41c892a5dd299fc0d28983e904195cd63cd97144869fa",
+      "evaluation/compare.py": "46a69554d2215a50f30cf8a8591288945fa1547a87052e7a872a0d14fcd98256",
+      "evaluation/dataset.py": "971d24e06d7977eb94573632c4bfd12e86758f1ed41c0acb4aaf0737788f212d",
+      "evaluation/experiment.py": "231338cd52929b0ac46d5f16918c550c187d26687cf7ba6cd0c0d690777d1732",
+      "evaluation/experiment_config.py": "9fe41c975d0cb07d9ad096847360e94e1cc323001dbf140a6e408b61f0899c84",
+      "evaluation/judge_metadata.py": "3a2804185c6ce42533f4badb68420898aa5b745ba257cb721a73f7c357371724",
+      "evaluation/prepare_dataset.py": "a8cdde2ea8615d5bab29a898f8226ba09bd4298fa3f88fa78632f6c3aea15226",
+      "evaluation/prepare_model.py": "fa49dae698822b69f8c04384acd1fb783b0429dcce008c2e9e0536ef96730f3c",
+      "evaluation/quality_gates.py": "4e610d882da1f447fadd1ae8a5fc782fa829714d3893ed2d4bc9a73756999d53",
+      "evaluation/ranking.py": "adbd07b022fdd84ab5f02baa8d3f77622b4537ef184749359d1a993b76c64717",
+      "evaluation/retrieval_benchmark.py": "c593610128a9775de9664ce8f0ef6996af5e1d141490d387f6b9bfcd76ec91cb",
+      "evaluation/retrieval_data.py": "37f12e77c3a46977ae2e0c8d1af5b27cd21a7e586653eb94102447e6dae7cad9",
+      "evaluation/retrieval_gate.py": "93a384d28c61cfcb815426d6adba06949d50a5547760c132b48a1564d88f7dd0",
+      "evaluation/run_eval.py": "29e5fb296ef79ee1b50e29bd17ed468dee72e74ab845916d564fd8e8c48cc492",
+      "evaluation/run_ragas.py": "5878b31c46a091a0421043ae231ff1f35517d72c2e19271a1513d386cd025d6a",
+      "evaluation/search_backends.py": "7ca8f87b22d8f60093dcd8019a93e315d3098f5d25218412e7ccc99ab1fa6eb5",
+      "evaluation/statistics.py": "da416b404388c87f689f61b440c25703298cccb4f21cd4e94e185e2dfc63086b",
+      "telemetry.py": "8a17107387f0459ec1fbc642cc8a0356f79441dcd74518baa628435f9d09d6d2"
+    }
+  },
+  "environment": {
+    "python": "3.14.2",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "cpu": "arm",
+    "logical_cpus": 10,
+    "ram_bytes": 17179869184,
+    "device": "cpu",
+    "threads": 1,
+    "dependencies": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "faiss-cpu": "1.15.1",
+      "sentence-transformers": "6.2.0",
+      "torch": "2.15.0",
+      "psutil": "7.2.2"
+    }
+  },
+  "results": [
+    {
+      "id": "tfidf-similarity-k1-n20",
+      "configuration": {
+        "name": "tfidf-similarity-k1",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 1,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "qrel_count": 23,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.9318181818181818,
+        "precision": 0.9545454545454546,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9545454545454546,
+        "hit_rate": 0.9545454545454546
+      },
+      "encoding": {
+        "corpus_encoding_ms": 11.022333012078889,
+        "query_encoding_ms": 0.53495800239034,
+        "dimension": 789,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0008750066626816988,
+        "artifact_bytes": 4197,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 8548,
+        "process_rss_before_bytes": 229277696,
+        "process_rss_after_bytes": 229277696,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.09635138617754406,
+        "p50_ms": 0.09004199819173664,
+        "p95_ms": 0.13540895160986116,
+        "p99_ms": 0.19515750216669403,
+        "serial_queries_per_second": 10378.677875555702,
+        "calls": 44,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-similarity-k1-n20.npz",
+        "per_query": "queries/tfidf-similarity-k1-n20.json"
+      }
+    },
+    {
+      "id": "tfidf-similarity-k3-n20",
+      "configuration": {
+        "name": "tfidf-similarity-k3",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 3,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "qrel_count": 23,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.9545454545454546,
+        "precision": 0.33333333333333326,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9508963995067358,
+        "hit_rate": 0.9545454545454546
+      },
+      "encoding": {
+        "corpus_encoding_ms": 11.022333012078889,
+        "query_encoding_ms": 0.53495800239034,
+        "dimension": 789,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0008329952834174037,
+        "artifact_bytes": 4197,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 8548,
+        "process_rss_before_bytes": 229556224,
+        "process_rss_after_bytes": 229556224,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.08876422692661766,
+        "p50_ms": 0.08837499626679346,
+        "p95_ms": 0.09324014317826368,
+        "p99_ms": 0.09479662097874098,
+        "serial_queries_per_second": 11265.799687825938,
+        "calls": 44,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-similarity-k3-n20.npz",
+        "per_query": "queries/tfidf-similarity-k3-n20.json"
+      }
+    },
+    {
+      "id": "tfidf-similarity-k5-n20",
+      "configuration": {
+        "name": "tfidf-similarity-k5",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 5,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "qrel_count": 23,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.9545454545454546,
+        "precision": 0.20000000000000007,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9508963995067358,
+        "hit_rate": 0.9545454545454546
+      },
+      "encoding": {
+        "corpus_encoding_ms": 11.022333012078889,
+        "query_encoding_ms": 0.53495800239034,
+        "dimension": 789,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0004169996827840805,
+        "artifact_bytes": 4197,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 8548,
+        "process_rss_before_bytes": 229572608,
+        "process_rss_after_bytes": 229572608,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.09103313641389832,
+        "p50_ms": 0.09095849964069203,
+        "p95_ms": 0.09406510798726231,
+        "p99_ms": 0.09732643142342567,
+        "serial_queries_per_second": 10985.010946490105,
+        "calls": 44,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-similarity-k5-n20.npz",
+        "per_query": "queries/tfidf-similarity-k5-n20.json"
+      }
+    },
+    {
+      "id": "tfidf-mmr-k1-n20",
+      "configuration": {
+        "name": "tfidf-mmr-k1",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 1,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "qrel_count": 23,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.9318181818181818,
+        "precision": 0.9545454545454546,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9545454545454546,
+        "hit_rate": 0.9545454545454546
+      },
+      "encoding": {
+        "corpus_encoding_ms": 11.022333012078889,
+        "query_encoding_ms": 0.53495800239034,
+        "dimension": 789,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.00037500285543501377,
+        "artifact_bytes": 4197,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 8548,
+        "process_rss_before_bytes": 229572608,
+        "process_rss_after_bytes": 229572608,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.30967893194015644,
+        "p50_ms": 0.3099369932897389,
+        "p95_ms": 0.3185161549481563,
+        "p99_ms": 0.3260785607562866,
+        "serial_queries_per_second": 3229.1508942340442,
+        "calls": 44,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-mmr-k1-n20.npz",
+        "per_query": "queries/tfidf-mmr-k1-n20.json"
+      }
+    },
+    {
+      "id": "tfidf-mmr-k3-n20",
+      "configuration": {
+        "name": "tfidf-mmr-k3",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 3,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "qrel_count": 23,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.9318181818181818,
+        "precision": 0.3181818181818181,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9369612360347936,
+        "hit_rate": 0.9545454545454546
+      },
+      "encoding": {
+        "corpus_encoding_ms": 11.022333012078889,
+        "query_encoding_ms": 0.53495800239034,
+        "dimension": 789,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0004999892553314567,
+        "artifact_bytes": 4197,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 8548,
+        "process_rss_before_bytes": 229605376,
+        "process_rss_after_bytes": 229605376,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.3869734771962447,
+        "p50_ms": 0.3601869975682348,
+        "p95_ms": 0.5426874980912545,
+        "p99_ms": 0.6757965615543071,
+        "serial_queries_per_second": 2584.1564317155335,
+        "calls": 44,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-mmr-k3-n20.npz",
+        "per_query": "queries/tfidf-mmr-k3-n20.json"
+      }
+    },
+    {
+      "id": "tfidf-mmr-k5-n20",
+      "configuration": {
+        "name": "tfidf-mmr-k5",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 5,
+        "fetch_k": 10,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "qrel_count": 23,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.9318181818181818,
+        "precision": 0.19090909090909094,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9369612360347936,
+        "hit_rate": 0.9545454545454546
+      },
+      "encoding": {
+        "corpus_encoding_ms": 11.022333012078889,
+        "query_encoding_ms": 0.53495800239034,
+        "dimension": 789,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0007080088835209608,
+        "artifact_bytes": 4197,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 8548,
+        "process_rss_before_bytes": 229605376,
+        "process_rss_after_bytes": 229605376,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.5461714552604297,
+        "p50_ms": 0.45091650827089325,
+        "p95_ms": 1.0367874427174686,
+        "p99_ms": 1.594601123215398,
+        "serial_queries_per_second": 1830.9268827005474,
+        "calls": 44,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-mmr-k5-n20.npz",
+        "per_query": "queries/tfidf-mmr-k5-n20.json"
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "left": "tfidf-similarity-k1-n20",
+      "right": "tfidf-mmr-k1-n20",
+      "metric": "recall",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k1-n20",
+      "right": "tfidf-mmr-k1-n20",
+      "metric": "precision",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k1-n20",
+      "right": "tfidf-mmr-k1-n20",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k1-n20",
+      "right": "tfidf-mmr-k1-n20",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k1-n20",
+      "right": "tfidf-mmr-k1-n20",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k3-n20",
+      "right": "tfidf-mmr-k3-n20",
+      "metric": "recall",
+      "difference_right_minus_left": -0.022727272727272728,
+      "ci95": [
+        -0.06818181818181818,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k3-n20",
+      "right": "tfidf-mmr-k3-n20",
+      "metric": "precision",
+      "difference_right_minus_left": -0.01515151515151515,
+      "ci95": [
+        -0.045454545454545456,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k3-n20",
+      "right": "tfidf-mmr-k3-n20",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k3-n20",
+      "right": "tfidf-mmr-k3-n20",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.013935163471942236,
+      "ci95": [
+        -0.04180549041582671,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k3-n20",
+      "right": "tfidf-mmr-k3-n20",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k5-n20",
+      "right": "tfidf-mmr-k5-n20",
+      "metric": "recall",
+      "difference_right_minus_left": -0.022727272727272728,
+      "ci95": [
+        -0.06818181818181818,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k5-n20",
+      "right": "tfidf-mmr-k5-n20",
+      "metric": "precision",
+      "difference_right_minus_left": -0.009090909090909092,
+      "ci95": [
+        -0.02727272727272728,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k5-n20",
+      "right": "tfidf-mmr-k5-n20",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k5-n20",
+      "right": "tfidf-mmr-k5-n20",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.013935163471942236,
+      "ci95": [
+        -0.04180549041582671,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-similarity-k5-n20",
+      "right": "tfidf-mmr-k5-n20",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "query_count": 22,
+      "resamples": 1000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    }
+  ],
+  "timing_trials_are_quality_samples": false,
+  "source_snapshot": "source/",
+  "completed_at": "2026-11-03T17:47:24.461997+00:00"
+}

@@ -19,6 +19,7 @@ extend-exclude = '''
 '''
 
 [tool.mypy]
+exclude = ["^evaluation/reports/", "^reports/", "^artifacts/", "^data/"]
 python_version = "3.10"
 ignore_missing_imports = true
 check_untyped_defs = true
@@ -47,5 +48,5 @@ testpaths = ["tests"]
 addopts = "-ra"
 
 [tool.bandit]
-exclude_dirs = [".venv", "tests", "vector_store_data"]
+exclude_dirs = [".venv", "tests", "vector_store_data", "evaluation/reports", "reports", "artifacts", "data"]
 skips = ["B101"]

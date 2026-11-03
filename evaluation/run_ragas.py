@@ -45,6 +45,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from dotenv import load_dotenv
+from evaluation.judge_metadata import judge_accounting, judge_identity, prompt_manifest
+from evaluation.retrieval_data import sha256
 
 load_dotenv()
 
@@ -129,6 +131,13 @@ def run_pipeline_stage(corpus_path: Path, dataset_path: Path, cache_path: Path, 
 
     cached = {
         "cached_at": datetime.now(timezone.utc).isoformat(),
+        "provenance": {
+            "corpus_sha256": sha256(corpus_path),
+            "dataset_sha256": sha256(dataset_path),
+            "pipeline_model": os.getenv("LLM_MODEL", "gpt-4o-mini"),
+            "embedding_model": "BAAI/bge-large-en-v1.5",
+            "evaluator_mode": "sync",
+        },
         "corpus_passages": len(passages),
         "dataset_size": len(rows),
         "questions": questions,
@@ -165,7 +174,7 @@ def _extract_scores(eval_result) -> dict:
     scores: dict = {}
     for k, v in repr_dict.items():
         # NaN != NaN; treat NaN / None as "not scored".
-        scores[k] = round(float(v), 4) if v is not None and v == v else None
+        scores[k] = round(float(v), 4) if v is not None and math.isfinite(float(v)) else None
     return scores
 
 
@@ -175,7 +184,7 @@ def _score_coverage(eval_result) -> dict:
     coverage: dict = {}
     for sample in scores_list:
         for k, v in sample.items():
-            ok = v is not None and v == v
+            ok = v is not None and math.isfinite(float(v))
             coverage[k] = coverage.get(k, 0) + (1 if ok else 0)
     return coverage
 
@@ -192,6 +201,7 @@ def run_scoring_stage(cached: dict, output_path: Path, limit: int | None = None)
     4-metric run inside one daily window.
     """
     from ragas import evaluate, EvaluationDataset, RunConfig
+    from ragas.cost import get_token_usage_for_openai
     from ragas.metrics import (
         Faithfulness,
         ResponseRelevancy,
@@ -209,6 +219,10 @@ def run_scoring_stage(cached: dict, output_path: Path, limit: int | None = None)
     if not questions:
         print("No cached samples to score; nothing to do.", flush=True)
         return {}
+    if any(len(column) != len(questions) for column in (answers, contexts, references, latencies, consistency)):
+        raise ValueError("Cached pipeline columns have mismatched lengths")
+    if any(not math.isfinite(v) or v < 0 for v in latencies):
+        raise ValueError("Cached latencies must be finite and nonnegative")
 
     if limit:
         questions = questions[:limit]
@@ -243,19 +257,34 @@ def run_scoring_stage(cached: dict, output_path: Path, limit: int | None = None)
         llm=judge_llm,
         embeddings=judge_emb,
         run_config=run_config,
+        token_usage_parser=get_token_usage_for_openai,
     )
 
     scores = _extract_scores(eval_result)
     coverage = _score_coverage(eval_result)
     n = len(questions)
-    complete = all(scores.get(m) is not None and coverage.get(m, 0) == n for m in scores)
+    expected_metrics = [metric.name for metric in metrics]
+    complete = all(scores.get(m) is not None and coverage.get(m, 0) == n for m in expected_metrics)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    prompts_path = output_path.with_suffix(".prompts.json")
+    prompts_path.write_text(json.dumps(prompt_manifest(metrics), indent=2), encoding="utf-8")
 
     p95 = sorted(latencies)[math.ceil(0.95 * len(latencies)) - 1]
     report = {
         "evaluator": "ragas",
         "run_at": datetime.now(timezone.utc).isoformat(),
         "status": "COMPLETE" if complete else "PARTIAL - some metric jobs did not finish (see coverage)",
-        "judge_model": os.getenv("LLM_MODEL"),
+        "judge_model": os.getenv("LLM_MODEL", "gpt-4o-mini"),
+        "judge_provenance": judge_identity(),
+        "judge_accounting": judge_accounting(eval_result),
+        "prompt_artifact": str(prompts_path),
+        "cache_provenance": cached.get("provenance"),
+        "metric_semantics": {
+            "faithfulness": "answer claims supported by retrieved context, not truth against a reference",
+            "answer_relevancy": "alignment of answer with question",
+            "context_precision_recall": "LLM judged context utility/coverage relative to reference",
+            "answer_correctness": "not evaluated by this metric set",
+        },
         "judge_provider_base_url": os.getenv("LLM_BASE_URL"),
         "embedding_model": "BAAI/bge-large-en-v1.5",
         "dataset_size": n,
@@ -285,6 +314,8 @@ def run(
     resume: bool = False,
     pipeline_only: bool = False,
 ) -> dict | None:
+    if limit is not None and limit < 1:
+        raise ValueError("Limit must be positive")
     if resume:
         if not cache_path.exists():
             raise SystemExit(
@@ -292,6 +323,11 @@ def run(
                 f"Run the pipeline stage first (e.g. --pipeline-only)."
             )
         cached = json.loads(cache_path.read_text(encoding="utf-8"))
+        provenance = cached.get("provenance")
+        if provenance and (
+            provenance["corpus_sha256"] != sha256(corpus_path) or provenance["dataset_sha256"] != sha256(dataset_path)
+        ):
+            raise ValueError("RAGAS cache corpus/dataset mismatch; regenerate pipeline outputs")
         print(f"Resuming from cached pipeline results ({cached['dataset_size']} questions).", flush=True)
     else:
         cached = run_pipeline_stage(corpus_path, dataset_path, cache_path, limit)

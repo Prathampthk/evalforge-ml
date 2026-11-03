@@ -1,4 +1,4 @@
--r requirements.txt
+-r requirements-experiments.txt
 
 # CI quality gates
 black>=24.0.0

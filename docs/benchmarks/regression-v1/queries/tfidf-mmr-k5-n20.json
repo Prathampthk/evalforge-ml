@@ -1,0 +1,464 @@
+[
+  {
+    "query_id": "ragas-001",
+    "ranked_ids": [
+      "ctx-faithfulness",
+      "ctx-opentelemetry",
+      "ctx-fastapi",
+      "ctx-vector-store",
+      "ctx-guardrail"
+    ],
+    "metrics": {
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "hit_rate": 0.0
+    },
+    "latency_ms_trials": [
+      1.9405000057304278,
+      0.8528329926775768
+    ]
+  },
+  {
+    "query_id": "ragas-002",
+    "ranked_ids": [
+      "ctx-rag-hallucination",
+      "ctx-faithfulness",
+      "ctx-topk",
+      "ctx-opentelemetry",
+      "ctx-rag-def"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.5687079974450171,
+      0.535333005245775
+    ]
+  },
+  {
+    "query_id": "ragas-003",
+    "ranked_ids": [
+      "ctx-embedding",
+      "ctx-rag-def",
+      "ctx-faithfulness",
+      "ctx-correlation-id",
+      "ctx-chunking"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      1.069249992724508,
+      0.6210420106071979
+    ]
+  },
+  {
+    "query_id": "ragas-004",
+    "ranked_ids": [
+      "ctx-vector-store",
+      "ctx-guardrail",
+      "ctx-cosine",
+      "ctx-correlation-id",
+      "ctx-embedding"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.5577080009970814,
+      1.1360839998815209
+    ]
+  },
+  {
+    "query_id": "ragas-005",
+    "ranked_ids": [
+      "ctx-chunking",
+      "ctx-vector-store",
+      "ctx-guardrail",
+      "ctx-cosine",
+      "ctx-correlation-id"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.5032920016674325,
+      0.4998340009478852
+    ]
+  },
+  {
+    "query_id": "ragas-006",
+    "ranked_ids": [
+      "ctx-cosine",
+      "ctx-faithfulness",
+      "ctx-threshold",
+      "ctx-rag-def",
+      "ctx-embedding"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.44837500900030136,
+      0.3962920018238947
+    ]
+  },
+  {
+    "query_id": "ragas-007",
+    "ranked_ids": [
+      "ctx-topk",
+      "ctx-faithfulness",
+      "ctx-mmr",
+      "ctx-generator",
+      "ctx-cosine"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.41033299930859357,
+      0.4006669914815575
+    ]
+  },
+  {
+    "query_id": "ragas-008",
+    "ranked_ids": [
+      "ctx-mmr",
+      "ctx-rag-hallucination",
+      "ctx-faithfulness",
+      "ctx-topk",
+      "ctx-fastapi"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.39170800300780684,
+      0.8027500007301569
+    ]
+  },
+  {
+    "query_id": "ragas-009",
+    "ranked_ids": [
+      "ctx-threshold",
+      "ctx-cosine",
+      "ctx-topk",
+      "ctx-offline-eval",
+      "ctx-context-precision"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.45525000314228237,
+      0.40254200575873256
+    ]
+  },
+  {
+    "query_id": "ragas-010",
+    "ranked_ids": [
+      "ctx-guardrail",
+      "ctx-faithfulness",
+      "ctx-generator",
+      "ctx-opentelemetry",
+      "ctx-topk"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.38350000977516174,
+      0.5322080105543137
+    ]
+  },
+  {
+    "query_id": "ragas-011",
+    "ranked_ids": [
+      "ctx-generator",
+      "ctx-guardrail",
+      "ctx-threshold",
+      "ctx-faithfulness",
+      "ctx-topk"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.3993339923908934,
+      0.39608299266546965
+    ]
+  },
+  {
+    "query_id": "ragas-012",
+    "ranked_ids": [
+      "ctx-evaluator",
+      "ctx-generator",
+      "ctx-opentelemetry",
+      "ctx-guardrail",
+      "ctx-topk"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.3922500036424026,
+      0.3942500043194741
+    ]
+  },
+  {
+    "query_id": "ragas-013",
+    "ranked_ids": [
+      "ctx-faithfulness",
+      "ctx-generator",
+      "ctx-topk",
+      "ctx-answer-relevancy",
+      "ctx-cosine"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.48412500473205,
+      0.4098750068806112
+    ]
+  },
+  {
+    "query_id": "ragas-014",
+    "ranked_ids": [
+      "ctx-answer-relevancy",
+      "ctx-faithfulness",
+      "ctx-context-recall",
+      "ctx-fastapi",
+      "ctx-embedding"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.7607080042362213,
+      0.7632080087205395
+    ]
+  },
+  {
+    "query_id": "ragas-015",
+    "ranked_ids": [
+      "ctx-context-precision",
+      "ctx-faithfulness",
+      "ctx-chunking",
+      "ctx-threshold",
+      "ctx-guardrail"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.6332089978968725,
+      0.5634999979520217
+    ]
+  },
+  {
+    "query_id": "ragas-016",
+    "ranked_ids": [
+      "ctx-context-recall",
+      "ctx-topk",
+      "ctx-faithfulness",
+      "ctx-guardrail",
+      "ctx-threshold"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.495165993925184,
+      0.4224169970257208
+    ]
+  },
+  {
+    "query_id": "ragas-017",
+    "ranked_ids": [
+      "ctx-correlation-id",
+      "ctx-vector-store",
+      "ctx-cosine",
+      "ctx-opentelemetry",
+      "ctx-fastapi"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.39933400694280863,
+      0.39758400816936046
+    ]
+  },
+  {
+    "query_id": "ragas-018",
+    "ranked_ids": [
+      "ctx-opentelemetry",
+      "ctx-fastapi",
+      "ctx-offline-eval",
+      "ctx-faithfulness",
+      "ctx-cosine"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.39666699012741446,
+      0.5424169939942658
+    ]
+  },
+  {
+    "query_id": "ragas-019",
+    "ranked_ids": [
+      "ctx-fastapi",
+      "ctx-offline-eval",
+      "ctx-opentelemetry",
+      "ctx-faithfulness",
+      "ctx-topk"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.45345800754148513,
+      0.40129199624061584
+    ]
+  },
+  {
+    "query_id": "ragas-020",
+    "ranked_ids": [
+      "ctx-offline-eval",
+      "ctx-cosine",
+      "ctx-opentelemetry",
+      "ctx-faithfulness",
+      "ctx-embedding"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.4624580033123493,
+      0.39679200563114136
+    ]
+  },
+  {
+    "query_id": "ragas-021",
+    "ranked_ids": [
+      "ctx-topk",
+      "ctx-guardrail",
+      "ctx-cosine",
+      "ctx-faithfulness",
+      "ctx-offline-eval"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.38616699748672545,
+      0.386040992452763
+    ]
+  },
+  {
+    "query_id": "ragas-022",
+    "ranked_ids": [
+      "ctx-context-recall",
+      "ctx-topk",
+      "ctx-guardrail",
+      "ctx-answer-relevancy",
+      "ctx-rag-hallucination"
+    ],
+    "metrics": {
+      "recall": 0.5,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 0.6131471927654584,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.39999998989515007,
+      0.38699999277014285
+    ]
+  }
+]

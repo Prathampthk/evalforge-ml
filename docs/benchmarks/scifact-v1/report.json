@@ -1,0 +1,3075 @@
+{
+  "schema_version": 1,
+  "experiment_id": "91a7b6912c767b91c81b",
+  "run_id": "91a7b6912c767b91c81b-8d4ebc58",
+  "started_at": "2026-11-03T17:43:19.631200+00:00",
+  "status": "COMPLETE",
+  "metric_version": "ranking-v2-exp2-fixed-k",
+  "dataset": {
+    "schema_version": 1,
+    "id": "beir/scifact",
+    "version": "beir-md5-5f7d1de60b170fc8027bb7898e2efca1",
+    "archive_sha256": "536e14446a0ba56ed1398ab1055f39fe852686ecad24a6306c80c490fa8e0165",
+    "split": "test",
+    "role": "benchmark",
+    "origin": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/scifact.zip",
+    "license": "Original claims/annotations CC-BY-4.0; abstracts ODC-By-1.0; BEIR card CC-BY-SA-4.0",
+    "license_source": "https://github.com/allenai/scifact/blob/master/LICENSE.md",
+    "preprocessing": "Join title and text with one space; preserve document units; no generated judgments",
+    "files": {
+      "corpus": {
+        "path": "corpus.jsonl",
+        "sha256": "dec31c8182f3d744c7d2c09423756fd1d17cbef75808db13ba01cc0aab4d1ac6"
+      },
+      "queries": {
+        "path": "queries.jsonl",
+        "sha256": "8ff84a7c903f722981cd8d595c022660140c51867b27608a6d4910db86080313"
+      },
+      "qrels": {
+        "path": "qrels/test.tsv",
+        "sha256": "0864bb985e0ca2367ba217977e72004d549054b2b06666ed9d4825ac7c21284c"
+      }
+    },
+    "corpus_count": 5183,
+    "query_count": 300,
+    "qrel_count": 339,
+    "positive_qrel_count": 339,
+    "queries_without_positives": 0
+  },
+  "config": {
+    "schema_version": 1,
+    "dataset": "../../data/scifact/test.manifest.json",
+    "seed": 42,
+    "corpus_sizes": [
+      1000,
+      3000,
+      0
+    ],
+    "repeats": 3,
+    "warmup": 1,
+    "threads": 1,
+    "bootstrap_samples": 2000,
+    "no_positive": "exclude",
+    "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "model_cache": "artifacts/model-cache",
+    "batch_size": 32,
+    "max_seq_length": 256,
+    "configurations": [
+      {
+        "name": "tfidf-exact",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "tfidf-mmr",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 10,
+        "fetch_k": 50,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "dense-flat",
+        "representation": "dense",
+        "index": "flat",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "dense-mmr",
+        "representation": "dense",
+        "index": "flat",
+        "mode": "mmr",
+        "k": 10,
+        "fetch_k": 50,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "dense-hnsw",
+        "representation": "dense",
+        "index": "hnsw",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      {
+        "name": "dense-ivf",
+        "representation": "dense",
+        "index": "ivf",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 16,
+        "nprobe": 4
+      }
+    ]
+  },
+  "code": {
+    "commit": "5668eeed04953f3daf17e2eb5aaadcd1a211cd01",
+    "working_tree_dirty": true,
+    "source_sha256": {
+      "config.py": "f161e32ed91666ce1ee9895d51c6cb22d5175b2c36da9c02da789e8577593374",
+      "evaluation/__init__.py": "4e70d4860f15941941d41c892a5dd299fc0d28983e904195cd63cd97144869fa",
+      "evaluation/compare.py": "46a69554d2215a50f30cf8a8591288945fa1547a87052e7a872a0d14fcd98256",
+      "evaluation/dataset.py": "971d24e06d7977eb94573632c4bfd12e86758f1ed41c0acb4aaf0737788f212d",
+      "evaluation/experiment.py": "687c5177601024bd3e50044ac0219bb94309e3b34a146ab3851163f82c666f92",
+      "evaluation/experiment_config.py": "9fe41c975d0cb07d9ad096847360e94e1cc323001dbf140a6e408b61f0899c84",
+      "evaluation/judge_metadata.py": "3a2804185c6ce42533f4badb68420898aa5b745ba257cb721a73f7c357371724",
+      "evaluation/prepare_dataset.py": "a8cdde2ea8615d5bab29a898f8226ba09bd4298fa3f88fa78632f6c3aea15226",
+      "evaluation/prepare_model.py": "fa49dae698822b69f8c04384acd1fb783b0429dcce008c2e9e0536ef96730f3c",
+      "evaluation/quality_gates.py": "4e610d882da1f447fadd1ae8a5fc782fa829714d3893ed2d4bc9a73756999d53",
+      "evaluation/ranking.py": "adbd07b022fdd84ab5f02baa8d3f77622b4537ef184749359d1a993b76c64717",
+      "evaluation/retrieval_benchmark.py": "c593610128a9775de9664ce8f0ef6996af5e1d141490d387f6b9bfcd76ec91cb",
+      "evaluation/retrieval_data.py": "37f12e77c3a46977ae2e0c8d1af5b27cd21a7e586653eb94102447e6dae7cad9",
+      "evaluation/retrieval_gate.py": "93a384d28c61cfcb815426d6adba06949d50a5547760c132b48a1564d88f7dd0",
+      "evaluation/run_eval.py": "29e5fb296ef79ee1b50e29bd17ed468dee72e74ab845916d564fd8e8c48cc492",
+      "evaluation/run_ragas.py": "5878b31c46a091a0421043ae231ff1f35517d72c2e19271a1513d386cd025d6a",
+      "evaluation/search_backends.py": "7ca8f87b22d8f60093dcd8019a93e315d3098f5d25218412e7ccc99ab1fa6eb5",
+      "evaluation/statistics.py": "da416b404388c87f689f61b440c25703298cccb4f21cd4e94e185e2dfc63086b",
+      "telemetry.py": "8a17107387f0459ec1fbc642cc8a0356f79441dcd74518baa628435f9d09d6d2"
+    }
+  },
+  "environment": {
+    "python": "3.14.2",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "cpu": "arm",
+    "logical_cpus": 10,
+    "ram_bytes": 17179869184,
+    "device": "cpu",
+    "threads": 1,
+    "dependencies": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "faiss-cpu": "1.15.1",
+      "sentence-transformers": "6.2.0",
+      "torch": "2.15.0",
+      "psutil": "7.2.2"
+    }
+  },
+  "results": [
+    {
+      "id": "tfidf-exact-n1000",
+      "configuration": {
+        "name": "tfidf-exact",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 1000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "a93e5d2aadf7c40f23c15cf8f5bb70957bf0183528976f08d1aa7673df5aff8d",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.8506666666666667,
+        "precision": 0.09533333333333331,
+        "mrr": 0.7058624338624339,
+        "ndcg": 0.7371500935685329,
+        "hit_rate": 0.8633333333333333
+      },
+      "encoding": {
+        "corpus_encoding_ms": 520.7673750119284,
+        "query_encoding_ms": 7.335083995712921,
+        "dimension": 136290,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0020840088836848736,
+        "artifact_bytes": 1370565,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 2515708,
+        "process_rss_before_bytes": 929660928,
+        "process_rss_after_bytes": 929660928,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.9402629964946149,
+        "p50_ms": 0.9369164981762879,
+        "p95_ms": 0.9904693972202949,
+        "p99_ms": 1.0092105146031827,
+        "serial_queries_per_second": 1063.53222845958,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-exact-n1000.npz",
+        "per_query": "queries/tfidf-exact-n1000.json"
+      }
+    },
+    {
+      "id": "tfidf-mmr-n1000",
+      "configuration": {
+        "name": "tfidf-mmr",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 10,
+        "fetch_k": 50,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 1000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "a93e5d2aadf7c40f23c15cf8f5bb70957bf0183528976f08d1aa7673df5aff8d",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.8042222222222222,
+        "precision": 0.08899999999999998,
+        "mrr": 0.6913439153439153,
+        "ndcg": 0.7103368420368726,
+        "hit_rate": 0.8233333333333334
+      },
+      "encoding": {
+        "corpus_encoding_ms": 520.7673750119284,
+        "query_encoding_ms": 7.335083995712921,
+        "dimension": 136290,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0008329952834174037,
+        "artifact_bytes": 1370565,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 2515708,
+        "process_rss_before_bytes": 746979328,
+        "process_rss_after_bytes": 746979328,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 2.8210183832723286,
+        "p50_ms": 2.7956455014646053,
+        "p95_ms": 2.9906580013630446,
+        "p99_ms": 3.129636991943698,
+        "serial_queries_per_second": 354.4819154421882,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-mmr-n1000.npz",
+        "per_query": "queries/tfidf-mmr-n1000.json"
+      }
+    },
+    {
+      "id": "dense-flat-n1000",
+      "configuration": {
+        "name": "dense-flat",
+        "representation": "dense",
+        "index": "flat",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 1000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "a93e5d2aadf7c40f23c15cf8f5bb70957bf0183528976f08d1aa7673df5aff8d",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.8853333333333334,
+        "precision": 0.10033333333333333,
+        "mrr": 0.7718875661375662,
+        "ndcg": 0.7951491607234865,
+        "hit_rate": 0.8933333333333333
+      },
+      "encoding": {
+        "corpus_encoding_ms": 22303.852166995057,
+        "query_encoding_ms": 697.6234169997042,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.3684999974211678,
+        "artifact_bytes": 1536045,
+        "serialized_index_memory_estimate_bytes": 1536045,
+        "retained_vector_bytes": 1536000,
+        "process_rss_before_bytes": 715145216,
+        "process_rss_after_bytes": 715227136,
+        "process_rss_delta_bytes": 81920,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.06267245784531245,
+        "p50_ms": 0.0625000029685907,
+        "p95_ms": 0.06387499161064625,
+        "p99_ms": 0.06775374204153195,
+        "serial_queries_per_second": 15955.97227841599,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-flat-n1000.faiss",
+        "per_query": "queries/dense-flat-n1000.json"
+      }
+    },
+    {
+      "id": "dense-mmr-n1000",
+      "configuration": {
+        "name": "dense-mmr",
+        "representation": "dense",
+        "index": "flat",
+        "mode": "mmr",
+        "k": 10,
+        "fetch_k": 50,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 1000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "a93e5d2aadf7c40f23c15cf8f5bb70957bf0183528976f08d1aa7673df5aff8d",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.8643333333333334,
+        "precision": 0.09699999999999998,
+        "mrr": 0.7574907407407406,
+        "ndcg": 0.7752787811721966,
+        "hit_rate": 0.8766666666666667
+      },
+      "encoding": {
+        "corpus_encoding_ms": 22303.852166995057,
+        "query_encoding_ms": 697.6234169997042,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.06545901123899966,
+        "artifact_bytes": 1536045,
+        "serialized_index_memory_estimate_bytes": 1536045,
+        "retained_vector_bytes": 1536000,
+        "process_rss_before_bytes": 715751424,
+        "process_rss_after_bytes": 715751424,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 1.1946253203172494,
+        "p50_ms": 1.1688334998325445,
+        "p95_ms": 1.23652530965046,
+        "p99_ms": 2.0798594968800894,
+        "serial_queries_per_second": 837.0825421098859,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-mmr-n1000.faiss",
+        "per_query": "queries/dense-mmr-n1000.json"
+      }
+    },
+    {
+      "id": "dense-hnsw-n1000",
+      "configuration": {
+        "name": "dense-hnsw",
+        "representation": "dense",
+        "index": "hnsw",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 1000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "a93e5d2aadf7c40f23c15cf8f5bb70957bf0183528976f08d1aa7673df5aff8d",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.8753333333333334,
+        "precision": 0.09933333333333333,
+        "mrr": 0.7649100529100529,
+        "ndcg": 0.7875386222597652,
+        "hit_rate": 0.8833333333333333
+      },
+      "encoding": {
+        "corpus_encoding_ms": 22303.852166995057,
+        "query_encoding_ms": 697.6234169997042,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 65.71216700831428,
+        "artifact_bytes": 1681306,
+        "serialized_index_memory_estimate_bytes": 1681306,
+        "retained_vector_bytes": 1536000,
+        "process_rss_before_bytes": 715767808,
+        "process_rss_after_bytes": 715997184,
+        "process_rss_delta_bytes": 229376,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.04319201231636624,
+        "p50_ms": 0.04312499368097633,
+        "p95_ms": 0.046835109969833866,
+        "p99_ms": 0.048541008291067556,
+        "serial_queries_per_second": 23152.429034224035,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": 0.9883333333333333,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-hnsw-n1000.faiss",
+        "per_query": "queries/dense-hnsw-n1000.json"
+      }
+    },
+    {
+      "id": "dense-ivf-n1000",
+      "configuration": {
+        "name": "dense-ivf",
+        "representation": "dense",
+        "index": "ivf",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 16,
+        "nprobe": 4
+      },
+      "corpus_count": 1000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "a93e5d2aadf7c40f23c15cf8f5bb70957bf0183528976f08d1aa7673df5aff8d",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.817,
+        "precision": 0.09333333333333332,
+        "mrr": 0.7186335978835978,
+        "ndcg": 0.737687604071882,
+        "hit_rate": 0.8266666666666667
+      },
+      "encoding": {
+        "corpus_encoding_ms": 22303.852166995057,
+        "query_encoding_ms": 697.6234169997042,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 2.713833993766457,
+        "artifact_bytes": 1568843,
+        "serialized_index_memory_estimate_bytes": 1568843,
+        "retained_vector_bytes": 1536000,
+        "process_rss_before_bytes": 716242944,
+        "process_rss_after_bytes": 717029376,
+        "process_rss_delta_bytes": 786432,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.034382526840393744,
+        "p50_ms": 0.03420800203457475,
+        "p95_ms": 0.03629199636634439,
+        "p99_ms": 0.03726207272848113,
+        "serial_queries_per_second": 29084.540663403674,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": 0.8733333333333333,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-ivf-n1000.faiss",
+        "per_query": "queries/dense-ivf-n1000.json"
+      }
+    },
+    {
+      "id": "tfidf-exact-n3000",
+      "configuration": {
+        "name": "tfidf-exact",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 3000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "e988b015fae488b728af8c489097e95835ea1761c14680ec5ccc09abca1ba15c",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.7853333333333333,
+        "precision": 0.08733333333333332,
+        "mrr": 0.6102050264550265,
+        "ndcg": 0.6465767293453331,
+        "hit_rate": 0.8
+      },
+      "encoding": {
+        "corpus_encoding_ms": 1516.6691250051372,
+        "query_encoding_ms": 8.029459000681527,
+        "dimension": 315799,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0011250085663050413,
+        "artifact_bytes": 4416737,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 7400884,
+        "process_rss_before_bytes": 679854080,
+        "process_rss_after_bytes": 679854080,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 2.7430710746234075,
+        "p50_ms": 2.739958501479123,
+        "p95_ms": 2.9384514506091364,
+        "p99_ms": 3.1115861558646425,
+        "serial_queries_per_second": 364.5548995252661,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-exact-n3000.npz",
+        "per_query": "queries/tfidf-exact-n3000.json"
+      }
+    },
+    {
+      "id": "tfidf-mmr-n3000",
+      "configuration": {
+        "name": "tfidf-mmr",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 10,
+        "fetch_k": 50,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 3000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "e988b015fae488b728af8c489097e95835ea1761c14680ec5ccc09abca1ba15c",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.7252222222222222,
+        "precision": 0.07966666666666666,
+        "mrr": 0.5955026455026455,
+        "ndcg": 0.6176987080952553,
+        "hit_rate": 0.7433333333333333
+      },
+      "encoding": {
+        "corpus_encoding_ms": 1516.6691250051372,
+        "query_encoding_ms": 8.029459000681527,
+        "dimension": 315799,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0006659975042566657,
+        "artifact_bytes": 4416737,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 7400884,
+        "process_rss_before_bytes": 515244032,
+        "process_rss_after_bytes": 515244032,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 4.912706023137111,
+        "p50_ms": 4.881187494902406,
+        "p95_ms": 5.259603841113858,
+        "p99_ms": 5.904226751008536,
+        "serial_queries_per_second": 203.55380421510122,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-mmr-n3000.npz",
+        "per_query": "queries/tfidf-mmr-n3000.json"
+      }
+    },
+    {
+      "id": "dense-flat-n3000",
+      "configuration": {
+        "name": "dense-flat",
+        "representation": "dense",
+        "index": "flat",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 3000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "e988b015fae488b728af8c489097e95835ea1761c14680ec5ccc09abca1ba15c",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.8323333333333333,
+        "precision": 0.09433333333333332,
+        "mrr": 0.6638068783068783,
+        "ndcg": 0.7022054388266948,
+        "hit_rate": 0.8433333333333334
+      },
+      "encoding": {
+        "corpus_encoding_ms": 65501.26533299044,
+        "query_encoding_ms": 695.3610420023324,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.8785420068306848,
+        "artifact_bytes": 4608045,
+        "serialized_index_memory_estimate_bytes": 4608045,
+        "retained_vector_bytes": 4608000,
+        "process_rss_before_bytes": 522354688,
+        "process_rss_after_bytes": 526974976,
+        "process_rss_delta_bytes": 4620288,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.13960290006555928,
+        "p50_ms": 0.13904200022807345,
+        "p95_ms": 0.14267020160332322,
+        "p99_ms": 0.15237582614645362,
+        "serial_queries_per_second": 7163.1749736602,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-flat-n3000.faiss",
+        "per_query": "queries/dense-flat-n3000.json"
+      }
+    },
+    {
+      "id": "dense-mmr-n3000",
+      "configuration": {
+        "name": "dense-mmr",
+        "representation": "dense",
+        "index": "flat",
+        "mode": "mmr",
+        "k": 10,
+        "fetch_k": 50,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 3000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "e988b015fae488b728af8c489097e95835ea1761c14680ec5ccc09abca1ba15c",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.7853333333333334,
+        "precision": 0.08833333333333332,
+        "mrr": 0.6397367724867725,
+        "ndcg": 0.6689803093461266,
+        "hit_rate": 0.8
+      },
+      "encoding": {
+        "corpus_encoding_ms": 65501.26533299044,
+        "query_encoding_ms": 695.3610420023324,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.20991700876038522,
+        "artifact_bytes": 4608045,
+        "serialized_index_memory_estimate_bytes": 4608045,
+        "retained_vector_bytes": 4608000,
+        "process_rss_before_bytes": 536231936,
+        "process_rss_after_bytes": 536231936,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 1.3094611456714726,
+        "p50_ms": 1.2869584970758297,
+        "p95_ms": 1.336502104823012,
+        "p99_ms": 2.0686747481522616,
+        "serial_queries_per_second": 763.6729072149863,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-mmr-n3000.faiss",
+        "per_query": "queries/dense-mmr-n3000.json"
+      }
+    },
+    {
+      "id": "dense-hnsw-n3000",
+      "configuration": {
+        "name": "dense-hnsw",
+        "representation": "dense",
+        "index": "hnsw",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 3000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "e988b015fae488b728af8c489097e95835ea1761c14680ec5ccc09abca1ba15c",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.829,
+        "precision": 0.09399999999999999,
+        "mrr": 0.6638664021164021,
+        "ndcg": 0.7013690937827892,
+        "hit_rate": 0.84
+      },
+      "encoding": {
+        "corpus_encoding_ms": 65501.26533299044,
+        "query_encoding_ms": 695.3610420023324,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 269.94179098983295,
+        "artifact_bytes": 5041946,
+        "serialized_index_memory_estimate_bytes": 5041946,
+        "retained_vector_bytes": 4608000,
+        "process_rss_before_bytes": 540852224,
+        "process_rss_after_bytes": 540852224,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.048418656612435974,
+        "p50_ms": 0.048250003601424396,
+        "p95_ms": 0.05400210357038304,
+        "p99_ms": 0.058044911856995896,
+        "serial_queries_per_second": 20653.195895219393,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": 0.9806666666666666,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-hnsw-n3000.faiss",
+        "per_query": "queries/dense-hnsw-n3000.json"
+      }
+    },
+    {
+      "id": "dense-ivf-n3000",
+      "configuration": {
+        "name": "dense-ivf",
+        "representation": "dense",
+        "index": "ivf",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 16,
+        "nprobe": 4
+      },
+      "corpus_count": 3000,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "e988b015fae488b728af8c489097e95835ea1761c14680ec5ccc09abca1ba15c",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.764,
+        "precision": 0.08733333333333332,
+        "mrr": 0.6302195767195767,
+        "ndcg": 0.6600052996515299,
+        "hit_rate": 0.7766666666666666
+      },
+      "encoding": {
+        "corpus_encoding_ms": 65501.26533299044,
+        "query_encoding_ms": 695.3610420023324,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 5.459417006932199,
+        "artifact_bytes": 4656843,
+        "serialized_index_memory_estimate_bytes": 4656843,
+        "retained_vector_bytes": 4608000,
+        "process_rss_before_bytes": 550961152,
+        "process_rss_after_bytes": 551698432,
+        "process_rss_delta_bytes": 737280,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.055080101317596726,
+        "p50_ms": 0.054459000239148736,
+        "p95_ms": 0.06125835061538964,
+        "p99_ms": 0.06612541867070831,
+        "serial_queries_per_second": 18155.376916137313,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": 0.8820000000000001,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-ivf-n3000.faiss",
+        "per_query": "queries/dense-ivf-n3000.json"
+      }
+    },
+    {
+      "id": "tfidf-exact-n5183",
+      "configuration": {
+        "name": "tfidf-exact",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 5183,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "37f90fa1e2ad54da518fa1dfa64daf80f4e6a3f30a1040f504e8bcaf992c7cef",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.7318888888888889,
+        "precision": 0.08066666666666665,
+        "mrr": 0.5548161375661376,
+        "ndcg": 0.5924462952214897,
+        "hit_rate": 0.75
+      },
+      "encoding": {
+        "corpus_encoding_ms": 2295.074541005306,
+        "query_encoding_ms": 7.579041994176805,
+        "dimension": 477848,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.004583998816087842,
+        "artifact_bytes": 7892556,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 12704280,
+        "process_rss_before_bytes": 457900032,
+        "process_rss_after_bytes": 458031104,
+        "process_rss_delta_bytes": 131072,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 5.860093613333043,
+        "p50_ms": 5.265166502795182,
+        "p95_ms": 8.804304445220623,
+        "p99_ms": 11.221295820578234,
+        "serial_queries_per_second": 170.6457381030182,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-exact-n5183.npz",
+        "per_query": "queries/tfidf-exact-n5183.json"
+      }
+    },
+    {
+      "id": "tfidf-mmr-n5183",
+      "configuration": {
+        "name": "tfidf-mmr",
+        "representation": "tfidf",
+        "index": "sparse",
+        "mode": "mmr",
+        "k": 10,
+        "fetch_k": 50,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 5183,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "37f90fa1e2ad54da518fa1dfa64daf80f4e6a3f30a1040f504e8bcaf992c7cef",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": null,
+      "quality": {
+        "recall": 0.6917777777777778,
+        "precision": 0.07466666666666665,
+        "mrr": 0.5386653439153439,
+        "ndcg": 0.567585120448099,
+        "hit_rate": 0.71
+      },
+      "encoding": {
+        "corpus_encoding_ms": 2295.074541005306,
+        "query_encoding_ms": 7.579041994176805,
+        "dimension": 477848,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.0007910130079835653,
+        "artifact_bytes": 7892556,
+        "serialized_index_memory_estimate_bytes": null,
+        "retained_vector_bytes": 12704280,
+        "process_rss_before_bytes": 429555712,
+        "process_rss_after_bytes": 429555712,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 7.281272361207003,
+        "p50_ms": 7.199270497949328,
+        "p95_ms": 7.9702833558258135,
+        "p99_ms": 8.910735491808737,
+        "serial_queries_per_second": 137.33863401783694,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/tfidf-mmr-n5183.npz",
+        "per_query": "queries/tfidf-mmr-n5183.json"
+      }
+    },
+    {
+      "id": "dense-flat-n5183",
+      "configuration": {
+        "name": "dense-flat",
+        "representation": "dense",
+        "index": "flat",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 5183,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "37f90fa1e2ad54da518fa1dfa64daf80f4e6a3f30a1040f504e8bcaf992c7cef",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.7833333333333333,
+        "precision": 0.08833333333333332,
+        "mrr": 0.6047248677248678,
+        "ndcg": 0.6450816521455774,
+        "hit_rate": 0.7933333333333333
+      },
+      "encoding": {
+        "corpus_encoding_ms": 115859.57745900669,
+        "query_encoding_ms": 676.7870409967145,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 1.5110419917618856,
+        "artifact_bytes": 7961133,
+        "serialized_index_memory_estimate_bytes": 7961133,
+        "retained_vector_bytes": 7961088,
+        "process_rss_before_bytes": 436928512,
+        "process_rss_after_bytes": 437551104,
+        "process_rss_delta_bytes": 622592,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.22550510034003915,
+        "p50_ms": 0.2240839967271313,
+        "p95_ms": 0.23472260072594509,
+        "p99_ms": 0.24054282461293042,
+        "serial_queries_per_second": 4434.489501532781,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-flat-n5183.faiss",
+        "per_query": "queries/dense-flat-n5183.json"
+      }
+    },
+    {
+      "id": "dense-mmr-n5183",
+      "configuration": {
+        "name": "dense-mmr",
+        "representation": "dense",
+        "index": "flat",
+        "mode": "mmr",
+        "k": 10,
+        "fetch_k": 50,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 5183,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "37f90fa1e2ad54da518fa1dfa64daf80f4e6a3f30a1040f504e8bcaf992c7cef",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.7425555555555555,
+        "precision": 0.08299999999999999,
+        "mrr": 0.5889828042328042,
+        "ndcg": 0.6198869854427731,
+        "hit_rate": 0.76
+      },
+      "encoding": {
+        "corpus_encoding_ms": 115859.57745900669,
+        "query_encoding_ms": 676.7870409967145,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 0.6012079975334927,
+        "artifact_bytes": 7961133,
+        "serialized_index_memory_estimate_bytes": 7961133,
+        "retained_vector_bytes": 7961088,
+        "process_rss_before_bytes": 455770112,
+        "process_rss_after_bytes": 455770112,
+        "process_rss_delta_bytes": 0,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 1.3958031485607434,
+        "p50_ms": 1.3754164974670857,
+        "p95_ms": 1.5784228984557558,
+        "p99_ms": 1.667918510647723,
+        "serial_queries_per_second": 716.43340325685,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": null,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-mmr-n5183.faiss",
+        "per_query": "queries/dense-mmr-n5183.json"
+      }
+    },
+    {
+      "id": "dense-hnsw-n5183",
+      "configuration": {
+        "name": "dense-hnsw",
+        "representation": "dense",
+        "index": "hnsw",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 32,
+        "nprobe": 4
+      },
+      "corpus_count": 5183,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "37f90fa1e2ad54da518fa1dfa64daf80f4e6a3f30a1040f504e8bcaf992c7cef",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.78,
+        "precision": 0.088,
+        "mrr": 0.6014378306878307,
+        "ndcg": 0.64179643508265,
+        "hit_rate": 0.79
+      },
+      "encoding": {
+        "corpus_encoding_ms": 115859.57745900669,
+        "query_encoding_ms": 676.7870409967145,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 511.3582500052871,
+        "artifact_bytes": 8709294,
+        "serialized_index_memory_estimate_bytes": 8709294,
+        "retained_vector_bytes": 7961088,
+        "process_rss_before_bytes": 463814656,
+        "process_rss_after_bytes": 464437248,
+        "process_rss_delta_bytes": 622592,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.04897564693237655,
+        "p50_ms": 0.04883299698121846,
+        "p95_ms": 0.055258299107663326,
+        "p99_ms": 0.06150000263005495,
+        "serial_queries_per_second": 20418.311194148322,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": 0.9786666666666668,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-hnsw-n5183.faiss",
+        "per_query": "queries/dense-hnsw-n5183.json"
+      }
+    },
+    {
+      "id": "dense-ivf-n5183",
+      "configuration": {
+        "name": "dense-ivf",
+        "representation": "dense",
+        "index": "ivf",
+        "mode": "similarity",
+        "k": 10,
+        "fetch_k": 20,
+        "mmr_lambda": 0.7,
+        "hnsw_m": 16,
+        "ef_construction": 100,
+        "ef_search": 32,
+        "nlist": 16,
+        "nprobe": 4
+      },
+      "corpus_count": 5183,
+      "query_count": 300,
+      "scored_query_count": 300,
+      "qrel_count": 339,
+      "corpus_ids_sha256": "37f90fa1e2ad54da518fa1dfa64daf80f4e6a3f30a1040f504e8bcaf992c7cef",
+      "query_ids_sha256": "aced760fd6c5091518755adba6360fa780305249610ff2acf24e966fb3ae901b",
+      "subset_policy": "all positives plus seeded nested real distractors; full corpus when size=full",
+      "chunking": "one document = title plus text, no overlapping chunks",
+      "preprocessing": "trim edges, join title/text; TF-IDF lowercase default token pattern, unigram/bigram",
+      "similarity": "L2-normalized vectors, inner product/cosine",
+      "model": {
+        "id": "sentence-transformers/all-MiniLM-L6-v2",
+        "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+        "max_seq_length": 256
+      },
+      "quality": {
+        "recall": 0.7116666666666667,
+        "precision": 0.08133333333333333,
+        "mrr": 0.5594325396825397,
+        "ndcg": 0.5932154793104124,
+        "hit_rate": 0.7233333333333334
+      },
+      "encoding": {
+        "corpus_encoding_ms": 115859.57745900669,
+        "query_encoding_ms": 676.7870409967145,
+        "dimension": 384,
+        "query_batch_size": 32
+      },
+      "performance": {
+        "index_build_ms": 8.432624992565252,
+        "artifact_bytes": 8027395,
+        "serialized_index_memory_estimate_bytes": 8027395,
+        "retained_vector_bytes": 7961088,
+        "process_rss_before_bytes": 473743360,
+        "process_rss_after_bytes": 478625792,
+        "process_rss_delta_bytes": 4882432,
+        "memory_scope": "RSS delta includes allocator noise; serialized FAISS size is a native-memory proxy, not RSS",
+        "mean_ms": 0.08333182450668472,
+        "p50_ms": 0.08395899931201711,
+        "p95_ms": 0.10671105483197607,
+        "p99_ms": 0.11246440088143572,
+        "serial_queries_per_second": 12000.217274971363,
+        "calls": 900,
+        "scope": "pre-encoded query index lookup plus optional MMR, tracing and Python overhead; warm serial calls"
+      },
+      "ann_recall_at_k_vs_exact": 0.8963333333333332,
+      "ann_scope": "raw index candidates before MMR, same representation/subset/query/K",
+      "artifacts": {
+        "index": "indexes/dense-ivf-n5183.faiss",
+        "per_query": "queries/dense-ivf-n5183.json"
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "tfidf-mmr-n1000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.04644444444444445,
+      "ci95": [
+        -0.07372361111111111,
+        -0.021444444444444447
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "tfidf-mmr-n1000",
+      "metric": "precision",
+      "difference_right_minus_left": -0.006333333333333335,
+      "ci95": [
+        -0.01,
+        -0.0033333333333333335
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "tfidf-mmr-n1000",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.014518518518518517,
+      "ci95": [
+        -0.024579993386243386,
+        -0.005168683862433867
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "tfidf-mmr-n1000",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.026813251531660313,
+      "ci95": [
+        -0.04003978707174061,
+        -0.014705372552228063
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "tfidf-mmr-n1000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.04,
+      "ci95": [
+        -0.06666666666666667,
+        -0.013333333333333334
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-flat-n1000",
+      "metric": "recall",
+      "difference_right_minus_left": 0.034666666666666665,
+      "ci95": [
+        -0.01033611111111111,
+        0.07778055555555555
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-flat-n1000",
+      "metric": "precision",
+      "difference_right_minus_left": 0.005000000000000001,
+      "ci95": [
+        -2.3129646346356114e-21,
+        0.01
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-flat-n1000",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.06602513227513228,
+      "ci95": [
+        0.023320370370370373,
+        0.10884510582010579
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-flat-n1000",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.05799906715495367,
+      "ci95": [
+        0.01798883401260911,
+        0.09727883677208352
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-flat-n1000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.03,
+      "ci95": [
+        -0.013333333333333334,
+        0.07333333333333333
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "recall",
+      "difference_right_minus_left": 0.013666666666666669,
+      "ci95": [
+        -0.032999999999999995,
+        0.06056388888888885
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "precision",
+      "difference_right_minus_left": 0.0016666666666666668,
+      "ci95": [
+        -0.004,
+        0.007
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.05162830687830688,
+      "ci95": [
+        0.007643187830687832,
+        0.09472906746031742
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.03812868760366366,
+      "ci95": [
+        -0.003104618968140716,
+        0.07798317175533502
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.013333333333333334,
+      "ci95": [
+        -0.03333333333333333,
+        0.06
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.021,
+      "ci95": [
+        -0.044333333333333336,
+        0.0013333333333333337
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "precision",
+      "difference_right_minus_left": -0.0033333333333333335,
+      "ci95": [
+        -0.006341666666666667,
+        -0.0006666666666666664
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.014396825396825396,
+      "ci95": [
+        -0.023994444444444443,
+        -0.005740343915343916
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.019870379551290007,
+      "ci95": [
+        -0.031104171145476447,
+        -0.008979516720529214
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-mmr-n1000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.016666666666666666,
+      "ci95": [
+        -0.04,
+        0.0033333333333333335
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "recall",
+      "difference_right_minus_left": 0.02466666666666667,
+      "ci95": [
+        -0.01989166666666667,
+        0.06900277777777777
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "precision",
+      "difference_right_minus_left": 0.004000000000000001,
+      "ci95": [
+        -0.0010000000000000002,
+        0.009000000000000001
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.05904761904761905,
+      "ci95": [
+        0.01582113095238096,
+        0.10195615079365078
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.050388528691232407,
+      "ci95": [
+        0.01001147905738217,
+        0.09148486582662022
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.02,
+      "ci95": [
+        -0.023333333333333334,
+        0.06333333333333334
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.01,
+      "ci95": [
+        -0.023333333333333334,
+        0.0
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "precision",
+      "difference_right_minus_left": -0.0010000000000000002,
+      "ci95": [
+        -0.002333333333333333,
+        0.0
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.006977513227513228,
+      "ci95": [
+        -0.016979001322751323,
+        5.95238095238095e-05
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.007610538463721256,
+      "ci95": [
+        -0.017670099985546604,
+        5.95615218253485e-05
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-hnsw-n1000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.01,
+      "ci95": [
+        -0.023333333333333334,
+        0.0
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.033666666666666664,
+      "ci95": [
+        -0.08356388888888888,
+        0.013230555555555513
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "precision",
+      "difference_right_minus_left": -0.002,
+      "ci95": [
+        -0.007666666666666668,
+        0.0033333333333333335
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.012771164021164022,
+      "ci95": [
+        -0.033553042328042335,
+        0.0563591931216931
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.0005375105033491175,
+      "ci95": [
+        -0.04241285582263245,
+        0.04286265357338476
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.03666666666666667,
+      "ci95": [
+        -0.08666666666666667,
+        0.01
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.06833333333333333,
+      "ci95": [
+        -0.09833333333333333,
+        -0.03833333333333333
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "precision",
+      "difference_right_minus_left": -0.007,
+      "ci95": [
+        -0.010000000000000002,
+        -0.004000000000000001
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.053253968253968255,
+      "ci95": [
+        -0.07811855158730159,
+        -0.0297167658730159
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.057461556651604545,
+      "ci95": [
+        -0.08259683459559121,
+        -0.0324100781462923
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n1000",
+      "right": "dense-ivf-n1000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.06666666666666667,
+      "ci95": [
+        -0.09666666666666666,
+        -0.03666666666666667
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "tfidf-mmr-n3000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.060111111111111115,
+      "ci95": [
+        -0.09000277777777778,
+        -0.03277777777777778
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "tfidf-mmr-n3000",
+      "metric": "precision",
+      "difference_right_minus_left": -0.007666666666666666,
+      "ci95": [
+        -0.011000000000000001,
+        -0.004666666666666666
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "tfidf-mmr-n3000",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.014702380952380951,
+      "ci95": [
+        -0.024285945767195772,
+        -0.0056371031746031775
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "tfidf-mmr-n3000",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.028878021250077643,
+      "ci95": [
+        -0.04261402192505488,
+        -0.016140777734088556
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "tfidf-mmr-n3000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.056666666666666664,
+      "ci95": [
+        -0.08666666666666667,
+        -0.03
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-flat-n3000",
+      "metric": "recall",
+      "difference_right_minus_left": 0.04700000000000001,
+      "ci95": [
+        -0.0015597222222222195,
+        0.09528055555555555
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-flat-n3000",
+      "metric": "precision",
+      "difference_right_minus_left": 0.007,
+      "ci95": [
+        0.0013333333333333337,
+        0.012666666666666668
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-flat-n3000",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.05360185185185185,
+      "ci95": [
+        0.010083300264550258,
+        0.0944353505291005
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-flat-n3000",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.055628709481361865,
+      "ci95": [
+        0.014813868096736954,
+        0.09530616535602672
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-flat-n3000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.043333333333333335,
+      "ci95": [
+        -0.006666666666666667,
+        0.09
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "recall",
+      "difference_right_minus_left": 2.960594732333751e-18,
+      "ci95": [
+        -0.048945833333333334,
+        0.04911527777777776
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "precision",
+      "difference_right_minus_left": 0.0009999999999999998,
+      "ci95": [
+        -0.004666666666666667,
+        0.006341666666666623
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.029531746031746037,
+      "ci95": [
+        -0.013343320105820107,
+        0.07140079365079363
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.022403580000793618,
+      "ci95": [
+        -0.018692900468635417,
+        0.06215142080580391
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        -0.05,
+        0.05
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.047,
+      "ci95": [
+        -0.07333333333333333,
+        -0.02366666666666667
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "precision",
+      "difference_right_minus_left": -0.006000000000000001,
+      "ci95": [
+        -0.009333333333333332,
+        -0.0033333333333333335
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.024070105820105814,
+      "ci95": [
+        -0.034675264550264547,
+        -0.01415949074074074
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.03322512948056825,
+      "ci95": [
+        -0.04579027453579149,
+        -0.02146182916134091
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-mmr-n3000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.043333333333333335,
+      "ci95": [
+        -0.07,
+        -0.02
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "recall",
+      "difference_right_minus_left": 0.04366666666666667,
+      "ci95": [
+        -0.006055555555555554,
+        0.09162222222222216
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "precision",
+      "difference_right_minus_left": 0.006666666666666667,
+      "ci95": [
+        0.0010000000000000002,
+        0.012333333333333333
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.05366137566137566,
+      "ci95": [
+        0.010137268518518518,
+        0.09564242724867725
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.05479236443745621,
+      "ci95": [
+        0.013848914734419954,
+        0.09565970857248937
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.04,
+      "ci95": [
+        -0.01,
+        0.08666666666666667
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.0033333333333333335,
+      "ci95": [
+        -0.01,
+        0.0
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "precision",
+      "difference_right_minus_left": -0.0003333333333333334,
+      "ci95": [
+        -0.0010000000000000002,
+        0.0
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "mrr",
+      "difference_right_minus_left": 5.95238095238095e-05,
+      "ci95": [
+        -0.0049404761904761904,
+        0.005059523809523809
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.0008363450439056659,
+      "ci95": [
+        -0.006309297535714575,
+        0.003727222444189476
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-hnsw-n3000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.0033333333333333335,
+      "ci95": [
+        -0.01,
+        0.0
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.02133333333333333,
+      "ci95": [
+        -0.0775625,
+        0.036166666666666666
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "precision",
+      "difference_right_minus_left": 0.0,
+      "ci95": [
+        -0.006333333333333333,
+        0.006666666666666667
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.020014550264550266,
+      "ci95": [
+        -0.029522751322751322,
+        0.06718363095238095
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.013428570306196834,
+      "ci95": [
+        -0.03266870037603403,
+        0.06006884879997669
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.023333333333333334,
+      "ci95": [
+        -0.08,
+        0.03333333333333333
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "recall",
+      "difference_right_minus_left": -0.06833333333333333,
+      "ci95": [
+        -0.09670833333333333,
+        -0.041666666666666664
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "precision",
+      "difference_right_minus_left": -0.006999999999999998,
+      "ci95": [
+        -0.01,
+        -0.004333333333333333
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.03358730158730159,
+      "ci95": [
+        -0.056400661375661375,
+        -0.013159623015873019
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.04220013917516503,
+      "ci95": [
+        -0.06567417845621837,
+        -0.020557412161023494
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n3000",
+      "right": "dense-ivf-n3000",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.06666666666666667,
+      "ci95": [
+        -0.09333333333333334,
+        -0.04
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "tfidf-mmr-n5183",
+      "metric": "recall",
+      "difference_right_minus_left": -0.04011111111111111,
+      "ci95": [
+        -0.06855833333333333,
+        -0.012823611111111166
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "tfidf-mmr-n5183",
+      "metric": "precision",
+      "difference_right_minus_left": -0.006,
+      "ci95": [
+        -0.009666666666666667,
+        -0.002666666666666667
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "tfidf-mmr-n5183",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.016150793650793648,
+      "ci95": [
+        -0.026802943121693117,
+        -0.005887202380952383
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "tfidf-mmr-n5183",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.02486117477339084,
+      "ci95": [
+        -0.038560687986874315,
+        -0.012136833233570619
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "tfidf-mmr-n5183",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.04,
+      "ci95": [
+        -0.07,
+        -0.01
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-flat-n5183",
+      "metric": "recall",
+      "difference_right_minus_left": 0.05144444444444445,
+      "ci95": [
+        0.000944444444444447,
+        0.10323055555555552
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-flat-n5183",
+      "metric": "precision",
+      "difference_right_minus_left": 0.007666666666666668,
+      "ci95": [
+        0.0019916666666666668,
+        0.013666666666666669
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-flat-n5183",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.04990873015873016,
+      "ci95": [
+        0.00541114417989418,
+        0.09573690476190476
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-flat-n5183",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.0526353569240878,
+      "ci95": [
+        0.009765230151978724,
+        0.09443232378663834
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-flat-n5183",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.043333333333333335,
+      "ci95": [
+        -0.006666666666666667,
+        0.09341666666666622
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "recall",
+      "difference_right_minus_left": 0.01066666666666667,
+      "ci95": [
+        -0.04405833333333333,
+        0.0638888888888889
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "precision",
+      "difference_right_minus_left": 0.0023333333333333335,
+      "ci95": [
+        -0.004,
+        0.008666666666666666
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.034166666666666665,
+      "ci95": [
+        -0.010455952380952385,
+        0.08050082671957673
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.027440690221283356,
+      "ci95": [
+        -0.014308303775039595,
+        0.06982157366300985
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.01,
+      "ci95": [
+        -0.043333333333333335,
+        0.06008333333333288
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "recall",
+      "difference_right_minus_left": -0.04077777777777778,
+      "ci95": [
+        -0.07366666666666667,
+        -0.010775000000000015
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "precision",
+      "difference_right_minus_left": -0.005333333333333334,
+      "ci95": [
+        -0.009000000000000001,
+        -0.002
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.015742063492063495,
+      "ci95": [
+        -0.027484755291005292,
+        -0.004348511904761916
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.02519466670280444,
+      "ci95": [
+        -0.040172214165511484,
+        -0.010850314232560537
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-mmr-n5183",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.03333333333333333,
+      "ci95": [
+        -0.06666666666666667,
+        -0.0033333333333333335
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "recall",
+      "difference_right_minus_left": 0.04811111111111112,
+      "ci95": [
+        -0.0018583333333333284,
+        0.10033472222222221
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "precision",
+      "difference_right_minus_left": 0.007333333333333334,
+      "ci95": [
+        0.0013333333333333337,
+        0.013333333333333336
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.04662169312169312,
+      "ci95": [
+        0.002327678571428571,
+        0.09217027116402113
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.0493501398611603,
+      "ci95": [
+        0.006891034115411784,
+        0.091407171082357
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "hit_rate",
+      "difference_right_minus_left": 0.04,
+      "ci95": [
+        -0.01,
+        0.09008333333333288
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "recall",
+      "difference_right_minus_left": -0.0033333333333333335,
+      "ci95": [
+        -0.01,
+        0.0
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "precision",
+      "difference_right_minus_left": -0.0003333333333333334,
+      "ci95": [
+        -0.0010000000000000002,
+        0.0
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.003287037037037037,
+      "ci95": [
+        -0.01,
+        0.00013888888888888894
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.003285217062927508,
+      "ci95": [
+        -0.01,
+        0.00014434881121747566
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-hnsw-n5183",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.0033333333333333335,
+      "ci95": [
+        -0.01,
+        0.0
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "recall",
+      "difference_right_minus_left": -0.020222222222222214,
+      "ci95": [
+        -0.07639583333333333,
+        0.03756805555555549
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "precision",
+      "difference_right_minus_left": 0.0006666666666666661,
+      "ci95": [
+        -0.005666666666666667,
+        0.007333333333333334
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "mrr",
+      "difference_right_minus_left": 0.004616402116402115,
+      "ci95": [
+        -0.0460556216931217,
+        0.05447278439153437
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "ndcg",
+      "difference_right_minus_left": 0.0007691840889226483,
+      "ci95": [
+        -0.04683735677836275,
+        0.04752393848401244
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "tfidf-exact-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.02666666666666667,
+      "ci95": [
+        -0.08333333333333333,
+        0.03
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "recall",
+      "difference_right_minus_left": -0.07166666666666667,
+      "ci95": [
+        -0.10170833333333333,
+        -0.043333333333333335
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "precision",
+      "difference_right_minus_left": -0.007,
+      "ci95": [
+        -0.010000000000000002,
+        -0.004000000000000001
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "mrr",
+      "difference_right_minus_left": -0.04529232804232804,
+      "ci95": [
+        -0.06918955026455026,
+        -0.023842261904761963
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "ndcg",
+      "difference_right_minus_left": -0.051866172835165154,
+      "ci95": [
+        -0.07698129147806206,
+        -0.029142611363779453
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    },
+    {
+      "left": "dense-flat-n5183",
+      "right": "dense-ivf-n5183",
+      "metric": "hit_rate",
+      "difference_right_minus_left": -0.07,
+      "ci95": [
+        -0.1,
+        -0.04
+      ],
+      "query_count": 300,
+      "resamples": 2000,
+      "seed": 42,
+      "method": "paired query percentile bootstrap; unadjusted exploratory 95% CI, not a superiority test"
+    }
+  ],
+  "timing_trials_are_quality_samples": false,
+  "source_snapshot": "source/",
+  "completed_at": "2026-11-03T17:47:43.457583+00:00"
+}

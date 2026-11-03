@@ -1,0 +1,1595 @@
+{
+  "benchmark": "retrieval_tfidf_faiss",
+  "run_at": "2026-11-02T17:52:35.838458+00:00",
+  "corpus_size": 20,
+  "query_count": 22,
+  "corpus_sha256": "de38780220330f2d40d781612c8ed5c233f7d27b917303d3dd5d1e4ee9dce542",
+  "dataset_sha256": "edf0dcf8ffc15d5037fc5b7f8827cb4f81c01033547b8aaf54b7e7c41a161a79",
+  "config": {
+    "ks": [
+      1,
+      3,
+      5
+    ],
+    "repeats": 10,
+    "fetch_k": 10,
+    "mmr_lambda": 0.7
+  },
+  "representation": "Corpus-fitted L2-normalized word unigram/bigram TF-IDF; one vector per passage",
+  "index": "FAISS IndexFlatIP",
+  "vector_dimension": 789,
+  "build_ms": 7.287333006388508,
+  "environment": {
+    "python": "3.14.2",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "faiss_threads": 1,
+    "versions": {
+      "faiss-cpu": "1.15.1",
+      "numpy": "2.5.4",
+      "scikit-learn": "1.9.1"
+    }
+  },
+  "limitations": [
+    "22-question repository sample is small and in-domain; not a held-out external benchmark.",
+    "TF-IDF lexical baseline; does not evaluate the production sentence-transformers embeddings or LLM.",
+    "Latency includes query vectorization and search/MMR; excludes build, downloads, generation and network.",
+    "Repeated serial warm queries are not concurrent throughput or independent quality observations."
+  ],
+  "experiments": [
+    {
+      "mode": "similarity",
+      "k": 1,
+      "metrics": {
+        "recall": 0.9318181818181818,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9545454545454546
+      },
+      "warm_query_latency_ms": {
+        "mean": 0.14579559958127158,
+        "median": 0.14420800289371982,
+        "p95": 0.15350000467151403,
+        "timed_calls": 220
+      },
+      "per_query": [
+        {
+          "query_id": "ragas-001",
+          "ranked_ids": [
+            "ctx-faithfulness"
+          ],
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        {
+          "query_id": "ragas-002",
+          "ranked_ids": [
+            "ctx-rag-hallucination"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-003",
+          "ranked_ids": [
+            "ctx-embedding"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-004",
+          "ranked_ids": [
+            "ctx-vector-store"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-005",
+          "ranked_ids": [
+            "ctx-chunking"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-006",
+          "ranked_ids": [
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-007",
+          "ranked_ids": [
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-008",
+          "ranked_ids": [
+            "ctx-mmr"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-009",
+          "ranked_ids": [
+            "ctx-threshold"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-010",
+          "ranked_ids": [
+            "ctx-guardrail"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-011",
+          "ranked_ids": [
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-012",
+          "ranked_ids": [
+            "ctx-evaluator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-013",
+          "ranked_ids": [
+            "ctx-faithfulness"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-014",
+          "ranked_ids": [
+            "ctx-answer-relevancy"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-015",
+          "ranked_ids": [
+            "ctx-context-precision"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-016",
+          "ranked_ids": [
+            "ctx-context-recall"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-017",
+          "ranked_ids": [
+            "ctx-correlation-id"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-018",
+          "ranked_ids": [
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-019",
+          "ranked_ids": [
+            "ctx-fastapi"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-020",
+          "ranked_ids": [
+            "ctx-offline-eval"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-021",
+          "ranked_ids": [
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-022",
+          "ranked_ids": [
+            "ctx-context-recall"
+          ],
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      ]
+    },
+    {
+      "mode": "similarity",
+      "k": 3,
+      "metrics": {
+        "recall": 0.9545454545454546,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9508963995067358
+      },
+      "warm_query_latency_ms": {
+        "mean": 0.15240073606202548,
+        "median": 0.14939600077923387,
+        "p95": 0.16629199672024697,
+        "timed_calls": 220
+      },
+      "per_query": [
+        {
+          "query_id": "ragas-001",
+          "ranked_ids": [
+            "ctx-faithfulness",
+            "ctx-opentelemetry",
+            "ctx-fastapi"
+          ],
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        {
+          "query_id": "ragas-002",
+          "ranked_ids": [
+            "ctx-rag-hallucination",
+            "ctx-faithfulness",
+            "ctx-answer-relevancy"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-003",
+          "ranked_ids": [
+            "ctx-embedding",
+            "ctx-rag-def",
+            "ctx-faithfulness"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-004",
+          "ranked_ids": [
+            "ctx-vector-store",
+            "ctx-embedding",
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-005",
+          "ranked_ids": [
+            "ctx-chunking",
+            "ctx-vector-store",
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-006",
+          "ranked_ids": [
+            "ctx-cosine",
+            "ctx-faithfulness",
+            "ctx-threshold"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-007",
+          "ranked_ids": [
+            "ctx-topk",
+            "ctx-faithfulness",
+            "ctx-mmr"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-008",
+          "ranked_ids": [
+            "ctx-mmr",
+            "ctx-faithfulness",
+            "ctx-rag-hallucination"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-009",
+          "ranked_ids": [
+            "ctx-threshold",
+            "ctx-cosine",
+            "ctx-context-precision"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-010",
+          "ranked_ids": [
+            "ctx-guardrail",
+            "ctx-faithfulness",
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-011",
+          "ranked_ids": [
+            "ctx-generator",
+            "ctx-threshold",
+            "ctx-guardrail"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-012",
+          "ranked_ids": [
+            "ctx-evaluator",
+            "ctx-faithfulness",
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-013",
+          "ranked_ids": [
+            "ctx-faithfulness",
+            "ctx-context-recall",
+            "ctx-context-precision"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-014",
+          "ranked_ids": [
+            "ctx-answer-relevancy",
+            "ctx-faithfulness",
+            "ctx-context-recall"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-015",
+          "ranked_ids": [
+            "ctx-context-precision",
+            "ctx-faithfulness",
+            "ctx-context-recall"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-016",
+          "ranked_ids": [
+            "ctx-context-recall",
+            "ctx-faithfulness",
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-017",
+          "ranked_ids": [
+            "ctx-correlation-id",
+            "ctx-vector-store",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-018",
+          "ranked_ids": [
+            "ctx-opentelemetry",
+            "ctx-fastapi",
+            "ctx-offline-eval"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-019",
+          "ranked_ids": [
+            "ctx-fastapi",
+            "ctx-offline-eval",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-020",
+          "ranked_ids": [
+            "ctx-offline-eval",
+            "ctx-opentelemetry",
+            "ctx-faithfulness"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-021",
+          "ranked_ids": [
+            "ctx-topk",
+            "ctx-guardrail",
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-022",
+          "ranked_ids": [
+            "ctx-context-recall",
+            "ctx-topk",
+            "ctx-faithfulness"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 0.9197207891481876
+        }
+      ]
+    },
+    {
+      "mode": "similarity",
+      "k": 5,
+      "metrics": {
+        "recall": 0.9545454545454546,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9508963995067358
+      },
+      "warm_query_latency_ms": {
+        "mean": 0.15654791773572055,
+        "median": 0.15504201292060316,
+        "p95": 0.16566700651310384,
+        "timed_calls": 220
+      },
+      "per_query": [
+        {
+          "query_id": "ragas-001",
+          "ranked_ids": [
+            "ctx-faithfulness",
+            "ctx-opentelemetry",
+            "ctx-fastapi",
+            "ctx-guardrail",
+            "ctx-vector-store"
+          ],
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        {
+          "query_id": "ragas-002",
+          "ranked_ids": [
+            "ctx-rag-hallucination",
+            "ctx-faithfulness",
+            "ctx-answer-relevancy",
+            "ctx-topk",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-003",
+          "ranked_ids": [
+            "ctx-embedding",
+            "ctx-rag-def",
+            "ctx-faithfulness",
+            "ctx-vector-store",
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-004",
+          "ranked_ids": [
+            "ctx-vector-store",
+            "ctx-embedding",
+            "ctx-cosine",
+            "ctx-guardrail",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-005",
+          "ranked_ids": [
+            "ctx-chunking",
+            "ctx-vector-store",
+            "ctx-cosine",
+            "ctx-guardrail",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-006",
+          "ranked_ids": [
+            "ctx-cosine",
+            "ctx-faithfulness",
+            "ctx-threshold",
+            "ctx-rag-def",
+            "ctx-embedding"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-007",
+          "ranked_ids": [
+            "ctx-topk",
+            "ctx-faithfulness",
+            "ctx-mmr",
+            "ctx-generator",
+            "ctx-evaluator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-008",
+          "ranked_ids": [
+            "ctx-mmr",
+            "ctx-faithfulness",
+            "ctx-rag-hallucination",
+            "ctx-topk",
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-009",
+          "ranked_ids": [
+            "ctx-threshold",
+            "ctx-cosine",
+            "ctx-context-precision",
+            "ctx-topk",
+            "ctx-vector-store"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-010",
+          "ranked_ids": [
+            "ctx-guardrail",
+            "ctx-faithfulness",
+            "ctx-generator",
+            "ctx-evaluator",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-011",
+          "ranked_ids": [
+            "ctx-generator",
+            "ctx-threshold",
+            "ctx-guardrail",
+            "ctx-faithfulness",
+            "ctx-evaluator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-012",
+          "ranked_ids": [
+            "ctx-evaluator",
+            "ctx-faithfulness",
+            "ctx-generator",
+            "ctx-guardrail",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-013",
+          "ranked_ids": [
+            "ctx-faithfulness",
+            "ctx-context-recall",
+            "ctx-context-precision",
+            "ctx-answer-relevancy",
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-014",
+          "ranked_ids": [
+            "ctx-answer-relevancy",
+            "ctx-faithfulness",
+            "ctx-context-recall",
+            "ctx-context-precision",
+            "ctx-evaluator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-015",
+          "ranked_ids": [
+            "ctx-context-precision",
+            "ctx-faithfulness",
+            "ctx-context-recall",
+            "ctx-evaluator",
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-016",
+          "ranked_ids": [
+            "ctx-context-recall",
+            "ctx-faithfulness",
+            "ctx-topk",
+            "ctx-context-precision",
+            "ctx-evaluator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-017",
+          "ranked_ids": [
+            "ctx-correlation-id",
+            "ctx-vector-store",
+            "ctx-opentelemetry",
+            "ctx-cosine",
+            "ctx-fastapi"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-018",
+          "ranked_ids": [
+            "ctx-opentelemetry",
+            "ctx-fastapi",
+            "ctx-offline-eval",
+            "ctx-faithfulness",
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-019",
+          "ranked_ids": [
+            "ctx-fastapi",
+            "ctx-offline-eval",
+            "ctx-opentelemetry",
+            "ctx-faithfulness",
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-020",
+          "ranked_ids": [
+            "ctx-offline-eval",
+            "ctx-opentelemetry",
+            "ctx-faithfulness",
+            "ctx-cosine",
+            "ctx-guardrail"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-021",
+          "ranked_ids": [
+            "ctx-topk",
+            "ctx-guardrail",
+            "ctx-cosine",
+            "ctx-faithfulness",
+            "ctx-rag-def"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-022",
+          "ranked_ids": [
+            "ctx-context-recall",
+            "ctx-topk",
+            "ctx-faithfulness",
+            "ctx-answer-relevancy",
+            "ctx-context-precision"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 0.9197207891481876
+        }
+      ]
+    },
+    {
+      "mode": "mmr",
+      "k": 1,
+      "metrics": {
+        "recall": 0.9318181818181818,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9545454545454546
+      },
+      "warm_query_latency_ms": {
+        "mean": 0.15997572713372807,
+        "median": 0.15899999561952427,
+        "p95": 0.16554200556129217,
+        "timed_calls": 220
+      },
+      "per_query": [
+        {
+          "query_id": "ragas-001",
+          "ranked_ids": [
+            "ctx-faithfulness"
+          ],
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        {
+          "query_id": "ragas-002",
+          "ranked_ids": [
+            "ctx-rag-hallucination"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-003",
+          "ranked_ids": [
+            "ctx-embedding"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-004",
+          "ranked_ids": [
+            "ctx-vector-store"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-005",
+          "ranked_ids": [
+            "ctx-chunking"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-006",
+          "ranked_ids": [
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-007",
+          "ranked_ids": [
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-008",
+          "ranked_ids": [
+            "ctx-mmr"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-009",
+          "ranked_ids": [
+            "ctx-threshold"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-010",
+          "ranked_ids": [
+            "ctx-guardrail"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-011",
+          "ranked_ids": [
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-012",
+          "ranked_ids": [
+            "ctx-evaluator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-013",
+          "ranked_ids": [
+            "ctx-faithfulness"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-014",
+          "ranked_ids": [
+            "ctx-answer-relevancy"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-015",
+          "ranked_ids": [
+            "ctx-context-precision"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-016",
+          "ranked_ids": [
+            "ctx-context-recall"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-017",
+          "ranked_ids": [
+            "ctx-correlation-id"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-018",
+          "ranked_ids": [
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-019",
+          "ranked_ids": [
+            "ctx-fastapi"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-020",
+          "ranked_ids": [
+            "ctx-offline-eval"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-021",
+          "ranked_ids": [
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-022",
+          "ranked_ids": [
+            "ctx-context-recall"
+          ],
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        }
+      ]
+    },
+    {
+      "mode": "mmr",
+      "k": 3,
+      "metrics": {
+        "recall": 0.9318181818181818,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9369612360347936
+      },
+      "warm_query_latency_ms": {
+        "mean": 0.19823253612478517,
+        "median": 0.196916502318345,
+        "p95": 0.20512499031610787,
+        "timed_calls": 220
+      },
+      "per_query": [
+        {
+          "query_id": "ragas-001",
+          "ranked_ids": [
+            "ctx-faithfulness",
+            "ctx-opentelemetry",
+            "ctx-fastapi"
+          ],
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        {
+          "query_id": "ragas-002",
+          "ranked_ids": [
+            "ctx-rag-hallucination",
+            "ctx-faithfulness",
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-003",
+          "ranked_ids": [
+            "ctx-embedding",
+            "ctx-rag-def",
+            "ctx-faithfulness"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-004",
+          "ranked_ids": [
+            "ctx-vector-store",
+            "ctx-guardrail",
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-005",
+          "ranked_ids": [
+            "ctx-chunking",
+            "ctx-vector-store",
+            "ctx-guardrail"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-006",
+          "ranked_ids": [
+            "ctx-cosine",
+            "ctx-faithfulness",
+            "ctx-threshold"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-007",
+          "ranked_ids": [
+            "ctx-topk",
+            "ctx-faithfulness",
+            "ctx-mmr"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-008",
+          "ranked_ids": [
+            "ctx-mmr",
+            "ctx-rag-hallucination",
+            "ctx-faithfulness"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-009",
+          "ranked_ids": [
+            "ctx-threshold",
+            "ctx-cosine",
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-010",
+          "ranked_ids": [
+            "ctx-guardrail",
+            "ctx-faithfulness",
+            "ctx-generator"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-011",
+          "ranked_ids": [
+            "ctx-generator",
+            "ctx-guardrail",
+            "ctx-threshold"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-012",
+          "ranked_ids": [
+            "ctx-evaluator",
+            "ctx-generator",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-013",
+          "ranked_ids": [
+            "ctx-faithfulness",
+            "ctx-generator",
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-014",
+          "ranked_ids": [
+            "ctx-answer-relevancy",
+            "ctx-faithfulness",
+            "ctx-context-recall"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-015",
+          "ranked_ids": [
+            "ctx-context-precision",
+            "ctx-faithfulness",
+            "ctx-chunking"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-016",
+          "ranked_ids": [
+            "ctx-context-recall",
+            "ctx-topk",
+            "ctx-faithfulness"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-017",
+          "ranked_ids": [
+            "ctx-correlation-id",
+            "ctx-vector-store",
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-018",
+          "ranked_ids": [
+            "ctx-opentelemetry",
+            "ctx-fastapi",
+            "ctx-offline-eval"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-019",
+          "ranked_ids": [
+            "ctx-fastapi",
+            "ctx-offline-eval",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-020",
+          "ranked_ids": [
+            "ctx-offline-eval",
+            "ctx-cosine",
+            "ctx-opentelemetry"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-021",
+          "ranked_ids": [
+            "ctx-topk",
+            "ctx-guardrail",
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-022",
+          "ranked_ids": [
+            "ctx-context-recall",
+            "ctx-topk",
+            "ctx-guardrail"
+          ],
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 0.6131471927654584
+        }
+      ]
+    },
+    {
+      "mode": "mmr",
+      "k": 5,
+      "metrics": {
+        "recall": 0.9318181818181818,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9369612360347936
+      },
+      "warm_query_latency_ms": {
+        "mean": 0.2323937265001322,
+        "median": 0.2299579937243834,
+        "p95": 0.2443750126985833,
+        "timed_calls": 220
+      },
+      "per_query": [
+        {
+          "query_id": "ragas-001",
+          "ranked_ids": [
+            "ctx-faithfulness",
+            "ctx-opentelemetry",
+            "ctx-fastapi",
+            "ctx-vector-store",
+            "ctx-guardrail"
+          ],
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0
+        },
+        {
+          "query_id": "ragas-002",
+          "ranked_ids": [
+            "ctx-rag-hallucination",
+            "ctx-faithfulness",
+            "ctx-topk",
+            "ctx-opentelemetry",
+            "ctx-rag-def"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-003",
+          "ranked_ids": [
+            "ctx-embedding",
+            "ctx-rag-def",
+            "ctx-faithfulness",
+            "ctx-correlation-id",
+            "ctx-chunking"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-004",
+          "ranked_ids": [
+            "ctx-vector-store",
+            "ctx-guardrail",
+            "ctx-cosine",
+            "ctx-correlation-id",
+            "ctx-embedding"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-005",
+          "ranked_ids": [
+            "ctx-chunking",
+            "ctx-vector-store",
+            "ctx-guardrail",
+            "ctx-cosine",
+            "ctx-correlation-id"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-006",
+          "ranked_ids": [
+            "ctx-cosine",
+            "ctx-faithfulness",
+            "ctx-threshold",
+            "ctx-rag-def",
+            "ctx-embedding"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-007",
+          "ranked_ids": [
+            "ctx-topk",
+            "ctx-faithfulness",
+            "ctx-mmr",
+            "ctx-generator",
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-008",
+          "ranked_ids": [
+            "ctx-mmr",
+            "ctx-rag-hallucination",
+            "ctx-faithfulness",
+            "ctx-topk",
+            "ctx-fastapi"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-009",
+          "ranked_ids": [
+            "ctx-threshold",
+            "ctx-cosine",
+            "ctx-topk",
+            "ctx-offline-eval",
+            "ctx-context-precision"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-010",
+          "ranked_ids": [
+            "ctx-guardrail",
+            "ctx-faithfulness",
+            "ctx-generator",
+            "ctx-opentelemetry",
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-011",
+          "ranked_ids": [
+            "ctx-generator",
+            "ctx-guardrail",
+            "ctx-threshold",
+            "ctx-faithfulness",
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-012",
+          "ranked_ids": [
+            "ctx-evaluator",
+            "ctx-generator",
+            "ctx-opentelemetry",
+            "ctx-guardrail",
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-013",
+          "ranked_ids": [
+            "ctx-faithfulness",
+            "ctx-generator",
+            "ctx-topk",
+            "ctx-answer-relevancy",
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-014",
+          "ranked_ids": [
+            "ctx-answer-relevancy",
+            "ctx-faithfulness",
+            "ctx-context-recall",
+            "ctx-fastapi",
+            "ctx-embedding"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-015",
+          "ranked_ids": [
+            "ctx-context-precision",
+            "ctx-faithfulness",
+            "ctx-chunking",
+            "ctx-threshold",
+            "ctx-guardrail"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-016",
+          "ranked_ids": [
+            "ctx-context-recall",
+            "ctx-topk",
+            "ctx-faithfulness",
+            "ctx-guardrail",
+            "ctx-threshold"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-017",
+          "ranked_ids": [
+            "ctx-correlation-id",
+            "ctx-vector-store",
+            "ctx-cosine",
+            "ctx-opentelemetry",
+            "ctx-fastapi"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-018",
+          "ranked_ids": [
+            "ctx-opentelemetry",
+            "ctx-fastapi",
+            "ctx-offline-eval",
+            "ctx-faithfulness",
+            "ctx-cosine"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-019",
+          "ranked_ids": [
+            "ctx-fastapi",
+            "ctx-offline-eval",
+            "ctx-opentelemetry",
+            "ctx-faithfulness",
+            "ctx-topk"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-020",
+          "ranked_ids": [
+            "ctx-offline-eval",
+            "ctx-cosine",
+            "ctx-opentelemetry",
+            "ctx-faithfulness",
+            "ctx-embedding"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-021",
+          "ranked_ids": [
+            "ctx-topk",
+            "ctx-guardrail",
+            "ctx-cosine",
+            "ctx-faithfulness",
+            "ctx-offline-eval"
+          ],
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0
+        },
+        {
+          "query_id": "ragas-022",
+          "ranked_ids": [
+            "ctx-context-recall",
+            "ctx-topk",
+            "ctx-guardrail",
+            "ctx-answer-relevancy",
+            "ctx-rag-hallucination"
+          ],
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 0.6131471927654584
+        }
+      ]
+    }
+  ]
+}

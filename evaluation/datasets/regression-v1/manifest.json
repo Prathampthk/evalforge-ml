@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "evalforge/regression",
+  "version": "1.0.0",
+  "split": "regression",
+  "role": "regression",
+  "origin": "Inherited repository ragas_corpus.json and ragas_eval.jsonl",
+  "license": "MIT repository fixture; inherited labels, not independent human ground truth",
+  "corpus_count": 20,
+  "query_count": 22,
+  "qrel_count": 23,
+  "files": {
+    "corpus": {
+      "path": "corpus.jsonl",
+      "sha256": "f1cbeb7c65a7f2d97cec375513bdf67fb63c6391704227e7e7f33f1677c5be5b"
+    },
+    "queries": {
+      "path": "queries.jsonl",
+      "sha256": "4c88279e34f68b53ea0e83710f4a1d4cb1c0027f25912150c0b26dedf27be89c"
+    },
+    "qrels": {
+      "path": "qrels.tsv",
+      "sha256": "e8e311e08112911a3f2e5abddbd35f941b07508367603cc8842a997501052da0"
+    }
+  }
+}

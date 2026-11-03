@@ -2,7 +2,7 @@
 FastAPI API Integration Tests
 
 Tests for all endpoints including health checks, ingest, and query operations.
-These tests require OPENAI_API_KEY to be set for the app lifespan initialization.
+These tests isolate the pipeline lifespan and require no credentials or model downloads.
 """
 
 import pytest
@@ -13,9 +13,6 @@ import json
 
 from api import app, get_pipeline, limiter
 from models import RetrievedChunk, Chunk, GeneratorOutput, EvaluatorOutput, EvaluationStatus, PipelineResult
-
-# Skip all API tests if OPENAI_API_KEY is not set
-pytestmark = pytest.mark.skipif(not os.getenv("OPENAI_API_KEY"), reason="OPENAI_API_KEY not set")
 
 
 @pytest.fixture
@@ -87,8 +84,10 @@ def mock_pipeline():
 
 
 @pytest.fixture
-def client(mock_pipeline):
+def client(mock_pipeline, monkeypatch):
     """Fixture to provide FastAPI test client with mocked pipeline."""
+    monkeypatch.setattr("api.RAGPipeline", lambda config: mock_pipeline)
+    limiter._storage.reset()
     previous_auth_disabled = os.environ.get("RAG_AUTH_DISABLED")
     os.environ["RAG_AUTH_DISABLED"] = "true"
 
@@ -302,8 +301,8 @@ class TestQueryEndpoint:
         assert response.status_code == 200
         data = response.json()
 
-        # With sync evaluation, status should be COMPLETED or PENDING
-        assert data["evaluation_status"] in ["COMPLETED", "PENDING", "FAILED"]
+        # This fixture returns completed evaluation; compare the actual enum wire value.
+        assert data["evaluation_status"] == EvaluationStatus.COMPLETED.value
 
     def test_query_streaming_response(self, client):
         """Test streaming query response."""
@@ -440,3 +439,26 @@ class TestResponseModels:
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
+
+@pytest.mark.parametrize("authorization,expected", [(None, 401), ("Bearer wrong", 401), ("Bearer fixture-token", 200)])
+def test_authentication_contract(client, monkeypatch, authorization, expected):
+    monkeypatch.setenv("RAG_AUTH_DISABLED", "false")
+    monkeypatch.setattr("api._auth_token", "fixture-token")
+    headers = {} if authorization is None else {"Authorization": authorization}
+    response = client.post("/query", json={"query": "fixture"}, headers=headers)
+    assert response.status_code == expected
+
+
+def test_per_request_retrieval_options_reach_pipeline(client, mock_pipeline):
+    response = client.post(
+        "/query", json={"query": "fixture", "top_k": 3, "enable_guardrail": True, "sync_evaluation": True}
+    )
+    assert response.status_code == 200
+    mock_pipeline.query.assert_called_once_with("fixture", top_k=3, enable_guardrail=True, sync_evaluation=True)
+
+
+def test_ingestion_validation_error_is_client_failure(client, mock_pipeline):
+    mock_pipeline.ingest.side_effect = ValueError("invalid fixture")
+    response = client.post("/ingest", json={"texts": ["fixture"]})
+    assert response.status_code == 400

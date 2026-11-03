@@ -1,0 +1,376 @@
+[
+  {
+    "query_id": "ragas-001",
+    "ranked_ids": [
+      "ctx-faithfulness"
+    ],
+    "metrics": {
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "hit_rate": 0.0
+    },
+    "latency_ms_trials": [
+      0.10679200931917876,
+      0.09962498734239489
+    ]
+  },
+  {
+    "query_id": "ragas-002",
+    "ranked_ids": [
+      "ctx-rag-hallucination"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.09675000910647213,
+      0.09029099601320922
+    ]
+  },
+  {
+    "query_id": "ragas-003",
+    "ranked_ids": [
+      "ctx-embedding"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.0882090098457411,
+      0.09600000339560211
+    ]
+  },
+  {
+    "query_id": "ragas-004",
+    "ranked_ids": [
+      "ctx-vector-store"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.09058300929609686,
+      0.09099999442696571
+    ]
+  },
+  {
+    "query_id": "ragas-005",
+    "ranked_ids": [
+      "ctx-chunking"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.0922499893931672,
+      0.08983300358522683
+    ]
+  },
+  {
+    "query_id": "ragas-006",
+    "ranked_ids": [
+      "ctx-cosine"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.08824998803902417,
+      0.08770900603849441
+    ]
+  },
+  {
+    "query_id": "ragas-007",
+    "ranked_ids": [
+      "ctx-topk"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.0909590016817674,
+      0.09008299093693495
+    ]
+  },
+  {
+    "query_id": "ragas-008",
+    "ranked_ids": [
+      "ctx-mmr"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.08820800576359034,
+      0.09000000136438757
+    ]
+  },
+  {
+    "query_id": "ragas-009",
+    "ranked_ids": [
+      "ctx-threshold"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.0870829971972853,
+      0.09037500421982259
+    ]
+  },
+  {
+    "query_id": "ragas-010",
+    "ranked_ids": [
+      "ctx-guardrail"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.08837498899083585,
+      0.08766699465923011
+    ]
+  },
+  {
+    "query_id": "ragas-011",
+    "ranked_ids": [
+      "ctx-generator"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.08812500163912773,
+      0.08845799311529845
+    ]
+  },
+  {
+    "query_id": "ragas-012",
+    "ranked_ids": [
+      "ctx-evaluator"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.09254200267605484,
+      0.09025000326801091
+    ]
+  },
+  {
+    "query_id": "ragas-013",
+    "ranked_ids": [
+      "ctx-faithfulness"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.08608300413470715,
+      0.09545899229124188
+    ]
+  },
+  {
+    "query_id": "ragas-014",
+    "ranked_ids": [
+      "ctx-answer-relevancy"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.08904199057724327,
+      0.09087500802706927
+    ]
+  },
+  {
+    "query_id": "ragas-015",
+    "ranked_ids": [
+      "ctx-context-precision"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.09004199819173664,
+      0.09087499347515404
+    ]
+  },
+  {
+    "query_id": "ragas-016",
+    "ranked_ids": [
+      "ctx-context-recall"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.08749999688006938,
+      0.09004199819173664
+    ]
+  },
+  {
+    "query_id": "ragas-017",
+    "ranked_ids": [
+      "ctx-correlation-id"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.08912499470170587,
+      0.09087499347515404
+    ]
+  },
+  {
+    "query_id": "ragas-018",
+    "ranked_ids": [
+      "ctx-opentelemetry"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.086499989265576,
+      0.08762501238379627
+    ]
+  },
+  {
+    "query_id": "ragas-019",
+    "ranked_ids": [
+      "ctx-fastapi"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.087417007307522,
+      0.08937501115724444
+    ]
+  },
+  {
+    "query_id": "ragas-020",
+    "ranked_ids": [
+      "ctx-offline-eval"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.08875000639818609,
+      0.08949999755714089
+    ]
+  },
+  {
+    "query_id": "ragas-021",
+    "ranked_ids": [
+      "ctx-topk"
+    ],
+    "metrics": {
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.17250000382773578,
+      0.14045900024939328
+    ]
+  },
+  {
+    "query_id": "ragas-022",
+    "ranked_ids": [
+      "ctx-context-recall"
+    ],
+    "metrics": {
+      "recall": 0.5,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "hit_rate": 1.0
+    },
+    "latency_ms_trials": [
+      0.09575000149197876,
+      0.21225000091362745
+    ]
+  }
+]

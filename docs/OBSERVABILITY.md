@@ -96,3 +96,8 @@ The Grafana dashboard is provisioned from `observability/grafana/dashboards/rag-
 - Use logs for incident details and traces for request flow; do not put secrets, prompts, or full retrieved context into span attributes.
 - Route OTLP from the app to a local or sidecar collector, then fan out to your vendor backend.
 - Alert first on p95 query latency, LLM latency, vector search latency, HTTP 5xx rate, and retrieval result count drops.
+
+
+## Retrieval experiment traces
+
+The new experiment runner supports `--trace-exporter console` or `otlp` and retains the existing OTLP environment configuration. It emits preprocessing, embedding generation, index build/lookup, MMR, and scoring spans with stable experiment IDs and unique run IDs. Query/document text and secrets are not attributes. Shared trace helpers now retain supplied attributes and sanitize exception events to exception type. RAG context construction is a separate span; retrieval-only timings remain distinct from full RAG inference. Unit tests validate in-memory trace output; a live collector run is not claimed by the retrieval measurements. See [methodology](EXPERIMENTS.md).

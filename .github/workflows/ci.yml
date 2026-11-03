@@ -42,8 +42,7 @@ jobs:
       install_command: python -m pip install -r requirements-dev.txt
       command: >
         mkdir -p reports/pytest &&
-        pytest tests/
-        --ignore=tests/test_api.py
+        OMP_NUM_THREADS=1 pytest tests/
         --junitxml=reports/pytest/junit.xml
       artifact_path: reports/pytest/junit.xml
 
@@ -72,3 +71,17 @@ jobs:
         --output json
         > reports/security/safety.json
       artifact_path: reports/security/safety.json
+
+  retrieval-regression:
+    uses: ./.github/workflows/_python-check.yml
+    with:
+      check_name: retrieval-regression
+      install_command: python -m pip install -r requirements-experiments.txt
+      command: >
+        OMP_NUM_THREADS=1 python -m evaluation.experiment
+        --config configs/experiments/regression.json
+        --output reports/retrieval/regression &&
+        python -m evaluation.retrieval_gate
+        --report reports/retrieval/regression/report.json
+        --baseline evaluation/baselines/regression-v1.json
+      artifact_path: reports/retrieval/regression/

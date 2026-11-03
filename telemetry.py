@@ -7,7 +7,7 @@ import json
 import logging
 import time
 import uuid
-from contextlib import contextmanager, nullcontext
+from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Any
 
@@ -213,10 +213,17 @@ def start_span(name: str, attributes: dict[str, Any] | None = None, tracer_name:
     if not tracer:
         yield None
         return
-    with tracer.start_as_current_span(name) as span:
+    # Exception messages can contain prompts/documents. Export only the exception type.
+    with tracer.start_as_current_span(name, record_exception=False, set_status_on_exception=False) as span:
         if attributes:
             set_span_attributes(span, attributes)
-        yield span
+        try:
+            yield span
+        except Exception as exc:
+            if trace is not None:
+                span.set_status(trace.Status(trace.StatusCode.ERROR, type(exc).__name__))
+            span.add_event("exception", {"exception.type": type(exc).__name__})
+            raise
 
 
 def set_span_attributes(span, attributes: dict[str, Any]) -> None:
@@ -246,10 +253,9 @@ def observe_duration(name: str, start_time: float, attributes: dict[str, Any] | 
 
 
 def span_context_or_null(name: str, attributes: dict[str, Any] | None = None, tracer_name: str = "rag-pipeline"):
-    tracer = get_tracer(tracer_name)
-    if tracer:
-        return tracer.start_as_current_span(name)
-    return nullcontext()
+    # Use the same attribute-aware context manager as explicit stage spans.
+    # Previously attributes passed by pipeline callers were silently discarded.
+    return start_span(name, attributes, tracer_name)
 
 
 def _get_metric_instrument(kind: str, name: str, unit: str):

@@ -1,0 +1,22 @@
+{"_id": "ragas-001", "text": "What does RAG stand for and what does it combine?"}
+{"_id": "ragas-002", "text": "How does RAG reduce hallucination?"}
+{"_id": "ragas-003", "text": "What does an embedding model do?"}
+{"_id": "ragas-004", "text": "What is a vector store and which library is commonly used?"}
+{"_id": "ragas-005", "text": "What is chunking and why is overlap used?"}
+{"_id": "ragas-006", "text": "What does cosine similarity measure in retrieval?"}
+{"_id": "ragas-007", "text": "What does the top_k parameter control?"}
+{"_id": "ragas-008", "text": "What does MMR balance and what does its lambda parameter do?"}
+{"_id": "ragas-009", "text": "What is the purpose of a similarity threshold?"}
+{"_id": "ragas-010", "text": "What does the guardrail stage do?"}
+{"_id": "ragas-011", "text": "What does the generator stage take as input?"}
+{"_id": "ragas-012", "text": "What does the evaluator stage compute?"}
+{"_id": "ragas-013", "text": "What does the RAGAS faithfulness metric measure?"}
+{"_id": "ragas-014", "text": "What does answer relevancy measure in RAGAS?"}
+{"_id": "ragas-015", "text": "What does context precision measure?"}
+{"_id": "ragas-016", "text": "What does context recall measure?"}
+{"_id": "ragas-017", "text": "What is a correlation ID used for?"}
+{"_id": "ragas-018", "text": "What is OpenTelemetry and what does the pipeline emit?"}
+{"_id": "ragas-019", "text": "What interface does the pipeline expose for serving requests?"}
+{"_id": "ragas-020", "text": "Why is offline evaluation run in continuous integration?"}
+{"_id": "ragas-021", "text": "Does a higher top_k always improve retrieval quality?"}
+{"_id": "ragas-022", "text": "How are faithfulness and context recall different?"}

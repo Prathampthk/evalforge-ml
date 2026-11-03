@@ -1,0 +1,225 @@
+{
+  "schema_version": 1,
+  "rationale": "Exact deterministic local fixture: no degradation allowed; 1e-12 tolerance covers float aggregation roundoff only. No noisy latency gate.",
+  "conditions": {
+    "metric_version": "ranking-v2-exp2-fixed-k",
+    "config": {
+      "schema_version": 1,
+      "dataset": "../../evaluation/datasets/regression-v1/manifest.json",
+      "seed": 42,
+      "corpus_sizes": [
+        0
+      ],
+      "repeats": 2,
+      "warmup": 1,
+      "threads": 1,
+      "bootstrap_samples": 1000,
+      "no_positive": "exclude",
+      "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+      "model_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "model_cache": "artifacts/model-cache",
+      "batch_size": 32,
+      "max_seq_length": 256,
+      "configurations": [
+        {
+          "name": "tfidf-similarity-k1",
+          "representation": "tfidf",
+          "index": "sparse",
+          "mode": "similarity",
+          "k": 1,
+          "fetch_k": 10,
+          "mmr_lambda": 0.7,
+          "hnsw_m": 16,
+          "ef_construction": 100,
+          "ef_search": 32,
+          "nlist": 32,
+          "nprobe": 4
+        },
+        {
+          "name": "tfidf-similarity-k3",
+          "representation": "tfidf",
+          "index": "sparse",
+          "mode": "similarity",
+          "k": 3,
+          "fetch_k": 10,
+          "mmr_lambda": 0.7,
+          "hnsw_m": 16,
+          "ef_construction": 100,
+          "ef_search": 32,
+          "nlist": 32,
+          "nprobe": 4
+        },
+        {
+          "name": "tfidf-similarity-k5",
+          "representation": "tfidf",
+          "index": "sparse",
+          "mode": "similarity",
+          "k": 5,
+          "fetch_k": 10,
+          "mmr_lambda": 0.7,
+          "hnsw_m": 16,
+          "ef_construction": 100,
+          "ef_search": 32,
+          "nlist": 32,
+          "nprobe": 4
+        },
+        {
+          "name": "tfidf-mmr-k1",
+          "representation": "tfidf",
+          "index": "sparse",
+          "mode": "mmr",
+          "k": 1,
+          "fetch_k": 10,
+          "mmr_lambda": 0.7,
+          "hnsw_m": 16,
+          "ef_construction": 100,
+          "ef_search": 32,
+          "nlist": 32,
+          "nprobe": 4
+        },
+        {
+          "name": "tfidf-mmr-k3",
+          "representation": "tfidf",
+          "index": "sparse",
+          "mode": "mmr",
+          "k": 3,
+          "fetch_k": 10,
+          "mmr_lambda": 0.7,
+          "hnsw_m": 16,
+          "ef_construction": 100,
+          "ef_search": 32,
+          "nlist": 32,
+          "nprobe": 4
+        },
+        {
+          "name": "tfidf-mmr-k5",
+          "representation": "tfidf",
+          "index": "sparse",
+          "mode": "mmr",
+          "k": 5,
+          "fetch_k": 10,
+          "mmr_lambda": 0.7,
+          "hnsw_m": 16,
+          "ef_construction": 100,
+          "ef_search": 32,
+          "nlist": 32,
+          "nprobe": 4
+        }
+      ]
+    },
+    "dataset": {
+      "schema_version": 1,
+      "id": "evalforge/regression",
+      "version": "1.0.0",
+      "split": "regression",
+      "role": "regression",
+      "origin": "Inherited repository ragas_corpus.json and ragas_eval.jsonl",
+      "license": "MIT repository fixture; inherited labels, not independent human ground truth",
+      "corpus_count": 20,
+      "query_count": 22,
+      "qrel_count": 23,
+      "files": {
+        "corpus": {
+          "path": "corpus.jsonl",
+          "sha256": "f1cbeb7c65a7f2d97cec375513bdf67fb63c6391704227e7e7f33f1677c5be5b"
+        },
+        "queries": {
+          "path": "queries.jsonl",
+          "sha256": "4c88279e34f68b53ea0e83710f4a1d4cb1c0027f25912150c0b26dedf27be89c"
+        },
+        "qrels": {
+          "path": "qrels.tsv",
+          "sha256": "e8e311e08112911a3f2e5abddbd35f941b07508367603cc8842a997501052da0"
+        }
+      },
+      "positive_qrel_count": 23,
+      "queries_without_positives": 0
+    }
+  },
+  "expected": {
+    "tfidf-similarity-k1-n20": {
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "quality": {
+        "recall": 0.9318181818181818,
+        "precision": 0.9545454545454546,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9545454545454546,
+        "hit_rate": 0.9545454545454546
+      }
+    },
+    "tfidf-similarity-k3-n20": {
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "quality": {
+        "recall": 0.9545454545454546,
+        "precision": 0.33333333333333326,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9508963995067358,
+        "hit_rate": 0.9545454545454546
+      }
+    },
+    "tfidf-similarity-k5-n20": {
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "quality": {
+        "recall": 0.9545454545454546,
+        "precision": 0.20000000000000007,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9508963995067358,
+        "hit_rate": 0.9545454545454546
+      }
+    },
+    "tfidf-mmr-k1-n20": {
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "quality": {
+        "recall": 0.9318181818181818,
+        "precision": 0.9545454545454546,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9545454545454546,
+        "hit_rate": 0.9545454545454546
+      }
+    },
+    "tfidf-mmr-k3-n20": {
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "quality": {
+        "recall": 0.9318181818181818,
+        "precision": 0.3181818181818181,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9369612360347936,
+        "hit_rate": 0.9545454545454546
+      }
+    },
+    "tfidf-mmr-k5-n20": {
+      "corpus_count": 20,
+      "query_count": 22,
+      "scored_query_count": 22,
+      "corpus_ids_sha256": "5b27f1483e4e07e13ed6f426fd7219279d365a261f454ec350fea90bd818906f",
+      "query_ids_sha256": "74c33ef97246cabb38d02e7b2cf92ea5e6d35c115bbcc5efc71e4340e9c0d67d",
+      "quality": {
+        "recall": 0.9318181818181818,
+        "precision": 0.19090909090909094,
+        "mrr": 0.9545454545454546,
+        "ndcg": 0.9369612360347936,
+        "hit_rate": 0.9545454545454546
+      }
+    }
+  }
+}

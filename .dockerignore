@@ -34,3 +34,6 @@ reports
 .venv*
 .cache
 .mypy_cache
+
+data
+artifacts

@@ -73,3 +73,23 @@ This structure keeps each pipeline concern isolated to a module while `main.py` 
 ## Runtime boundaries
 
 The guardrail is optional and disabled by default. Deferred evaluation returns pending fields without a result-polling endpoint; select sync mode to consume completed scores. FAISS indexes are process-local, and save/load is explicit. API startup does not restore a persisted index. The README diagram describes implemented stages only; the roadmap is separate.
+
+## Retrieval experiment path (unreleased upgrade)
+
+```mermaid
+flowchart TD
+  C[Strict JSON or YAML config] --> D[Hashed BEIR-compatible dataset manifest]
+  D --> V[Validate IDs, split roles and graded qrels]
+  V --> S[Real-document corpus subsets]
+  S --> E[Corpus-only TF-IDF or pinned CPU MiniLM]
+  E --> I[Sparse exact or FAISS flat/HNSW/IVF]
+  I --> R[Lookup and optional MMR]
+  R --> M[Versioned ranking metrics per query]
+  M --> B[Paired query bootstrap]
+  I --> P[Build, artifact, RSS and warm query measurements]
+  B --> A[JSON artifacts and comparison report]
+  P --> A
+  A --> G[Versioned deterministic fixture gate]
+```
+
+This path does not call an LLM or replace `RAGPipeline`. Dataset text and qrels stay separate from trace metadata. Experiment IDs link privacy-safe stage spans to file artifacts. See [experiments](EXPERIMENTS.md), [datasets](DATASETS.md), and [measured results](SCIFACT_RESULTS.md).

@@ -118,3 +118,7 @@ reports/
 .ruff_cache/
 .venv*/
 .graphify_python
+
+# Downloaded benchmark data and model caches
+/data/
+/artifacts/

@@ -11,7 +11,7 @@ import time
 from config import GeneratorConfig
 from llm_client import LLMClient
 from models import RetrievedChunk, GeneratorOutput
-from telemetry import add_counter, get_or_create_correlation_id, record_histogram
+from telemetry import add_counter, get_or_create_correlation_id, record_histogram, start_span
 
 logger = logging.getLogger(__name__)
 
@@ -41,8 +41,9 @@ class Generator:
                 context_token_estimate=0,
             )
 
-        selected_chunks, token_estimate, truncated_count = self._select_context_with_budget(context_chunks)
-        context_block = self._build_context(selected_chunks)
+        with start_span("rag.context_construction", {"context.input_count": len(context_chunks)}, "rag.generator"):
+            selected_chunks, token_estimate, truncated_count = self._select_context_with_budget(context_chunks)
+            context_block = self._build_context(selected_chunks)
 
         warnings = []
         if truncated_count > 0:
