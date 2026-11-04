@@ -6,6 +6,24 @@ An extensible machine learning evaluation platform for benchmarking retrieval-au
 
 Version **0.1.0 foundation + unreleased retrieval infrastructure upgrade** · Maintainer: **Pratham Pathak** · [Repository](https://github.com/Prathampthk/evalforge-ml) · [MIT license](LICENSE)
 
+## Retrieval serving and performance engineering
+
+EvalForge now includes an LLM-free FastAPI retrieval service, concurrent HTTP load tests, and atomic versioned FAISS snapshots shared safely across workers. [Measured HTTP results](docs/SERVING_PERFORMANCE.md): **36,000 real MiniLM retrieval requests, zero errors**, with full embedding/search/HTTP stage distributions. On one CPU host, two workers at 16 concurrent clients delivered **362.8 successful requests/s**, P50/P95/P99 **51.61/81.08/121.15 ms**. This is a short loopback load test, not a production capacity claim; the old sub-millisecond lookup results remain separately labeled.
+
+[Cross-domain experiments](docs/CROSS_DOMAIN_RESULTS.md) compare TF-IDF, dense exact, HNSW and IVF with explicit dataset versions/exclusions. [Snapshot consistency](docs/SNAPSHOT_CONSISTENCY.md) covers concurrent ingestion, pinned readers, checksums, CAS conflicts and restart/crash recovery. See the [audit](docs/PERFORMANCE_AUDIT.md) for validation and limitations.
+
+```bash
+python -m pip install -r requirements-experiments.txt -r requirements-serving.txt
+python -m evaluation.prepare_dataset --dataset scifact --output data/scifact
+python -m evaluation.prepare_model
+OMP_NUM_THREADS=1 python -m serving.build_snapshot --manifest data/scifact/test.manifest.json --output artifacts/serving-new
+# Set a unique bearer token before exposing the service:
+export EVALFORGE_SNAPSHOT_DIR=artifacts/serving-new
+python -m uvicorn serving.api:app --workers 2 --host 127.0.0.1 --port 8000
+```
+
+The new app exposes authenticated `POST /retrieve` (`query`, `k`) and `POST /documents` (`documents: [{id,text}]`, optional `expected_version`). Every retrieval reports its snapshot version and stage timings. The legacy `api:app` remains available. On macOS, read the [native runtime setup](docs/SERVING_PERFORMANCE.md#reproduce) before building/loading real embeddings.
+
 ## Overview and motivation
 
 EvalForge extends an existing Python RAG implementation with versioned relevance datasets, tested ranking metrics, controlled lexical/dense experiments, index scaling measurements, and paired statistical comparisons. Its focus is retrieval relevance and quality/performance tradeoffs; asynchronous LLM job scheduling belongs to AgentEval. The inherited RAG serving and answer-evaluation paths remain available, with upstream attribution retained.
@@ -168,7 +186,7 @@ Export `RAG_API_TOKEN` in your shell for these curl commands; `.env` loading ins
 docker compose up --build
 ```
 
-The image is `evalforge-ml:0.1.0`. Existing Compose service/network/container identifiers are preserved. The container entrypoint defaults to four workers, each with an independent in-memory index. For ingestion/query consistency in local use, run one worker via `docker compose run --rm --service-ports -e GUNICORN_WORKERS=1 rag-api`. A mounted volume alone does not synchronize indexes or automatically save/restore them. See [deployment notes](docs/DEPLOYMENT.md).
+The image is `evalforge-ml:0.1.0`. Existing Compose service/network/container identifiers are preserved. The legacy container entrypoint now defaults to one worker. Multiple legacy workers require explicit pinned shared-snapshot mode; a mounted volume alone does not synchronize the legacy index. The separate `Dockerfile.retrieval` runs the new snapshot-aware retrieval app with two workers. See [deployment notes](docs/DEPLOYMENT.md).
 
 ## Running evaluation benchmarks
 
@@ -225,7 +243,7 @@ python -m flake8 .
 python -m mypy
 ```
 
-The pre-upgrade baseline was 72 passed / 24 skipped. The upgrade isolates API startup with mocks so those contract tests run without credentials; explicit in-memory exporters validate telemetry. Use `OMP_NUM_THREADS=1` on the local macOS validation host to avoid the native threading crash observed in the initial audit. See [current validation and measurements](docs/SCIFACT_RESULTS.md). Python 3.11 CI and Docker runtime execution remain separate validation tasks.
+The pre-upgrade baseline was 72 passed / 24 skipped. The upgrade isolates API startup with mocks so those contract tests run without credentials; explicit in-memory exporters validate telemetry. The current local suite passes 169 tests with no skips. For real-model macOS runs, also follow the native-runtime setup in [serving methodology](docs/SERVING_PERFORMANCE.md). See the [performance audit](docs/PERFORMANCE_AUDIT.md) for current CI and Docker evidence.
 
 Tests exercise loading, embeddings, vector indexes, retrieval, agents, runtime behavior, telemetry, evaluation, and API behavior. Many substitute fake models/clients. CI now includes the API contract tests and a versioned deterministic retrieval regression gate. The larger SciFact workflow runs separately, manually or monthly. See [testing](docs/TESTING.md) and the [release audit](docs/RELEASE_AUDIT.md) for actual validation results and limitations.
 
@@ -257,7 +275,7 @@ The retrieval infrastructure upgrade implements versioned data, lexical/dense/AN
 
 ## Project status
 
-**v0.1.0 foundation with an unreleased retrieval-infrastructure upgrade.** Configuration-driven, provenance-rich retrieval experiments and small-fixture regression gates are implemented. Production readiness, cross-model inference optimization, multi-domain generalization, and independently validated LLM judgments remain future work. See [release notes](CHANGELOG.md) and [release audit](docs/RELEASE_AUDIT.md) before publishing.
+**v0.1.0 foundation with an unreleased retrieval-infrastructure upgrade.** Configuration-driven, provenance-rich retrieval experiments and small-fixture regression gates are implemented. Production readiness, cross-model inference optimization, multi-seed generalization, and independently validated LLM judgments remain future work. Measured domain comparisons and HTTP load tests are documented above. See [release notes](CHANGELOG.md) and [release audit](docs/RELEASE_AUDIT.md) before publishing.
 
 ## License and acknowledgements
 

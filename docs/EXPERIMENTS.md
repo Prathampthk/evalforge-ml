@@ -77,7 +77,7 @@ Validation includes hand calculations and exhaustive permutations against scikit
 
 Prespecified comparisons use the first declared configuration at each K as a lexical reference, plus exact dense similarity as the reference for dense MMR/HNSW/IVF. All pairs require identical evaluated query IDs. Differences are right minus left per query. For each metric, resample paired query differences with replacement 2,000 times, seed 42; report mean difference and 2.5/97.5 percentiles. Do not resample timing repetitions as independent quality observations.
 
-Intervals describe this query sample under an IID-query approximation. They are exploratory, unadjusted for multiple comparisons, and do not establish a universal ranking or production significance. Queries may be correlated by scientific topic. The 22-query fixture is too small for a strong generalization claim. Multi-seed/index-build studies and other domains remain future work. Runtime repeated trials estimate warm timing noise, not stochastic relevance uncertainty.
+Intervals describe this query sample under an IID-query approximation. They are exploratory, unadjusted for multiple comparisons, and do not establish a universal ranking or production significance. Queries may be correlated by scientific topic. The 22-query fixture is too small for a strong generalization claim. Multi-seed/index-build studies remain future work; additional measured domains and their derived dataset conditions are documented in [cross-domain results](CROSS_DOMAIN_RESULTS.md). Runtime repeated trials estimate warm timing noise, not stochastic relevance uncertainty.
 
 ## Artifacts and integrity
 
@@ -102,3 +102,21 @@ Retrieval relevance uses qrels; context utility/coverage uses judge-based RAGAS 
 ## Observability
 
 `--trace-exporter console` or `otlp` enables export using existing telemetry configuration. Retrieval-only stages include preprocessing, encoding, index build, lookup, MMR, and metric scoring. Experiment/run IDs connect traces to artifacts. Existing RAG spans cover embedding, retrieval, generation/LLM and evaluation; context construction now has a span. Attributes include counts/model/config identities, not raw questions/documents. Exception events expose exception type only, not potentially sensitive messages. In-memory exporter tests verify attribute propagation and privacy. Live collector/dashboard deployment is not validated by these tests.
+
+## End-to-end serving, load and index lifecycle
+
+The original SciFact bundles remain byte unchanged. New [HTTP measurements](SERVING_PERFORMANCE.md) execute real MiniLM inference for every request through FastAPI and retain 36,000 raw client/stage observations. These are separate from this document's warm pre-encoded index measurements. `evaluation.http_load` reports closed-loop throughput, P50/P95/P99, errors and sampled server sum RSS, plus encoder lock wait, inference, lookup, processing and an explicitly mixed transport/client residual. Empty HTTP controls do not isolate physical network latency. No LLM call is included.
+
+`serving.build_snapshot` prepares a hash-verified immutable exact index; [snapshot publication semantics](SNAPSHOT_CONSISTENCY.md) define update visibility, process crash recovery, model compatibility and local-filesystem limits. `evaluation.serving_checks` verifies real two-process HTTP updates/reads/restarts; `evaluation.docker_check` repeats them in a disposable container/volume. The hash encoder is explicitly integration-only, never evidence for dense semantic accuracy or model throughput.
+
+Reproduce additional domains with explicit downloads and new output directories:
+
+```bash
+python -m evaluation.prepare_dataset --dataset arguana --output data/arguana
+python -m evaluation.prepare_dataset --dataset fiqa --output data/fiqa
+OMP_NUM_THREADS=1 python -m evaluation.experiment --config configs/experiments/arguana.json --output evaluation/reports/arguana-new
+OMP_NUM_THREADS=1 python -m evaluation.experiment --config configs/experiments/fiqa.json --output evaluation/reports/fiqa-new
+python -m evaluation.docker_check --output reports/docker-integration.json
+```
+
+See [dataset exclusions and licenses](DATASETS.md), [cross-domain measurements](CROSS_DOMAIN_RESULTS.md), and [current validation status](PERFORMANCE_AUDIT.md). Dense runs remain offline/pinned after model preparation. ArguAna/FiQA have one warm serial repetition, explicitly recorded in their configs, versus three in the preserved SciFact study. Neither implies concurrent HTTP performance. Source snapshots and hashes preserve exact dirty-tree code used for measured runs, even when later maintenance changes the repository.

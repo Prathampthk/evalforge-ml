@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "dataset": "../../data/arguana/test.manifest.json",
+  "corpus_sizes": [
+    0
+  ],
+  "repeats": 1,
+  "warmup": 1,
+  "threads": 1,
+  "seed": 42,
+  "bootstrap_samples": 2000,
+  "configurations": [
+    {
+      "name": "tfidf-exact",
+      "representation": "tfidf",
+      "index": "sparse",
+      "k": 10
+    },
+    {
+      "name": "dense-flat",
+      "representation": "dense",
+      "index": "flat",
+      "k": 10
+    },
+    {
+      "name": "dense-hnsw",
+      "representation": "dense",
+      "index": "hnsw",
+      "k": 10,
+      "hnsw_m": 16,
+      "ef_search": 32,
+      "ef_construction": 100
+    },
+    {
+      "name": "dense-ivf",
+      "representation": "dense",
+      "index": "ivf",
+      "k": 10,
+      "nlist": 16,
+      "nprobe": 4
+    }
+  ]
+}

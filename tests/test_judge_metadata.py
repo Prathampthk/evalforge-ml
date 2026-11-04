@@ -74,15 +74,22 @@ def test_resume_rejects_stale_dataset_before_scoring(tmp_path):
 
 
 def test_installed_ragas_judge_integrations_import():
-    # Exercise the real imports: do not let lazy cache validation conceal dependency drift.
-    from ragas import evaluate, EvaluationDataset, RunConfig
-    from ragas.cost import get_token_usage_for_openai
-    from ragas.metrics import Faithfulness, ResponseRelevancy, LLMContextPrecisionWithReference, LLMContextRecall
-    from langchain_community.chat_models.vertexai import ChatVertexAI
-    from langchain_openai import ChatOpenAI
+    # RAGAS imports nest_asyncio, which globally patches the loop. Verify real imports in an
+    # isolated interpreter so this smoke test cannot alter later FastAPI/AnyIO tests.
+    import subprocess
+    import sys
 
-    assert callable(evaluate)
-    assert callable(get_token_usage_for_openai)
-    assert EvaluationDataset and RunConfig and ChatVertexAI and ChatOpenAI
-    metrics = [Faithfulness(), ResponseRelevancy(), LLMContextPrecisionWithReference(), LLMContextRecall()]
-    assert len(prompt_manifest(metrics)) == 5
+    code = """
+from ragas import evaluate, EvaluationDataset, RunConfig
+from ragas.cost import get_token_usage_for_openai
+from ragas.metrics import Faithfulness, ResponseRelevancy, LLMContextPrecisionWithReference, LLMContextRecall
+from langchain_community.chat_models.vertexai import ChatVertexAI
+from langchain_openai import ChatOpenAI
+from evaluation.judge_metadata import prompt_manifest
+assert callable(evaluate) and callable(get_token_usage_for_openai)
+assert EvaluationDataset and RunConfig and ChatVertexAI and ChatOpenAI
+metrics = [Faithfulness(), ResponseRelevancy(), LLMContextPrecisionWithReference(), LLMContextRecall()]
+assert len(prompt_manifest(metrics)) == 5
+"""
+    result = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, timeout=60)
+    assert result.returncode == 0, result.stderr

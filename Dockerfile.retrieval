@@ -1,0 +1,19 @@
+FROM python:3.11-slim
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false
+ENV EVALFORGE_SNAPSHOT_DIR=/data/snapshots EVALFORGE_MODEL_CACHE=/models TELEMETRY_EXPORTER=none
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 curl \
+    && rm -rf /var/lib/apt/lists/*
+COPY requirements-serving.txt .
+# CPU wheels avoid downloading unused CUDA libraries on CPU deployment/CI hosts.
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir -r requirements-serving.txt
+COPY config.py models.py vector_store.py telemetry.py ./
+COPY serving ./serving
+COPY evaluation/__init__.py evaluation/prepare_model.py ./evaluation/
+RUN groupadd -g 1000 app && useradd -m -u 1000 -g app app \
+    && mkdir /data /models && chown -R app:app /data /models
+USER app
+EXPOSE 8000
+HEALTHCHECK --interval=10s --timeout=5s --retries=10 CMD curl -fsS http://127.0.0.1:8000/health || exit 1
+CMD ["python", "-m", "uvicorn", "serving.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]

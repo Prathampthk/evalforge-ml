@@ -1,0 +1,14 @@
+# Retrieval-only container; LLM/RAGAS packages are intentionally not part of this runtime.
+faiss-cpu>=1.7.4
+numpy>=1.24
+pydantic>=2.5
+python-dotenv>=1
+fastapi>=0.100
+uvicorn[standard]>=0.24
+sentence-transformers>=2.7
+scikit-learn>=1.4,<2
+psutil>=5.9,<8
+httpx>=0.25
+opentelemetry-api>=1.24
+opentelemetry-sdk>=1.24
+opentelemetry-exporter-otlp-proto-http>=1.24

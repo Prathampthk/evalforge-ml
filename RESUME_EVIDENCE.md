@@ -1,58 +1,41 @@
 # EvalForge resume evidence
 
-This file links claims to implementation, tests, commands, data, actual results and limits. The project extends an inherited RAG foundation; the upstream copyright/license are preserved. New retrieval infrastructure does not imply independent authorship of inherited RAG components.
+Claims below refer to actual implementation and measurements. EvalForge extends an inherited RAG foundation; original copyright and required attribution remain. New work does not establish independent authorship of inherited components.
 
-## Reproducible retrieval benchmarking
+## Reproducible quality and indexing experiments
 
-**Supported claim:** Implemented versioned retrieval experiments comparing six configurations over three real corpus sizes (18 configuration/size results) on BEIR SciFact, with 5,183 documents, 300 test queries and 339 positive judgments.
+Implemented versioned datasets/configs, graded Recall/MRR/NDCG/Precision/Hit Rate, paired query bootstrap intervals, lexical TF-IDF and pinned MiniLM exact/HNSW/IVF comparisons. The original 18 SciFact configuration/scale rows (5,183 full-corpus documents, 300 test queries) reproduced identical quality twice and remain unchanged in [frozen SciFact evidence](docs/SCIFACT_RESULTS.md).
 
-- Implementation: [dataset loader](evaluation/retrieval_data.py), [bounded preparer](evaluation/prepare_dataset.py), [strict config](evaluation/experiment_config.py), [runner](evaluation/experiment.py), [versioned metrics](evaluation/ranking.py).
-- Tests: [dataset integrity](tests/test_retrieval_data.py), [independent ranking reference](tests/test_ranking_v2.py), [deterministic runner/config/persistence](tests/test_experiments.py).
-- Command: `OMP_NUM_THREADS=1 python -m evaluation.experiment --config configs/experiments/scifact.json --output evaluation/reports/scifact-new` after explicit dataset/model preparation.
-- Data: [origin/licenses/splits](docs/DATASETS.md); [frozen test manifest](docs/benchmarks/scifact-v1/test.manifest.json).
-- Result: [complete report](docs/benchmarks/scifact-v1/report.json), [tables](docs/SCIFACT_RESULTS.md). All 18 quality and ANN-agreement results reproduced identically across two complete runs.
-- Limits: one domain/model/seed; smaller subsets deliberately retain all judged positives and sample real distractors. They are not independent external datasets. Test parameters were prespecified, not tuned against held-out scores.
+SciFact exact dense Recall@10 is **78.33%** versus **73.19%** TF-IDF (+5.14 percentage points), NDCG 0.6451 versus 0.5924. HNSW warm **pre-encoded** P95 index-query latency is 0.055 ms versus 0.235 ms flat (4.25x lower), with **97.87% exact-neighbor agreement** and 78.00% qrel recall. These timings exclude embedding and HTTP; do not describe them as end-to-end latency or production speedup. [Raw reports, per-query observations, paired intervals and conditions](docs/benchmarks/scifact-v1/report.json) support those numbers.
 
-## Retrieval relevance improvement on the measured dataset
+New completed [ArguAna results](docs/benchmarks/arguana-v1/report.json) compare four methods over **8,674 documents / 1,401 valid queries**: exact dense Recall@10 **79.30%**, TF-IDF **69.31%**; HNSW **79.16%** qrel recall and **99.69%** exact-neighbor agreement. Five original qrels reference absent documents and are explicitly excluded. See [cross-domain results](docs/CROSS_DOMAIN_RESULTS.md), [dataset terms/exclusions](docs/DATASETS.md), and [reproduction commands](docs/EXPERIMENTS.md). FiQA inventory is validated separately; quality/performance claims require its COMPLETE published report.
 
-**Supported claim:** Dense exact Recall@10 measured 78.33%, versus 73.19% TF-IDF (+5.14 percentage points); NDCG@10 measured 0.6451 versus 0.5924.
+Code: `evaluation/retrieval_data.py`, `prepare_dataset.py`, `experiment_config.py`, `experiment.py`, `search_backends.py`, `ranking.py`, `statistics.py`. Independent ranking reference tests, strict integrity checks, reload verification, self-match exclusion and deterministic fixture gate cover correctness. Limits: one pinned model/seed, incomplete labels, exploratory unadjusted intervals, no BM25/hybrid or training-contamination audit. Do not claim universal quality superiority.
 
-- Implementation: [sparse lexical/FAISS adapters](evaluation/search_backends.py), [paired bootstrap](evaluation/statistics.py), [experiment config](configs/experiments/scifact.json).
-- Tests: [ranking correctness](tests/test_ranking_v2.py), [paired statistics](tests/test_statistics_and_gate.py), [search consistency](tests/test_experiments.py).
-- Command/data: same SciFact full-corpus experiment above; identical 300 queries, corpus and qrels, K=10.
-- Result: rows `tfidf-exact-n5183` and `dense-flat-n5183` in the [raw report](docs/benchmarks/scifact-v1/report.json); [per-query dense evidence](docs/benchmarks/scifact-v1/queries/dense-flat-n5183.json). Recall difference paired 95% CI [+0.09,+10.32] percentage points using 2,000 query-resampling draws, seed 42.
-- Limits: exploratory unadjusted intervals, incomplete judgments and possible query correlation. Do not claim a universal 5.14-point improvement, generated-answer accuracy, or statistical superiority across retrieval tasks. MiniLM is not a scientifically specialized or newly trained model here.
+## Actual end-to-end HTTP load
 
-## Index quality/performance tradeoff
+[36,000 real MiniLM FastAPI retrieval requests](docs/SERVING_PERFORMANCE.md), six closed-loop cases, 6,000 per case, **zero request errors**. Two workers at 16 concurrent clients measured **362.8 successful requests/s**, P50/P95/P99 **51.61 / 81.08 / 121.15 ms** on one macOS CPU host. One worker at that concurrency measured 261.3 QPS; observed throughput ratio 1.39x. Every case evaluated all 300 SciFact queries and preserved exact dense Recall@10 **78.33%**.
 
-**Supported claim:** On the full corpus, HNSW reduced measured warm pre-encoded P95 index-query latency from 0.235 ms (flat) to 0.055 ms (about 4.25x lower), retaining 97.87% exact-neighbor Recall@10 and 78.00% qrel Recall@10.
+Code: `serving/api.py`, `serving/embedding.py`, `evaluation/http_load.py`. [Raw requests, runtime, source hashes and summary](docs/benchmarks/serving-v1/report.json) separate embedding, encoder contention, lookup, processing, server envelope and HTTP/client residual. Server sum RSS sampled every 50 ms; report retains all six peaks. Quantiles of components are not additive. Loopback short windows, one host/model, warm startup excluded, no LLM, no WAN/TLS or production traffic, not a capacity/SLA claim. Residual is not pure physical network latency; repeat requests are not independent relevance judgments.
 
-- Implementation: [index builders/search](evaluation/search_backends.py), [performance and exact-reference evaluation](evaluation/experiment.py).
-- Tests: parametrized exact/HNSW/IVF construction, serialization/reload, dimensions, tie handling and search consistency in [test_experiments.py](tests/test_experiments.py).
-- Command/data: same pinned MiniLM representations, full 5,183-document SciFact corpus and 300 queries, single CPU/FAISS thread; HNSW M=16, efConstruction=100, efSearch=32.
-- Result: `dense-flat-n5183` versus `dense-hnsw-n5183` [report rows and paired intervals](docs/SCIFACT_RESULTS.md). Raw per-query timing trials are retained. These exact latency values are from the predesignated second run, not a best-of-run selection.
-- Limits: lookup excludes embedding generation, corpus build, network and LLM generation. Warm serial microbenchmark on one host, not end-to-end service latency, concurrent throughput, production SLA, or isolated timing hardware. Exact-to-HNSW qrel recall changed by -0.33 points (paired CI [-1.00,0.00]); do not call approximate search lossless.
+## Multi-worker FAISS consistency and recovery
 
-## Automated regression and observability
+Implemented immutable hash-verified snapshots with model fingerprint, cross-process writer lock, full-copy build, fsynced atomic CURRENT activation, request-pinned readers, automatic refresh/restart restore and stale-version HTTP 409. [Contract/tradeoffs](docs/SNAPSHOT_CONSISTENCY.md). Legacy RAG defaults to one worker and requires explicit pinned shared mode for multiple workers.
 
-**Supported claim:** Expanded validation to 153 passing automated tests with no skips, adding versioned deterministic retrieval gates and privacy-safe experiment-correlated stage traces.
+Tests: `tests/test_shared_snapshots.py`, `test_serving_api.py`, `test_serving_processes.py`, `test_shared_rag_pipeline.py`. Real two-process HTTP tests perform 12 concurrent additions and 40 reads during writes, verify all 13 IDs on both workers, stale CAS, and restart. Abrupt writer exit before activation preserves the prior committed snapshot and permits the next writer to commit. Test-hash embeddings validate mechanics, not semantic quality. POSIX local filesystem only, O(n) rebuild/update, no automatic GC/deletion or distributed replication; do not claim power-loss or production fault tolerance.
 
-- Implementation: [retrieval gate](evaluation/retrieval_gate.py), [frozen baseline](evaluation/baselines/regression-v1.json), [normal CI](.github/workflows/ci.yml), [separate public workflow](.github/workflows/retrieval-benchmark.yml), [telemetry](telemetry.py), [context construction](generator.py).
-- Tests: [gate failure/reproducibility](tests/test_statistics_and_gate.py), [actual in-memory spans/privacy](tests/test_experiment_telemetry.py), [credential-free mocked API contracts](tests/test_api.py), plus the existing and new full suite.
-- Command: `OMP_NUM_THREADS=1 python -m pytest tests/ -q`; regression command and gate in [methodology](docs/EXPERIMENTS.md).
-- Result: 153 passed, 0 skipped, 20 deprecation warnings. Baseline before this upgrade was 72 passed/24 skipped; the upgrade enables those 24 tests and adds 57 test cases. The original preceding extension included 12 benchmark tests and remains preserved. Formatting, linting, typing, Bandit and dependency checks pass locally.
-- Limits: tests isolate models/providers; actual provider calls and deployment are separate. GitHub Actions configuration is implemented but has not been executed from this workspace. In-memory telemetry verification is not a live observability deployment.
+## Validation and CI
 
-## Claims not currently supported
+Current local suite: **169 passed, zero skipped**, 16 dependency deprecation warnings. Black, flake8, mypy (37 source files) and Bandit pass. Deterministic retrieval gate retains the original dataset/config/metric contract. `tests/test_dataset_preparation.py` checks exclusions without altering raw evidence. RAGAS SDK import smoke test runs in a subprocess to prevent its global event-loop patches from contaminating unrelated async tests.
 
-- LLM answer accuracy/faithfulness gains, human-judge agreement, false-positive rates, inference cost savings, GPU speedups, production throughput, concurrent-user capacity, or zero hallucinations.
-- Newly trained dense models, implemented BM25/hybrid baselines, multiple independent benchmark domains, or multi-seed robustness.
-- Treating the old fixed-score fixture evaluator as measured model quality.
+[CI](.github/workflows/ci.yml) adds a real Docker HTTP/update/volume-restart integration job using a clearly labeled synthetic encoder. Local Docker is unavailable; execution must be verified on GitHub before claiming container success. See [audit](docs/PERFORMANCE_AUDIT.md) for latest run evidence. Public benchmark timing is not gated on noisy CI runners.
 
-`run_ragas` preserves answer evaluation with improved provenance/cost accounting; actual measured judge costs, agreement and correctness remain **[unmeasured]** until a credentialed, independently validated run is performed.
+## Resume wording supported by current evidence
 
-## Three resume bullets grounded in this evidence
+- Built a reproducible retrieval evaluation and performance engineering platform with versioned datasets, lexical/dense/ANN comparisons, and a FastAPI service backed by atomic FAISS snapshots.
+- Benchmarked **36,000 end-to-end retrieval requests with zero errors**, measuring **362.8 requests/s and 81.08 ms P95** at 16 concurrent clients across two CPU workers while retaining **78.33% SciFact Recall@10**.
+- Validated concurrent ingestion, cross-worker query consistency and restart/crash recovery with **169 passing tests**, adding dataset-aware regression gates and reproducible Docker integration checks.
 
-- Engineered reproducible retrieval experiments across **300 SciFact queries and 5,183 documents**, comparing **18 configuration/scale combinations** with versioned datasets, graded ranking metrics, and paired bootstrap intervals.
-- Measured a **4.25x reduction in warm pre-encoded P95 index-query latency** using HNSW versus exact FAISS search, retaining **97.87% exact-neighbor Recall@10** on the full SciFact corpus.
-- Expanded regression validation to **153 passing tests** and automated dataset-aware quality gates, instrumenting encoding, index lookup, MMR and scoring with privacy-safe OpenTelemetry experiment traces.
+## Unsupported claims
+
+Production capacity, zero hallucinations, generated-answer accuracy gains, paid judge cost savings, human-judge agreement/false-positive rates, GPU speedups, new model training, long-running memory stability, multi-seed robustness, or unmeasured deployment success. Existing `run_ragas` provenance and optional cost accounting do not replace an actual credentialed and independently validated judge run.

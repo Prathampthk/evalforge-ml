@@ -26,6 +26,7 @@ class EmbeddingConfig:
     device: str = "cpu"  # "cpu" | "cuda"
     batch_size: int = 64
     normalize: bool = True
+    revision: Optional[str] = field(default_factory=lambda: os.getenv("RAG_EMBEDDING_REVISION"))
 
 
 @dataclass(frozen=True)

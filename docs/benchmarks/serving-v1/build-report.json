@@ -1,0 +1,42 @@
+{
+  "version": "0517c0f99a1f4e0a8c0800f91d4e5cd3",
+  "dataset": {
+    "schema_version": 1,
+    "id": "beir/scifact",
+    "version": "beir-md5-5f7d1de60b170fc8027bb7898e2efca1",
+    "archive_sha256": "536e14446a0ba56ed1398ab1055f39fe852686ecad24a6306c80c490fa8e0165",
+    "split": "test",
+    "role": "benchmark",
+    "origin": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/scifact.zip",
+    "license": "Original claims/annotations CC-BY-4.0; abstracts ODC-By-1.0; BEIR card CC-BY-SA-4.0",
+    "license_source": "https://github.com/allenai/scifact/blob/master/LICENSE.md",
+    "preprocessing": "Join title and text with one space; preserve document units; no generated judgments",
+    "files": {
+      "corpus": {
+        "path": "corpus.jsonl",
+        "sha256": "dec31c8182f3d744c7d2c09423756fd1d17cbef75808db13ba01cc0aab4d1ac6"
+      },
+      "queries": {
+        "path": "queries.jsonl",
+        "sha256": "8ff84a7c903f722981cd8d595c022660140c51867b27608a6d4910db86080313"
+      },
+      "qrels": {
+        "path": "qrels/test.tsv",
+        "sha256": "0864bb985e0ca2367ba217977e72004d549054b2b06666ed9d4825ac7c21284c"
+      }
+    },
+    "corpus_count": 5183,
+    "query_count": 300,
+    "qrel_count": 339,
+    "positive_qrel_count": 339,
+    "queries_without_positives": 0
+  },
+  "encoder": {
+    "name": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "max_seq_length": 256,
+    "normalize": true
+  },
+  "corpus_encoding_ms": 59766.27616700716,
+  "snapshot_build_ms": 109.77754100167658
+}

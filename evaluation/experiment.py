@@ -55,7 +55,11 @@ def subset_ids(data: RetrievalDataset, size: int, seed: int) -> list[str]:
 
 
 def provenance() -> dict:
-    paths = sorted(set(Path("evaluation").glob("*.py")) | {Path("telemetry.py"), Path("config.py")})
+    paths = sorted(
+        set(Path("evaluation").glob("*.py"))
+        | set(Path("serving").glob("*.py"))
+        | {Path("telemetry.py"), Path("config.py"), Path("main.py"), Path("embeddings.py")}
+    )
     sources = {str(p): sha256(p) for p in paths}
     try:
         git = shutil.which("git")
@@ -192,12 +196,18 @@ def execute(cfg: ExperimentConfig, data: RetrievalDataset, output: Path, source:
                     for i, qid in enumerate(qids):
                         query = query_vectors[i]
                         for _ in range(cfg.warmup):
-                            index.retrieve(query, experiment_id)
-                        ranked = index.retrieve(query, experiment_id)
+                            index.retrieve(
+                                query, experiment_id, exclude_id=qid if data.metadata.get("exclude_query_id") else None
+                            )
+                        ranked = index.retrieve(
+                            query, experiment_id, exclude_id=qid if data.metadata.get("exclude_query_id") else None
+                        )
                         # Runtime repetitions are stored separately from one quality observation/query.
                         for trial in range(cfg.repeats):
                             started = time.perf_counter()
-                            repeated = index.retrieve(query, experiment_id)
+                            repeated = index.retrieve(
+                                query, experiment_id, exclude_id=qid if data.metadata.get("exclude_query_id") else None
+                            )
                             elapsed = (time.perf_counter() - started) * 1000
                             if repeated != ranked:
                                 raise ValueError("Non-deterministic ranking during timing repetitions")
@@ -212,9 +222,18 @@ def execute(cfg: ExperimentConfig, data: RetrievalDataset, output: Path, source:
                         }
                         rows.append(row)
                         if reference is not None:
-                            _, exact = reference.search(query.reshape(1, -1), min(spec.k, size))
-                            reference_ids = {doc_ids[int(j)] for j in exact[0] if j >= 0}
-                            approximate = {doc_ids[j] for j in index.lookup(query, spec.k)}
+                            exclude = qid if data.metadata.get("exclude_query_id") else None
+                            _, exact = reference.search(
+                                query.reshape(1, -1), min(spec.k + int(exclude is not None), size)
+                            )
+                            reference_ids = {doc_ids[int(j)] for j in exact[0] if j >= 0 and doc_ids[int(j)] != exclude}
+                            # Preserve rank before truncation when removing identical query/document IDs.
+                            reference_ids = set(
+                                [doc_ids[int(j)] for j in exact[0] if j >= 0 and doc_ids[int(j)] != exclude][: spec.k]
+                            )
+                            approximate = set(
+                                index.retrieve(query, experiment_id, mode="similarity", exclude_id=exclude)
+                            )
                             ann_agreement.append(len(reference_ids & approximate) / len(reference_ids))
                     valid = [row for row in rows if row["metrics"] is not None]
                     if not valid:

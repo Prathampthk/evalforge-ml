@@ -6,6 +6,9 @@ Wires every component together and exposes a simple query() method.
 
 from __future__ import annotations
 import logging
+import os
+import re
+from pathlib import Path
 import time
 import contextvars
 from concurrent.futures import ThreadPoolExecutor
@@ -23,6 +26,7 @@ from embeddings import EmbeddingModel
 from vector_store import VectorStore
 from document_loader import DocumentLoader
 from retriever import Retriever
+from serving.snapshots import SnapshotRepository
 from guardrail_agent import GuardrailAgent
 from generator import Generator
 from evaluator_agent import EvaluatorAgent
@@ -51,6 +55,27 @@ class RAGPipeline:
             cast(Any, self._config.vector_store),
             dimension=self._embeddings.dimension,
         )
+        self._snapshot_repository: SnapshotRepository | None = None
+        shared_root = os.getenv("RAG_SHARED_SNAPSHOT_DIR")
+        if shared_root:
+            if self._config.vector_store.index_type != "flat":
+                raise ValueError("Shared RAG snapshots currently require a flat index")
+            if not self._config.embedding.revision or not re.fullmatch(
+                r"[a-f0-9]{40}", self._config.embedding.revision
+            ):
+                raise ValueError("Shared RAG snapshots require a pinned RAG_EMBEDDING_REVISION")
+            self._snapshot_repository = SnapshotRepository(
+                Path(shared_root),
+                {
+                    "name": self._config.embedding.model_name,
+                    "revision": self._config.embedding.revision,
+                    "dimension": self._embeddings.dimension,
+                    "normalize": self._config.embedding.normalize,
+                },
+            )
+            current = self._snapshot_repository.latest()
+            if current:
+                self._vector_store = current.store
         self._loader = DocumentLoader(self._config.chunking)
         self._retriever = Retriever(self._config.retriever, self._embeddings, self._vector_store)
 
@@ -98,7 +123,11 @@ class RAGPipeline:
 
             texts = [c.content for c in chunks]
             embeddings = self._embeddings.embed(texts)
-            self._vector_store.add(chunks, embeddings)
+            if self._snapshot_repository is not None:
+                snapshot = self._snapshot_repository.upsert(chunks, embeddings)
+                self._vector_store = snapshot.store
+            else:
+                self._vector_store.add(chunks, embeddings)
             elapsed_ms = observe_duration(
                 "rag_ingest_latency_ms",
                 t0,
@@ -139,7 +168,14 @@ class RAGPipeline:
             )
 
             with span_context_or_null("rag.retrieve", tracer_name="rag.main") as retrieve_span:
-                retrieved = self._retriever.retrieve(question, top_k=top_k)
+                retriever = self._retriever
+                if self._snapshot_repository is not None:
+                    snapshot = self._snapshot_repository.latest()
+                    if snapshot:
+                        # Pin a request-local reader; never mutate the index used by another request.
+                        retriever = Retriever(self._config.retriever, self._embeddings, snapshot.store)
+                        set_span_attributes(retrieve_span, {"snapshot.version": snapshot.version})
+                retrieved = retriever.retrieve(question, top_k=top_k)
                 set_span_attributes(retrieve_span, {"retrieved.count": len(retrieved)})
             logger.info("  Step 1 (Retrieve): %s chunks", len(retrieved))
 
@@ -260,9 +296,13 @@ class RAGPipeline:
             return fallback, EvaluationStatus.FAILED, str(exc)
 
     def save(self, name: str = "default") -> None:
+        if self._snapshot_repository is not None:
+            raise ValueError("Shared snapshots persist automatically; legacy save is disabled")
         self._vector_store.save(name)
 
     def load(self, name: str = "default") -> None:
+        if self._snapshot_repository is not None:
+            raise ValueError("Shared snapshot mode restores CURRENT automatically; legacy load is disabled")
         self._vector_store.load(name)
 
     def close(self) -> None:
