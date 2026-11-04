@@ -72,7 +72,7 @@ This structure keeps each pipeline concern isolated to a module while `main.py` 
 
 ## Runtime boundaries
 
-The guardrail is optional and disabled by default. Deferred evaluation returns pending fields without a result-polling endpoint; select sync mode to consume completed scores. FAISS indexes are process-local, and save/load is explicit. API startup does not restore a persisted index. The README diagram describes implemented stages only; the roadmap is separate.
+The guardrail is optional and disabled by default. Deferred evaluation returns pending fields without a result-polling endpoint; select sync mode to consume completed scores. Without shared mode, legacy FAISS indexes are process-local, save/load is explicit, and API startup does not restore a persisted index. The new `serving.api:app` and opt-in legacy shared mode publish immutable, hash-verified versions, refresh CURRENT per request, and restore automatically; [snapshot contract](SNAPSHOT_CONSISTENCY.md) defines visibility, locking and restart behavior. The README diagram describes implemented stages only; the roadmap is separate.
 
 ## Retrieval experiment path (unreleased upgrade)
 

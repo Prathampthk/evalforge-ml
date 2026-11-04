@@ -1,0 +1,799 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-04T02:00:21.545720+00:00",
+  "dataset": {
+    "schema_version": 1,
+    "id": "beir/scifact",
+    "version": "beir-md5-5f7d1de60b170fc8027bb7898e2efca1",
+    "archive_sha256": "536e14446a0ba56ed1398ab1055f39fe852686ecad24a6306c80c490fa8e0165",
+    "split": "test",
+    "role": "benchmark",
+    "origin": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/scifact.zip",
+    "license": "Original claims/annotations CC-BY-4.0; abstracts ODC-By-1.0; BEIR card CC-BY-SA-4.0",
+    "license_source": "https://github.com/allenai/scifact/blob/master/LICENSE.md",
+    "preprocessing": "Join title and text with one space; preserve document units; no generated judgments",
+    "files": {
+      "corpus": {
+        "path": "corpus.jsonl",
+        "sha256": "dec31c8182f3d744c7d2c09423756fd1d17cbef75808db13ba01cc0aab4d1ac6"
+      },
+      "queries": {
+        "path": "queries.jsonl",
+        "sha256": "8ff84a7c903f722981cd8d595c022660140c51867b27608a6d4910db86080313"
+      },
+      "qrels": {
+        "path": "qrels/test.tsv",
+        "sha256": "0864bb985e0ca2367ba217977e72004d549054b2b06666ed9d4825ac7c21284c"
+      }
+    },
+    "corpus_count": 5183,
+    "query_count": 300,
+    "qrel_count": 339,
+    "positive_qrel_count": 339,
+    "queries_without_positives": 0
+  },
+  "snapshot_manifest": {
+    "count": 5183,
+    "dimension": 384,
+    "model": {
+      "max_seq_length": 256,
+      "name": "sentence-transformers/all-MiniLM-L6-v2",
+      "normalize": true,
+      "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+    },
+    "parent": null,
+    "schema_version": 1,
+    "sha256": {
+      "chunks.json": "bd496454e1667f0b98df6573afbd99cccf3b812aeeef03a19a66fd29a38cf588",
+      "embeddings.npy": "2a5f34608b421219c7c0db750de77ddd4bfc8293dd2e07cb4a58dbe90a41f7ca",
+      "index.faiss": "c240c620ec59696dd3df7f750b4c787630bf3304069a8f7fdc9016c33204f3e9"
+    },
+    "version": "0517c0f99a1f4e0a8c0800f91d4e5cd3"
+  },
+  "environment": {
+    "python": "3.14.2",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "logical_cpus": 10,
+    "ram_bytes": 17179869184,
+    "dependencies": {
+      "httpx": "0.28.1",
+      "uvicorn": "0.54.0",
+      "fastapi": "0.162.0",
+      "faiss-cpu": "1.15.1",
+      "torch": "2.15.0",
+      "sentence-transformers": "6.2.0"
+    }
+  },
+  "code": {
+    "commit": "e94dbfb1076bbffec64a73179d646322f22cc0de",
+    "working_tree_dirty": true,
+    "source_sha256": {
+      "config.py": "51ba23ada60ff7f0b648a116f4b4d127bede92788566036ca05df64dda29d5bb",
+      "embeddings.py": "63fd27d411810c50ea52811ec7dc3b97b7077fd5376e7a63b9de833399930c51",
+      "evaluation/__init__.py": "4e70d4860f15941941d41c892a5dd299fc0d28983e904195cd63cd97144869fa",
+      "evaluation/compare.py": "46a69554d2215a50f30cf8a8591288945fa1547a87052e7a872a0d14fcd98256",
+      "evaluation/dataset.py": "971d24e06d7977eb94573632c4bfd12e86758f1ed41c0acb4aaf0737788f212d",
+      "evaluation/docker_check.py": "c5fd068818c3d4c7e52c0dd3cf0e97095fb7e897331137ccb69bc5e9bc99a88d",
+      "evaluation/experiment.py": "f724496e70214f285bb89d187599cbfcf73addd4d343daa784e074ae23718d05",
+      "evaluation/experiment_config.py": "9fe41c975d0cb07d9ad096847360e94e1cc323001dbf140a6e408b61f0899c84",
+      "evaluation/http_load.py": "8f7d5b0b2cb73c5edeaa0dd4f48744ceb47e562337a749ea86b5c1a9e8f8f093",
+      "evaluation/judge_metadata.py": "3a2804185c6ce42533f4badb68420898aa5b745ba257cb721a73f7c357371724",
+      "evaluation/prepare_dataset.py": "55ef822ad8837462a54332df7645da02fd8855912dda06f5c36386651acf15a0",
+      "evaluation/prepare_model.py": "fa49dae698822b69f8c04384acd1fb783b0429dcce008c2e9e0536ef96730f3c",
+      "evaluation/quality_gates.py": "4e610d882da1f447fadd1ae8a5fc782fa829714d3893ed2d4bc9a73756999d53",
+      "evaluation/ranking.py": "adbd07b022fdd84ab5f02baa8d3f77622b4537ef184749359d1a993b76c64717",
+      "evaluation/retrieval_benchmark.py": "c593610128a9775de9664ce8f0ef6996af5e1d141490d387f6b9bfcd76ec91cb",
+      "evaluation/retrieval_data.py": "37f12e77c3a46977ae2e0c8d1af5b27cd21a7e586653eb94102447e6dae7cad9",
+      "evaluation/retrieval_gate.py": "93a384d28c61cfcb815426d6adba06949d50a5547760c132b48a1564d88f7dd0",
+      "evaluation/run_eval.py": "29e5fb296ef79ee1b50e29bd17ed468dee72e74ab845916d564fd8e8c48cc492",
+      "evaluation/run_ragas.py": "0f7288e46f50035753bb4f0a1dc34f0fe291904dd1c7616f1412f2a8f6d369e2",
+      "evaluation/search_backends.py": "1d03fa6a8d5ebfa9c135c675ff898304da2ac5d55d1564faeee1d4692cfbfb01",
+      "evaluation/serving_checks.py": "da4660117e3a2b7a73019a9094e7253553aeca35f0cc79176a392d10170279eb",
+      "evaluation/statistics.py": "da416b404388c87f689f61b440c25703298cccb4f21cd4e94e185e2dfc63086b",
+      "main.py": "446d2b38f2ff83bb9ff05b808cb766a6df6f18b0561ee0661d962cc95d3a81aa",
+      "serving/__init__.py": "6f60c3898badbd700109958bc04151cb35ee1133a7eddb912001c56bffede153",
+      "serving/api.py": "d9313bf13db58a281014a21f9446b7a8abb65c2ff3797b49533d9d26e989d996",
+      "serving/build_snapshot.py": "7421467c4c61fa7f4913c8ce0f7fef701ea51dd8b0b333738a06459dc6eafc05",
+      "serving/embedding.py": "20de811d1a04dd928dc899e9e68290f2fd46fcd1a5ea765664567030272fdbf1",
+      "serving/snapshots.py": "b8f00ae4481bd7a68f5ff75f383dceeeb262930c1eb2bfe6f976390c4c6ce1cf",
+      "telemetry.py": "8a17107387f0459ec1fbc642cc8a0356f79441dcd74518baa628435f9d09d6d2"
+    }
+  },
+  "scope": "HTTP loopback closed-loop retrieval including text embedding; excludes ingestion, index build and startup",
+  "limitations": [
+    "Residual combines transport, scheduling and client overhead; it is not pure network latency",
+    "Loopback single-host burst test, not WAN latency, open-loop saturation or production capacity",
+    "Per-process encoder is serialized; embedding_wait measures contention; no LLM call",
+    "Raw samples retained; repeated requests are not independent relevance judgments"
+  ],
+  "results": [
+    {
+      "concurrency": 1,
+      "requests": 6000,
+      "successful": 6000,
+      "errors": 0,
+      "error_rate": 0.0,
+      "duration_seconds": 26.217306207996444,
+      "completed_requests_per_second": 228.85646421484608,
+      "successful_requests_per_second": 228.85646421484608,
+      "client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 4.3555326175240525,
+        "p50_ms": 4.046208494401071,
+        "p95_ms": 6.322605907189428,
+        "p99_ms": 7.7530636549636265
+      },
+      "successful_client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 4.3555326175240525,
+        "p50_ms": 4.046208494401071,
+        "p95_ms": 6.322605907189428,
+        "p99_ms": 7.7530636549636265
+      },
+      "stages": {
+        "embedding": {
+          "count": 6000,
+          "mean_ms": 2.9454689119860027,
+          "p50_ms": 2.8096665046177804,
+          "p95_ms": 3.6778475958271883,
+          "p99_ms": 4.203574340499473
+        },
+        "embedding_wait": {
+          "count": 6000,
+          "mean_ms": 0.00046572623735604185,
+          "p50_ms": 0.0004579924279823899,
+          "p95_ms": 0.0006250047590583563,
+          "p99_ms": 0.0007924124656710864
+        },
+        "faiss_lookup": {
+          "count": 6000,
+          "mean_ms": 0.1998524778561356,
+          "p50_ms": 0.19204198906663805,
+          "p95_ms": 0.2549693992477842,
+          "p99_ms": 0.28833426171331666
+        },
+        "processing": {
+          "count": 6000,
+          "mean_ms": 0.08419745471231484,
+          "p50_ms": 0.07712500519119203,
+          "p95_ms": 0.11550303170224653,
+          "p99_ms": 0.13688415448996258
+        },
+        "handler_total": {
+          "count": 6000,
+          "mean_ms": 3.229984570791809,
+          "p50_ms": 3.0891040005371906,
+          "p95_ms": 3.976133011019556,
+          "p99_ms": 4.558070747298189
+        }
+      },
+      "server_to_headers": {
+        "count": 6000,
+        "mean_ms": 3.620934347602694,
+        "p50_ms": 3.456271006143652,
+        "p95_ms": 4.396547957730945,
+        "p99_ms": 5.6232475741126144
+      },
+      "framework_and_queue": {
+        "count": 6000,
+        "mean_ms": 0.39094977681088494,
+        "p50_ms": 0.3619999988586642,
+        "p95_ms": 0.4283770525944419,
+        "p99_ms": 0.5238859713426793
+      },
+      "transport_framework_client_residual": {
+        "count": 6000,
+        "mean_ms": 0.7345982699213588,
+        "p50_ms": 0.5605005062534474,
+        "p95_ms": 2.2657372050161966,
+        "p99_ms": 3.9542662506573865
+      },
+      "post_load_empty_http_control": {
+        "latency": {
+          "count": 100,
+          "mean_ms": 0.6186504500510637,
+          "p50_ms": 0.6149164983071387,
+          "p95_ms": 0.6601023880648427,
+          "p99_ms": 0.6919983401894589
+        },
+        "errors": 0,
+        "scope": "same-host HTTP stack control; not a pure network measurement"
+      },
+      "memory": {
+        "sampled_peak_sum_rss_bytes": 754810880,
+        "sample_interval_ms": 50,
+        "scope": "server parent plus children summed RSS; shared pages can be double-counted; not client RSS/PSS"
+      },
+      "worker_pids_observed": [
+        37082
+      ],
+      "workers": 1,
+      "quality_query_count": 300,
+      "quality": {
+        "recall": 0.7833333333333333,
+        "precision": 0.08833333333333332,
+        "mrr": 0.6047248677248678,
+        "ndcg": 0.6450816521455774,
+        "hit_rate": 0.7933333333333333
+      }
+    },
+    {
+      "concurrency": 4,
+      "requests": 6000,
+      "successful": 6000,
+      "errors": 0,
+      "error_rate": 0.0,
+      "duration_seconds": 24.052485332998913,
+      "completed_requests_per_second": 249.45447079301505,
+      "successful_requests_per_second": 249.45447079301505,
+      "client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 16.007452085767,
+        "p50_ms": 14.467541492194869,
+        "p95_ms": 24.003894397174008,
+        "p99_ms": 45.98551142800722
+      },
+      "successful_client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 16.007452085767,
+        "p50_ms": 14.467541492194869,
+        "p95_ms": 24.003894397174008,
+        "p99_ms": 45.98551142800722
+      },
+      "stages": {
+        "embedding": {
+          "count": 6000,
+          "mean_ms": 3.9463031325309808,
+          "p50_ms": 3.515541997330729,
+          "p95_ms": 5.717348252073863,
+          "p99_ms": 10.882517498539551
+        },
+        "embedding_wait": {
+          "count": 6000,
+          "mean_ms": 9.505868143028541,
+          "p50_ms": 8.783771001617424,
+          "p95_ms": 13.950219337129965,
+          "p99_ms": 25.460481241898382
+        },
+        "faiss_lookup": {
+          "count": 6000,
+          "mean_ms": 0.6154199926143823,
+          "p50_ms": 0.5560415011132136,
+          "p95_ms": 0.8427624998148531,
+          "p99_ms": 1.5452804282540462
+        },
+        "processing": {
+          "count": 6000,
+          "mean_ms": 0.1719935059203029,
+          "p50_ms": 0.12404150766087696,
+          "p95_ms": 0.2753538690740243,
+          "p99_ms": 0.6968918189522814
+        },
+        "handler_total": {
+          "count": 6000,
+          "mean_ms": 14.239584774094206,
+          "p50_ms": 13.026207998336758,
+          "p95_ms": 20.9245627920609,
+          "p99_ms": 40.00495707703527
+        }
+      },
+      "server_to_headers": {
+        "count": 6000,
+        "mean_ms": 14.92002056624915,
+        "p50_ms": 13.60572899284307,
+        "p95_ms": 21.844502055319026,
+        "p99_ms": 41.39487092761569
+      },
+      "framework_and_queue": {
+        "count": 6000,
+        "mean_ms": 0.680435792154943,
+        "p50_ms": 0.576812497456558,
+        "p95_ms": 1.045141350914492,
+        "p99_ms": 2.0739189116284362
+      },
+      "transport_framework_client_residual": {
+        "count": 6000,
+        "mean_ms": 1.0874315195178497,
+        "p50_ms": 0.7352915054070763,
+        "p95_ms": 2.977125009056182,
+        "p99_ms": 5.1910396758467
+      },
+      "post_load_empty_http_control": {
+        "latency": {
+          "count": 100,
+          "mean_ms": 1.5016775189724285,
+          "p50_ms": 1.2087500072084367,
+          "p95_ms": 2.390556607861072,
+          "p99_ms": 2.4014331607031636
+        },
+        "errors": 0,
+        "scope": "same-host HTTP stack control; not a pure network measurement"
+      },
+      "memory": {
+        "sampled_peak_sum_rss_bytes": 657309696,
+        "sample_interval_ms": 50,
+        "scope": "server parent plus children summed RSS; shared pages can be double-counted; not client RSS/PSS"
+      },
+      "worker_pids_observed": [
+        37082
+      ],
+      "workers": 1,
+      "quality_query_count": 300,
+      "quality": {
+        "recall": 0.7833333333333333,
+        "precision": 0.08833333333333332,
+        "mrr": 0.6047248677248678,
+        "ndcg": 0.6450816521455774,
+        "hit_rate": 0.7933333333333333
+      }
+    },
+    {
+      "concurrency": 16,
+      "requests": 6000,
+      "successful": 6000,
+      "errors": 0,
+      "error_rate": 0.0,
+      "duration_seconds": 22.96456141700037,
+      "completed_requests_per_second": 261.27213540243264,
+      "successful_requests_per_second": 261.27213540243264,
+      "client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 61.14195605667677,
+        "p50_ms": 57.29697900096653,
+        "p95_ms": 81.57386045349995,
+        "p99_ms": 127.62927074974871
+      },
+      "successful_client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 61.14195605667677,
+        "p50_ms": 57.29697900096653,
+        "p95_ms": 81.57386045349995,
+        "p99_ms": 127.62927074974871
+      },
+      "stages": {
+        "embedding": {
+          "count": 6000,
+          "mean_ms": 3.7789108111416376,
+          "p50_ms": 3.467791997536551,
+          "p95_ms": 4.807219052599976,
+          "p99_ms": 9.858630425878811
+        },
+        "embedding_wait": {
+          "count": 6000,
+          "mean_ms": 48.75430871321684,
+          "p50_ms": 45.77422899455996,
+          "p95_ms": 65.94620445321199,
+          "p99_ms": 105.31983658147513
+        },
+        "faiss_lookup": {
+          "count": 6000,
+          "mean_ms": 0.5858233777107671,
+          "p50_ms": 0.5451670003822073,
+          "p95_ms": 0.7141707952541767,
+          "p99_ms": 1.3826564897317455
+        },
+        "processing": {
+          "count": 6000,
+          "mean_ms": 0.29575941528067534,
+          "p50_ms": 0.268916497589089,
+          "p95_ms": 0.4509170103119686,
+          "p99_ms": 0.8206287457142026
+        },
+        "handler_total": {
+          "count": 6000,
+          "mean_ms": 53.41480231734992,
+          "p50_ms": 50.17502050031908,
+          "p95_ms": 71.69788990722736,
+          "p99_ms": 112.74248458066727
+        }
+      },
+      "server_to_headers": {
+        "count": 6000,
+        "mean_ms": 60.00575173660036,
+        "p50_ms": 56.47708350443281,
+        "p95_ms": 80.08793125336524,
+        "p99_ms": 126.22173359064618
+      },
+      "framework_and_queue": {
+        "count": 6000,
+        "mean_ms": 6.59094941925044,
+        "p50_ms": 6.318542000371963,
+        "p95_ms": 8.4807698505756,
+        "p99_ms": 16.00242818210977
+      },
+      "transport_framework_client_residual": {
+        "count": 6000,
+        "mean_ms": 1.1362043200764067,
+        "p50_ms": 0.7199174942797981,
+        "p95_ms": 3.3342904862365685,
+        "p99_ms": 5.760164757230089
+      },
+      "post_load_empty_http_control": {
+        "latency": {
+          "count": 100,
+          "mean_ms": 16.566970849962672,
+          "p50_ms": 13.011187496886123,
+          "p95_ms": 39.06215241077007,
+          "p99_ms": 59.65348334109879
+        },
+        "errors": 0,
+        "scope": "same-host HTTP stack control; not a pure network measurement"
+      },
+      "memory": {
+        "sampled_peak_sum_rss_bytes": 366542848,
+        "sample_interval_ms": 50,
+        "scope": "server parent plus children summed RSS; shared pages can be double-counted; not client RSS/PSS"
+      },
+      "worker_pids_observed": [
+        37082
+      ],
+      "workers": 1,
+      "quality_query_count": 300,
+      "quality": {
+        "recall": 0.7833333333333333,
+        "precision": 0.08833333333333332,
+        "mrr": 0.6047248677248678,
+        "ndcg": 0.6450816521455774,
+        "hit_rate": 0.7933333333333333
+      }
+    },
+    {
+      "concurrency": 1,
+      "requests": 6000,
+      "successful": 6000,
+      "errors": 0,
+      "error_rate": 0.0,
+      "duration_seconds": 30.1309223749995,
+      "completed_requests_per_second": 199.13097665335243,
+      "successful_requests_per_second": 199.13097665335243,
+      "client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 5.0037229828473455,
+        "p50_ms": 4.371083501609974,
+        "p95_ms": 8.050133947836002,
+        "p99_ms": 12.832341499306505
+      },
+      "successful_client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 5.0037229828473455,
+        "p50_ms": 4.371083501609974,
+        "p95_ms": 8.050133947836002,
+        "p99_ms": 12.832341499306505
+      },
+      "stages": {
+        "embedding": {
+          "count": 6000,
+          "mean_ms": 3.2679947803820446,
+          "p50_ms": 2.9504164995159954,
+          "p95_ms": 4.554294098488754,
+          "p99_ms": 8.239392246177891
+        },
+        "embedding_wait": {
+          "count": 6000,
+          "mean_ms": 0.00042736426257761195,
+          "p50_ms": 0.00037500285543501377,
+          "p95_ms": 0.0006250047590583563,
+          "p99_ms": 0.0013334190589375885
+        },
+        "faiss_lookup": {
+          "count": 6000,
+          "mean_ms": 0.2299307243010844,
+          "p50_ms": 0.21008349722251296,
+          "p95_ms": 0.3134663536911831,
+          "p99_ms": 0.5781744897831232
+        },
+        "processing": {
+          "count": 6000,
+          "mean_ms": 0.1157383793106419,
+          "p50_ms": 0.09629249689169228,
+          "p95_ms": 0.17068153683794668,
+          "p99_ms": 0.3543486853595827
+        },
+        "handler_total": {
+          "count": 6000,
+          "mean_ms": 3.6140912482563485,
+          "p50_ms": 3.269229506258853,
+          "p95_ms": 5.0511694054876,
+          "p99_ms": 9.100507088151078
+        }
+      },
+      "server_to_headers": {
+        "count": 6000,
+        "mean_ms": 4.064655260510335,
+        "p50_ms": 3.6809169978369027,
+        "p95_ms": 5.788866656803298,
+        "p99_ms": 10.169103422522362
+      },
+      "framework_and_queue": {
+        "count": 6000,
+        "mean_ms": 0.45056401225398685,
+        "p50_ms": 0.40118750621331856,
+        "p95_ms": 0.622416051919572,
+        "p99_ms": 1.078887507756008
+      },
+      "transport_framework_client_residual": {
+        "count": 6000,
+        "mean_ms": 0.93906772233701,
+        "p50_ms": 0.6275414998526685,
+        "p95_ms": 2.9653576981218084,
+        "p99_ms": 4.737650256283815
+      },
+      "post_load_empty_http_control": {
+        "latency": {
+          "count": 100,
+          "mean_ms": 0.654569140606327,
+          "p50_ms": 0.6302704932750203,
+          "p95_ms": 0.8144583487592172,
+          "p99_ms": 1.1583639225864322
+        },
+        "errors": 0,
+        "scope": "same-host HTTP stack control; not a pure network measurement"
+      },
+      "memory": {
+        "sampled_peak_sum_rss_bytes": 1380663296,
+        "sample_interval_ms": 50,
+        "scope": "server parent plus children summed RSS; shared pages can be double-counted; not client RSS/PSS"
+      },
+      "worker_pids_observed": [
+        37116
+      ],
+      "workers": 2,
+      "quality_query_count": 300,
+      "quality": {
+        "recall": 0.7833333333333333,
+        "precision": 0.08833333333333332,
+        "mrr": 0.6047248677248678,
+        "ndcg": 0.6450816521455774,
+        "hit_rate": 0.7933333333333333
+      }
+    },
+    {
+      "concurrency": 4,
+      "requests": 6000,
+      "successful": 6000,
+      "errors": 0,
+      "error_rate": 0.0,
+      "duration_seconds": 17.188774499998544,
+      "completed_requests_per_second": 349.0650249673418,
+      "successful_requests_per_second": 349.0650249673418,
+      "client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 11.431212234538785,
+        "p50_ms": 12.052354497427586,
+        "p95_ms": 19.291219348087907,
+        "p99_ms": 35.86137332618841
+      },
+      "successful_client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 11.431212234538785,
+        "p50_ms": 12.052354497427586,
+        "p95_ms": 19.291219348087907,
+        "p99_ms": 35.86137332618841
+      },
+      "stages": {
+        "embedding": {
+          "count": 6000,
+          "mean_ms": 4.669810760201169,
+          "p50_ms": 4.1903125020326115,
+          "p95_ms": 6.756302400026471,
+          "p99_ms": 13.474846661265495
+        },
+        "embedding_wait": {
+          "count": 6000,
+          "mean_ms": 3.9429218544076625,
+          "p50_ms": 5.4182495005079545,
+          "p95_ms": 8.726704448781677,
+          "p99_ms": 15.52195000927897
+        },
+        "faiss_lookup": {
+          "count": 6000,
+          "mean_ms": 0.5571011247157003,
+          "p50_ms": 0.6080000021029264,
+          "p95_ms": 0.9326555918960371,
+          "p99_ms": 1.538667422864819
+        },
+        "processing": {
+          "count": 6000,
+          "mean_ms": 0.18315420342211533,
+          "p50_ms": 0.13637501251650974,
+          "p95_ms": 0.26263006002409384,
+          "p99_ms": 0.4812338860938349
+        },
+        "handler_total": {
+          "count": 6000,
+          "mean_ms": 9.352987942746646,
+          "p50_ms": 10.39556250179885,
+          "p95_ms": 16.225290206057252,
+          "p99_ms": 29.113821753417234
+        }
+      },
+      "server_to_headers": {
+        "count": 6000,
+        "mean_ms": 10.110440553803832,
+        "p50_ms": 11.077749994001351,
+        "p95_ms": 17.440886049007535,
+        "p99_ms": 30.968624180095507
+      },
+      "framework_and_queue": {
+        "count": 6000,
+        "mean_ms": 0.7574526110571848,
+        "p50_ms": 0.6484164987341501,
+        "p95_ms": 1.1667642465909014,
+        "p99_ms": 4.3355164906824974
+      },
+      "transport_framework_client_residual": {
+        "count": 6000,
+        "mean_ms": 1.3207716807349545,
+        "p50_ms": 0.902749496162869,
+        "p95_ms": 4.022344049735697,
+        "p99_ms": 5.932795493572489
+      },
+      "post_load_empty_http_control": {
+        "latency": {
+          "count": 100,
+          "mean_ms": 1.53839870064985,
+          "p50_ms": 1.1924999998882413,
+          "p95_ms": 2.386518399725901,
+          "p99_ms": 2.415889578260249
+        },
+        "errors": 0,
+        "scope": "same-host HTTP stack control; not a pure network measurement"
+      },
+      "memory": {
+        "sampled_peak_sum_rss_bytes": 918568960,
+        "sample_interval_ms": 50,
+        "scope": "server parent plus children summed RSS; shared pages can be double-counted; not client RSS/PSS"
+      },
+      "worker_pids_observed": [
+        37115,
+        37116
+      ],
+      "workers": 2,
+      "quality_query_count": 300,
+      "quality": {
+        "recall": 0.7833333333333333,
+        "precision": 0.08833333333333332,
+        "mrr": 0.6047248677248678,
+        "ndcg": 0.6450816521455774,
+        "hit_rate": 0.7933333333333333
+      }
+    },
+    {
+      "concurrency": 16,
+      "requests": 6000,
+      "successful": 6000,
+      "errors": 0,
+      "error_rate": 0.0,
+      "duration_seconds": 16.540138584008673,
+      "completed_requests_per_second": 362.753913428568,
+      "successful_requests_per_second": 362.753913428568,
+      "client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 44.001808410590456,
+        "p50_ms": 51.60647949378472,
+        "p95_ms": 81.0816770994279,
+        "p99_ms": 121.15066325321096
+      },
+      "successful_client_end_to_end": {
+        "count": 6000,
+        "mean_ms": 44.001808410590456,
+        "p50_ms": 51.60647949378472,
+        "p95_ms": 81.0816770994279,
+        "p99_ms": 121.15066325321096
+      },
+      "stages": {
+        "embedding": {
+          "count": 6000,
+          "mean_ms": 5.38836142134096,
+          "p50_ms": 4.929791502945591,
+          "p95_ms": 7.914036843430949,
+          "p99_ms": 12.51925459218913
+        },
+        "embedding_wait": {
+          "count": 6000,
+          "mean_ms": 34.49439031581763,
+          "p50_ms": 37.88960450037848,
+          "p95_ms": 67.29578990198206,
+          "p99_ms": 103.44573242662615
+        },
+        "faiss_lookup": {
+          "count": 6000,
+          "mean_ms": 0.8135903370299881,
+          "p50_ms": 0.7451454948750325,
+          "p95_ms": 1.1370083477231683,
+          "p99_ms": 1.8786985165206749
+        },
+        "processing": {
+          "count": 6000,
+          "mean_ms": 0.19708008262872076,
+          "p50_ms": 0.16364600014640018,
+          "p95_ms": 0.32450206053908914,
+          "p99_ms": 0.6371269084047535
+        },
+        "handler_total": {
+          "count": 6000,
+          "mean_ms": 40.8934221568173,
+          "p50_ms": 45.37243800587021,
+          "p95_ms": 75.35508124274202,
+          "p99_ms": 114.1254699978163
+        }
+      },
+      "server_to_headers": {
+        "count": 6000,
+        "mean_ms": 41.83214596743104,
+        "p50_ms": 46.22847899736371,
+        "p95_ms": 76.36156039588973,
+        "p99_ms": 115.37123573711156
+      },
+      "framework_and_queue": {
+        "count": 6000,
+        "mean_ms": 0.9387238106137374,
+        "p50_ms": 0.7879785043769516,
+        "p95_ms": 1.4257916642236526,
+        "p99_ms": 2.7020615051151275
+      },
+      "transport_framework_client_residual": {
+        "count": 6000,
+        "mean_ms": 2.1696624431594196,
+        "p50_ms": 1.2132909978390671,
+        "p95_ms": 5.5345756067254115,
+        "p99_ms": 15.929849999229216
+      },
+      "post_load_empty_http_control": {
+        "latency": {
+          "count": 100,
+          "mean_ms": 17.558932909741998,
+          "p50_ms": 13.954354501038324,
+          "p95_ms": 41.35988189591444,
+          "p99_ms": 63.021748517348925
+        },
+        "errors": 0,
+        "scope": "same-host HTTP stack control; not a pure network measurement"
+      },
+      "memory": {
+        "sampled_peak_sum_rss_bytes": 883113984,
+        "sample_interval_ms": 50,
+        "scope": "server parent plus children summed RSS; shared pages can be double-counted; not client RSS/PSS"
+      },
+      "worker_pids_observed": [
+        37115,
+        37116
+      ],
+      "workers": 2,
+      "quality_query_count": 300,
+      "quality": {
+        "recall": 0.7833333333333333,
+        "precision": 0.08833333333333332,
+        "mrr": 0.6047248677248678,
+        "ndcg": 0.6450816521455774,
+        "hit_rate": 0.7933333333333333
+      }
+    }
+  ],
+  "service": {
+    "status": "ready",
+    "version": "0517c0f99a1f4e0a8c0800f91d4e5cd3",
+    "count": 5183,
+    "pid": 37116,
+    "encoder": {
+      "name": "sentence-transformers/all-MiniLM-L6-v2",
+      "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "max_seq_length": 256,
+      "normalize": true
+    },
+    "native_runtime": [
+      {
+        "user_api": "openmp",
+        "internal_api": "openmp",
+        "num_threads": 1,
+        "prefix": "libomp",
+        "filepath": "/private/tmp/evalforge-release-venv/lib/python3.14/site-packages/torch/lib/libomp.dylib",
+        "version": null
+      }
+    ]
+  },
+  "completed_at": "2026-11-04T02:02:49.588091+00:00",
+  "status": "COMPLETE",
+  "raw_samples": "requests.jsonl.gz",
+  "source_snapshot": "source-snapshot.json"
+}

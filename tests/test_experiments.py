@@ -101,6 +101,15 @@ def test_mmr_diversity_and_lambda_configuration(tmp_path):
     assert index.retrieve(query, "test", mode="similarity") == ["a", "b"]
 
 
+@pytest.mark.parametrize("mode", ["similarity", "mmr"])
+def test_self_match_exclusion_fills_k(tmp_path, mode):
+    vectors = np.array([[1, 0], [0.9, 0.1], [0.8, 0.2]], dtype=np.float32)
+    spec = RetrievalSpec(name="self", representation="dense", index="flat", k=2, mode=mode, fetch_k=3)
+    index = SearchIndex(vectors, ["self", "a", "b"], spec, 42, tmp_path / "self.faiss")
+    result = index.retrieve(vectors[0], "test", exclude_id="self")
+    assert len(result) == 2 and set(result) == {"a", "b"}
+
+
 @pytest.mark.parametrize("matrix,rows", [(np.ones((2, 3)), 3), (np.array([[np.nan]]), 1)])
 def test_invalid_embeddings(matrix, rows):
     with pytest.raises(ValueError):

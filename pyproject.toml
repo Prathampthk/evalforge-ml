@@ -39,6 +39,7 @@ files = [
   "main.py",
   "models.py",
   "retriever.py",
+  "serving",
   "telemetry.py",
   "vector_store.py",
 ]

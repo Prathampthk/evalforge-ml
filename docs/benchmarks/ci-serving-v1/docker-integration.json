@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "concurrent_updates": 12,
+    "count": 13,
+    "queries_during_updates": 40,
+    "stale_update_status": 409,
+    "version": "46a7e5386522449dad14f9f558f00313",
+    "worker_pids": [
+      8,
+      9
+    ]
+  },
+  "completed_at": "2026-11-04T02:22:36.883259+00:00",
+  "encoder": "synthetic-test-word-hash",
+  "restart": {
+    "query_after_restart": "passed",
+    "restored_count": 13,
+    "restored_version": "46a7e5386522449dad14f9f558f00313",
+    "restored_worker_pids": [
+      8,
+      9
+    ]
+  },
+  "scope": "actual Docker HTTP/FAISS snapshot integration, not semantic model performance",
+  "started_at": "2026-11-04T02:20:58.784367+00:00",
+  "status": "COMPLETE"
+}

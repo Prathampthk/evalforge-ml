@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "id": "beir/arguana",
+  "version": "beir-md5-8ad3e3c2a5867cdced806d6503f29b99-available-v1",
+  "archive_sha256": "cfdf79adce27a401b3cd3ea267903134dbfab2c6afeb95d7fe5724a00bf7557b",
+  "split": "test",
+  "role": "benchmark",
+  "origin": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/arguana.zip",
+  "license": "CC-BY-SA-4.0 per BEIR distribution card; original publisher rights retained",
+  "license_source": "https://huggingface.co/datasets/BeIR/arguana",
+  "exclude_query_id": true,
+  "original_source": "https://webis.de/data/arguana-counterargs.html",
+  "files": {
+    "corpus": {
+      "path": "corpus.jsonl",
+      "sha256": "0627982cec4ee896df6dc98604ef6b499c83fd87a19eaaeb3f23b88bbef6cbce"
+    },
+    "queries": {
+      "path": "queries.jsonl",
+      "sha256": "f8b7c903f95d9a2d291de3915a8fac25085e9db679f19f59fea4145bfd1df618"
+    },
+    "qrels": {
+      "path": "qrels/test-available.tsv",
+      "sha256": "2eb4aa1e19b963c75338bc13e857dc55afa013ae252266f491d14ea24b56dce4"
+    }
+  },
+  "original_query_count": 1406,
+  "original_qrel_count": 1406,
+  "excluded_qrel_count": 5,
+  "exclusion_reason": "Published archive references five unavailable corpus IDs; derived available-only subset",
+  "raw_qrels_sha256": "0c47b481fa8b47fb9ca5e74bc8a017bdea14518c0e4a5d21345291180b3aca76",
+  "corpus_count": 8674,
+  "query_count": 1401,
+  "qrel_count": 1401
+}

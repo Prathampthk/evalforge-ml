@@ -18,7 +18,11 @@ class EmbeddingModel:
     def __init__(self, config: EmbeddingConfig):
         self._config = config
         logger.info("Loading embedding model: %s", config.model_name)
-        self._model = SentenceTransformer(config.model_name, device=config.device)
+        # Existing unpinned configurations retain their constructor behavior.
+        if config.revision:
+            self._model = SentenceTransformer(config.model_name, device=config.device, revision=config.revision)
+        else:
+            self._model = SentenceTransformer(config.model_name, device=config.device)
 
         test_emb = self._model.encode(["test"], normalize_embeddings=config.normalize)
         actual_dim = int(test_emb.shape[1])

@@ -1,0 +1,27 @@
+[
+  {
+    "query-id": "test-free-speech-debate-yfsdfkhbwu-con03a",
+    "corpus-id": "test-free-speech-debate-yfsdfkhbwu-con03b",
+    "score": "1"
+  },
+  {
+    "query-id": "test-education-ufsdfkhbwu-con03a",
+    "corpus-id": "test-education-ufsdfkhbwu-con03b",
+    "score": "1"
+  },
+  {
+    "query-id": "test-politics-dhwem-pro06a",
+    "corpus-id": "test-politics-dhwem-pro06b",
+    "score": "1"
+  },
+  {
+    "query-id": "test-science-sghwbdgmo-con03a",
+    "corpus-id": "test-science-sghwbdgmo-con03b",
+    "score": "1"
+  },
+  {
+    "query-id": "test-society-asfhwapg-con04a",
+    "corpus-id": "test-society-asfhwapg-con04b",
+    "score": "1"
+  }
+]

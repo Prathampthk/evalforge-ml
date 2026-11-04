@@ -130,12 +130,14 @@ class SearchIndex:
         candidates = [(float(s), int(i)) for s, i in zip(scores[0], positions[0]) if i >= 0]
         return [i for _, i in sorted(candidates, key=lambda pair: (-pair[0], self.ids[pair[1]]))[:count]]
 
-    def retrieve(self, query, experiment_id: str, mode: str | None = None) -> list[str]:
+    def retrieve(self, query, experiment_id: str, mode: str | None = None, exclude_id: str | None = None) -> list[str]:
         spec = self.spec
         mode = mode or spec.mode
         attrs = {"experiment.id": experiment_id, "configuration": spec.name, "top_k": spec.k}
         with start_span("evalforge.index_lookup", attrs, "evalforge.experiments"):
-            candidate_ids = self.lookup(query, spec.fetch_k if mode == "mmr" else spec.k)
+            count = spec.fetch_k if mode == "mmr" else spec.k
+            candidate_ids = self.lookup(query, count + int(exclude_id is not None))
+            candidate_ids = [i for i in candidate_ids if self.ids[i] != exclude_id][:count]
         if mode == "mmr" and candidate_ids:
             with start_span("evalforge.rerank_mmr", attrs, "evalforge.experiments"):
                 candidates = self.vectors[candidate_ids]

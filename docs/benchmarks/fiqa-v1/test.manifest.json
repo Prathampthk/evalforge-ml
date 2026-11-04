@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "id": "beir/fiqa",
+  "version": "beir-md5-17918ed23cd04fb15047f73e6c3bd9d9-nonempty-v1",
+  "archive_sha256": "32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02",
+  "split": "test",
+  "role": "benchmark",
+  "origin": "https://public.ukp.informatik.tu-darmstadt.de/thakur/BEIR/datasets/fiqa.zip",
+  "license": "CC-BY-SA-4.0 per BEIR distribution card; original financial post rights retained",
+  "license_source": "https://huggingface.co/datasets/BeIR/fiqa",
+  "original_corpus_count": 57638,
+  "excluded_empty_documents": 38,
+  "original_query_count": 648,
+  "original_qrel_count": 1706,
+  "excluded_qrel_count": 1,
+  "exclude_query_id": true,
+  "preprocessing": "Drop empty/whitespace documents and only judgments referencing them; no relabeling",
+  "raw_corpus_sha256": "ff593e4df9933955dc3af83be0c3fa28ac7465f627e08c2e53593e734d506517",
+  "raw_qrels_sha256": "6adc2a640dcdd22bb8b3858f89107adef2a7c3db20a63550dfa7a0f71e379e44",
+  "files": {
+    "corpus": {
+      "path": "corpus-nonempty.jsonl",
+      "sha256": "b18826c291385e6ee1786fb006e5b8b1ea5515b3a7a9b9723b35d97dd90fdcd3"
+    },
+    "queries": {
+      "path": "queries.jsonl",
+      "sha256": "eede1e61d4a0188940239b53ebc2da91f577a6a34679c812d1eb9090c29877bc"
+    },
+    "qrels": {
+      "path": "qrels/test-available.tsv",
+      "sha256": "b90b12498ee384da3681c8d403306c97d400b0d553a100b0e93b53af9c80ee58"
+    }
+  },
+  "corpus_count": 57600,
+  "query_count": 648,
+  "qrel_count": 1705
+}

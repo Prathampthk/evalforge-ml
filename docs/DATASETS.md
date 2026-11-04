@@ -47,3 +47,21 @@ The 1,000- and 3,000-document subsets contain **all judged positive documents pl
 ## Judgment limitations
 
 SciFact is one scientific-claim retrieval domain, with incomplete evidence judgments; unjudged documents are treated as nonrelevant by convention. Retrieving a judged document is distinct from supporting/refuting a claim correctly. These judgments are not labels for generated answer correctness, faithfulness, or LLM judge agreement. Zero-positive judged queries are supported through an explicit `exclude` (default) or `zero` metric policy; counts and scored denominators are reported.
+
+## Additional domains: explicit derived versions
+
+```bash
+python -m evaluation.prepare_dataset --dataset arguana --output data/arguana
+python -m evaluation.prepare_dataset --dataset fiqa --output data/fiqa
+```
+
+Both preparers verify a fixed official BEIR archive checksum plus pinned SHA-256, bound downloads to 50 MiB and selected extraction to 100 MiB, preserve raw data, refuse existing nonempty destinations, and validate the derived manifest. [BEIR dataset inventory](https://github.com/beir-cellar/beir/wiki/Datasets-available), [ArguAna original source](https://webis.de/data/arguana-counterargs.html), [ArguAna BEIR card](https://huggingface.co/datasets/BeIR/arguana), and [FiQA BEIR card](https://huggingface.co/datasets/BeIR/fiqa) identify origins and terms. The BEIR cards advertise CC-BY-SA-4.0; original argument and financial-post rights are retained. These are not MIT-licensed code assets. Raw downloads remain ignored and are not republished here.
+
+| Derived benchmark version | Usable corpus | Test queries | Positive test judgments | Explicit exclusions |
+|---|---:|---:|---:|---|
+| ArguAna `beir-md5-8ad3e3c2a5867cdced806d6503f29b99-available-v1` | 8,674 | 1,401 | 1,401 | Five of 1,406 archive qrels reference absent corpus IDs; five affected queries omitted |
+| FiQA `beir-md5-17918ed23cd04fb15047f73e6c3bd9d9-nonempty-v1` | 57,600 | 648 | 1,705 | 38 of 57,638 documents are empty/whitespace; one test qrel references an excluded document |
+
+ArguAna archive SHA-256: `cfdf79adce27a401b3cd3ea267903134dbfab2c6afeb95d7fe5724a00bf7557b`. FiQA: `32c7df99ed21252fdfb2cf3f5673502a8d245ee0c44c4a133570d92ce2b3ad02`. Derived manifests include raw/filtered hashes, original/evaluated counts, exclusions, and no relabeling. FiQA train has 5,498 usable queries/14,131 judgments (35 excluded qrels); dev has 500/1,236 (two excluded). Test/dev/train query IDs are checked disjoint; neither development split was used for parameter tuning.
+
+For these new datasets `exclude_query_id: true` filters a result whose document ID equals the query ID before selecting K, following BEIR self-match convention (essential for ArguAna arguments also present in the corpus). Extra candidates are fetched to fill K; exact-neighbor comparisons use the same filtering. This policy is recorded rather than retroactively changing SciFact conditions. One document per original nonempty text, title joined where present, normalized MiniLM truncation at 256 tokens. ArguAna has no development split here; settings were fixed in config. These available-only/nonempty versions differ from unfiltered leaderboard conditions. See [measured cross-domain comparisons](CROSS_DOMAIN_RESULTS.md); additional domains alone do not prove generalization or exclude model training contamination.
