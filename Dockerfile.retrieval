@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/wh
     && pip install --no-cache-dir -r requirements-serving.txt
 COPY config.py models.py vector_store.py telemetry.py ./
 COPY serving ./serving
-COPY evaluation/__init__.py evaluation/prepare_model.py ./evaluation/
+COPY evaluation/__init__.py evaluation/dataset.py evaluation/prepare_model.py ./evaluation/
 RUN groupadd -g 1000 app && useradd -m -u 1000 -g app app \
     && mkdir /data /models && chown -R app:app /data /models
 USER app
