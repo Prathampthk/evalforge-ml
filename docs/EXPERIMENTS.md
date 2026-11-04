@@ -91,7 +91,7 @@ A failed run writes `status: FAILED` and exception type, then raises nonzero; in
 
 Normal CI runs small deterministic fixtures, all unit/API contract tests, and a versioned retrieval regression gate. `evaluation/baselines/regression-v1.json` locks dataset/config/metric semantics and expected quality/count/ID-hash results. No degradation is allowed on this deterministic fixture; 1e-12 is only an aggregation roundoff tolerance. Changed conditions, missing configurations, NaN or a lower metric fail. Baseline updates must be intentional, reviewed, and separately versioned; the runner does not auto-accept a regression.
 
-Latency is not gated on noisy shared CI hosts. `.github/workflows/retrieval-benchmark.yml` runs the larger public benchmark manually or monthly and uploads machine-readable results/indexes. Public-benchmark workflow execution on GitHub remains unverified until pushed and run. Existing annotation-derived `quality-regression.yml` is retained as a legacy harness check and must not be cited as measured retrieval quality.
+Latency is not gated on noisy shared CI hosts. `.github/workflows/retrieval-benchmark.yml` runs the larger public benchmark manually or monthly and uploads machine-readable results/indexes. The separate scheduled/public benchmark workflow remains unverified; the main deterministic fixture and Docker integration passed in [CI run 41760000510](https://github.com/Prathampthk/evalforge-ml/actions/runs/41760000510). Existing annotation-derived `quality-regression.yml` is retained as a legacy harness check and must not be cited as measured retrieval quality.
 
 ## RAG answer evaluation remains distinct
 
@@ -120,3 +120,5 @@ python -m evaluation.docker_check --output reports/docker-integration.json
 ```
 
 See [dataset exclusions and licenses](DATASETS.md), [cross-domain measurements](CROSS_DOMAIN_RESULTS.md), and [current validation status](PERFORMANCE_AUDIT.md). Dense runs remain offline/pinned after model preparation. ArguAna/FiQA have one warm serial repetition, explicitly recorded in their configs, versus three in the preserved SciFact study. Neither implies concurrent HTTP performance. Source snapshots and hashes preserve exact dirty-tree code used for measured runs, even when later maintenance changes the repository.
+
+Current code validation: [CI run 41760000510](https://github.com/Prathampthk/evalforge-ml/actions/runs/41760000510), all eight jobs successful, Python 3.11.18 with 169 tests and actual synthetic-encoder Docker update/restart checks. This is separate from the measured local CPU performance runs; CI did not produce the published MiniLM load timings.

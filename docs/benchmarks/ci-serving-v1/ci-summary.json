@@ -1,0 +1,65 @@
+{
+  "run_url": "https://github.com/Prathampthk/evalforge-ml/actions/runs/41760000510",
+  "run_id": 41760000510,
+  "head_commit": "f55fd69a51a3160ceaaa4509e8a32c31a57cbee7",
+  "conclusion": "success",
+  "pytest": {
+    "passed": 169,
+    "skipped": 0,
+    "warnings": 1,
+    "python": "3.11.18",
+    "scope": "Ubuntu GitHub runner; provider/model mocks and synthetic serving encoder in tests"
+  },
+  "jobs": [
+    {
+      "id": 126345622649,
+      "name": "unit-tests / pytest",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126345622855,
+      "name": "Docker retrieval and snapshot integration",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126345622865,
+      "name": "lint / flake8",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126345622983,
+      "name": "security-scan / bandit",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126345622985,
+      "name": "retrieval-regression / retrieval-regression",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126345622990,
+      "name": "type-check / mypy",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126345623034,
+      "name": "dependency-scan / safety",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126345623090,
+      "name": "format / black",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "docker_report_source": "JSON emitted by evaluation.docker_check in job 126345622855",
+  "docker_artifact_url": "https://github.com/Prathampthk/evalforge-ml/actions/runs/41760000510/artifacts/13289404622"
+}

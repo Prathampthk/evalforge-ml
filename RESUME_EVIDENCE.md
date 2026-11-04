@@ -28,7 +28,7 @@ Tests: `tests/test_shared_snapshots.py`, `test_serving_api.py`, `test_serving_pr
 
 Current local suite: **169 passed, zero skipped**, 16 dependency deprecation warnings. Black, flake8, mypy (37 source files) and Bandit pass. Deterministic retrieval gate retains the original dataset/config/metric contract. `tests/test_dataset_preparation.py` checks exclusions without altering raw evidence. RAGAS SDK import smoke test runs in a subprocess to prevent its global event-loop patches from contaminating unrelated async tests.
 
-[CI](.github/workflows/ci.yml) adds a real Docker HTTP/update/volume-restart integration job using a clearly labeled synthetic encoder. Local Docker is unavailable; execution must be verified on GitHub before claiming container success. See [audit](docs/PERFORMANCE_AUDIT.md) for latest run evidence. Public benchmark timing is not gated on noisy CI runners.
+[CI](.github/workflows/ci.yml) adds a real Docker HTTP/update/volume-restart integration job using a clearly labeled synthetic encoder. Local Docker is unavailable; actual container execution passed in [GitHub CI run 41760000510](https://github.com/Prathampthk/evalforge-ml/actions/runs/41760000510) at commit `f55fd69`: all eight jobs succeeded, including **169 tests under Python 3.11.18**, the deterministic gate, and the volume-backed Docker update/restart check. [Actual report and job evidence](docs/benchmarks/ci-serving-v1/ci-summary.json), [audit](docs/PERFORMANCE_AUDIT.md). This verifies synthetic-encoder container mechanics, not real-model Docker performance. Public benchmark timing is not gated on noisy CI runners.
 
 ## Resume wording supported by current evidence
 

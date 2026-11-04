@@ -83,3 +83,9 @@ Chunk quality metrics are stored on each chunk under `metadata["chunking"]["metr
 ## Environment boundaries
 
 `EMBEDDING_MODEL`, `EMBEDDING_DEVICE`, `VECTOR_INDEX_TYPE`, and `VECTOR_STORE_PERSIST_DIR` are not read by the Python configuration. Legacy Compose entries are retained for compatibility but have no effect on these settings. Use `EmbeddingConfig` and `VectorStoreConfig` in Python. API settings include `RAG_API_TOKEN`, `RAG_AUTH_DISABLED` (false), `CORS_ORIGINS`, and `TRUSTED_HOSTS`. `API_HOST`/`API_PORT` apply only when running `python api.py`; Uvicorn CLI takes its own options.
+
+## Retrieval-only service and shared indexes
+
+`serving.api:app` uses `EVALFORGE_SNAPSHOT_DIR` (default `vector_store_data/shared`) and `EVALFORGE_MODEL_CACHE` (default `artifacts/model-cache`). `EVALFORGE_EMBEDDER` defaults to real offline pinned `minilm`; `test-hash` is only for explicitly synthetic integration tests. `RAG_API_TOKEN` is required for `/documents` and `/retrieve` (no development auth bypass in this app). The model/revision/normalization fingerprint must match the snapshot.
+
+Legacy `api:app` defaults to one worker in `start.sh`. To enable safe shared mode, set `RAG_SHARED_SNAPSHOT_DIR` and a pinned 40-character `RAG_EMBEDDING_REVISION`; use a flat index and matching embedding dimensions/normalization. Shared mode persists on ingestion and restores automatically, disabling legacy save/load. Separate applications should use separate snapshot directories because their fingerprints/ingestion contracts differ. See [deployment](DEPLOYMENT.md) and [consistency limits](SNAPSHOT_CONSISTENCY.md).

@@ -10,7 +10,7 @@ Version **0.1.0 foundation + unreleased retrieval infrastructure upgrade** · Ma
 
 EvalForge now includes an LLM-free FastAPI retrieval service, concurrent HTTP load tests, and atomic versioned FAISS snapshots shared safely across workers. [Measured HTTP results](docs/SERVING_PERFORMANCE.md): **36,000 real MiniLM retrieval requests, zero errors**, with full embedding/search/HTTP stage distributions. On one CPU host, two workers at 16 concurrent clients delivered **362.8 successful requests/s**, P50/P95/P99 **51.61/81.08/121.15 ms**. This is a short loopback load test, not a production capacity claim; the old sub-millisecond lookup results remain separately labeled.
 
-[Cross-domain experiments](docs/CROSS_DOMAIN_RESULTS.md) compare TF-IDF, dense exact, HNSW and IVF with explicit dataset versions/exclusions. [Snapshot consistency](docs/SNAPSHOT_CONSISTENCY.md) covers concurrent ingestion, pinned readers, checksums, CAS conflicts and restart/crash recovery. See the [audit](docs/PERFORMANCE_AUDIT.md) for validation and limitations.
+[Cross-domain experiments](docs/CROSS_DOMAIN_RESULTS.md) compare TF-IDF, dense exact, HNSW and IVF with explicit dataset versions/exclusions. [Snapshot consistency](docs/SNAPSHOT_CONSISTENCY.md) covers concurrent ingestion, pinned readers, checksums, CAS conflicts and restart/crash recovery. Validation: **169 tests passed locally and on Python 3.11 GitHub CI; all eight CI jobs passed**, including actual Docker concurrent update/restart integration ([verified run](https://github.com/Prathampthk/evalforge-ml/actions/runs/41760000510)). See the [audit](docs/PERFORMANCE_AUDIT.md) for scope and limitations.
 
 ```bash
 python -m pip install -r requirements-experiments.txt -r requirements-serving.txt
@@ -82,7 +82,7 @@ flowchart TD
   A --> O
 ```
 
-Deferred evaluation returns a pending placeholder; there is no result-polling endpoint. Use synchronous evaluation when consuming reliability scores. Vector persistence is explicit; API startup does not automatically restore saved indexes. See [architecture](docs/ARCHITECTURE.md).
+Deferred evaluation returns a pending placeholder; there is no result-polling endpoint. Use synchronous evaluation when consuming reliability scores. Without shared mode, legacy vector persistence is explicit and startup does not restore saved indexes. The new retrieval app and opt-in legacy shared mode restore CURRENT automatically. See [architecture](docs/ARCHITECTURE.md).
 
 ## Technology stack
 
